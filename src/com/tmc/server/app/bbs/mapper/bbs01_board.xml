@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="bbs01_board">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.bbs.model.BoardModel" >
+	<id  	column="bbs01_board_id"			property="boardId"/>
+	<result column="bbs01_company_id"		property="companyId"/>
+	<result column="bbs01_type_cd"			property="boardTypeCode"/>
+	<result column="bbs01_type_nm"			property="boardTypeName"/>
+	<result column="bbs01_title"			property="title"/>
+	<result column="bbs01_content"			property="content"/>
+	<result column="bbs01_write_user_id"	property="writeUserId"/>
+	<result column="bbs01_write_date" 		property="writeDate"/>
+	<result column="bbs01_note"				property="note"/>
+
+	<association property="userModel" 
+		javaType="com.tmc.client.app.sys.model.UserModel" 
+		resultMap="sys02_user.mapper"
+	/>
+
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	a.*, 
+			b.*,  
+			dbo.f_cdnm('BoardTypeCode', bbs01_type_cd) bbs01_type_nm
+	from 	bbs01_board a, 
+			sys02_user b
+	where	bbs01_write_user_id = sys02_user_id
+	and		bbs01_board_id = #{boardId}
+</select>
+
+<select id="selectByCompanyId" resultMap="mapper" parameterType="HashMap">
+	select 	a.*, 
+			b.*,  
+			dbo.f_cdnm('BoardTypeCode', bbs01_type_cd) bbs01_type_nm
+	from 	bbs01_board a, 
+			sys02_user b
+	where	bbs01_write_user_id = sys02_user_id
+	and		bbs01_company_id = #{companyId}
+	and		bbs01_title like #{title} 
+	order 	by bbs01_write_date
+</select>
+
+<select id="selectByTypeCode" resultMap="mapper" parameterType="HashMap">
+	select 	a.*, 
+			b.*,  
+			dbo.f_cdnm('BoardTypeCode', bbs01_type_cd) bbs01_type_nm
+	from 	bbs01_board a, 
+			sys02_user b
+	where	bbs01_write_user = sys02_user_id
+	and		bbs01_company_id = #{companyId}
+	and		bbs01_type_cd like #{boardTypeCode} 
+	and		bbs01_title like #{title} 
+	order 	by bbs01_write_date
+</select>
+
+</mapper>

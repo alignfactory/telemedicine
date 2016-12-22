@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="emp02_license">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.emp.model.LicenseModel" >
+	<id  	column="emp02_license_id"	property="licenseId"/>
+	<result column="emp02_user_id"		property="userId"/>
+	<result column="emp02_license_cd"	property="licenseCode"/>
+	<result column="emp02_issue_date"	property="issueDate"/>
+	<result column="emp02_expiration_date" property="expirationDate"/>
+	<result column="emp02_note"			property="note"/>
+	
+	<association property="userModel" 
+		javaType="com.tmc.client.app.sys.model.UserModel" 
+		resultMap="sys02_user.mapper"
+	/>
+
+<!-- 
+	<association property="hireModel" 
+		javaType="com.tmc.client.app.emp.model.HireModel" 
+		resultMap="emp02_hire.hireModel"
+	/>
+ -->
+ 	
+	<association property="licenseCodeModel" 
+		javaType="com.tmc.client.app.sys.model.LicenseCodeModel" 
+		resultMap="sys21_license_code.mapper"
+	/>
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	*
+	from 	sys02_user, 
+			sys21_license_code , 
+			emp02_license 
+	where	emp02_user_id = sys02_user_id
+	and		emp02_license_cd = sys21_license_cd 
+	and		sys21_apply_date = (
+				select 	max(x.sys21_apply_date) 
+				from 	sys21_license_code x 
+				where 	x.sys21_license_cd = emp02_license_cd
+				and		x.sys21_apply_date &lt; NULLIS(emp02_issue_date, sysdate) )   
+	and		emp02_license_id = #{licenseId}
+</select>
+
+<select id="selectByUserId" resultMap="mapper" parameterType="Long">
+	select 	*
+	from 	sys02_user, 
+			sys21_license_code , 
+			emp02_license 
+	where	emp02_user_id = sys02_user_id
+	and		emp02_license_cd = sys21_license_cd 
+	and		sys21_apply_date = (
+				select 	max(x.sys21_apply_date) 
+				from 	sys21_license_code x 
+				where 	x.sys21_license_cd = emp02_license_cd
+				and		x.sys21_apply_date &lt; NULLIS(emp02_issue_date, sysdate) )   
+	and		emp02_user_id = #{userId}
+</select>
+
+<select id="selectByToday" resultMap="mapper" parameterType="Long">
+	select 	*
+	from 	sys02_user,
+			sys21_license_code a,
+			emp01_hire,
+			emp02_license
+	where	emp02_user_id = sys02_user_id
+	and		sys02_company_id = #{companyId}
+	and		sys02_user_id = emp01_user_id
+	and		sysdate between NULLIS(emp01_hire_date, sysdate) and NULLIS(emp01_retire_date, to_date('29991231', 'yyyymmdd'))
+	and		emp02_license_cd = sys21_license_cd
+	and		sys21_apply_date = (
+				select 	max(x.sys21_apply_date)
+				from 	sys21_license_code x
+				where 	x.sys21_apply_date &lt;= sysdate
+				and		x.sys21_license_cd = emp02_license_cd)
+	order by sys02_kor_nm, sys21_license_nm 
+</select>
+
+</mapper>

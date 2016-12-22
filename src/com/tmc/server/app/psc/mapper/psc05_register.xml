@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="psc05_register">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.psc.model.RegisterModel" >
+	<id  	column="psc05_register_id"		property="registerId"/>
+	<result column="psc05_student_id"		property="studentId"/>
+	<result column="psc05_entrance_cd"		property="entranceCode"/>
+	<result column="psc05_entrance_nm"		property="entranceName"/>
+	<result column="psc05_entrance_date"	property="entranceDate"/>
+	<result column="psc05_entrance_note"	property="entranceNote"/>
+	<result column="psc05_graduate_cd"		property="graduateCode"/>
+	<result column="psc05_graduate_nm"		property="graduateName"/>
+	<result column="psc05_graduate_date" 	property="graduateDate"/>
+	<result column="psc05_graduate_note" 	property="graduateNote"/>
+	<result column="psc05_after_action" 	property="afterAction"/>
+	<result column="psc05_note"				property="note"/>
+	
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	a.*, 
+			dbo.f_cdnm('EntranceCode', psc05_entrance_cd) psc05_entrance_nm, 
+			dbo.f_cdnm('GraduateCode', psc05_graduate_cd) psc05_graduate_nm
+	from 	psc05_register a
+	where	psc05_register_id = #{registerId}
+</select>
+
+<select id="selectByStudentId" resultMap="mapper" parameterType="Long">
+	select 	a.*, 
+			dbo.f_cdnm('EntranceCode', psc05_entrance_cd) psc05_entrance_nm, 
+			dbo.f_cdnm('GraduateCode', psc05_graduate_cd) psc05_graduate_nm
+	from 	psc05_register a
+	where	psc05_student_id = #{studentId}
+	order by psc05_entrance_date
+</select>
+
+</mapper>

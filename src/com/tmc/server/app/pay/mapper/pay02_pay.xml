@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="pay02_pay">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.pay.model.PayModel" >
+	<id  	column="pay02_pay_id"		property="payId"/>
+	<result column="pay02_payday_id"	property="paydayId"/>
+	<result column="pay02_user_id"		property="userId"/>
+	<result column="pay02_base_amt"		property="baseAmt"/>
+	<result column="pay02_hire_amt"		property="hireAmt"/>
+	<result column="pay02_benefit_amt"	property="benefitAmt"/>
+	<result column="pay02_extra_amt"	property="extraAmt"/>
+	<result column="pay02_etc_in_amt"	property="etcInAmt"/>
+	<result column="pay02_income_tax"	property="incomeTax"/>
+	<result column="pay02_ctz_tax"		property="ctzTax"/>
+	<result column="pay02_health_ins"	property="healthIns"/>
+	<result column="pay02_private_pns"	property="privatePns"/>
+	<result column="pay02_unemp_ins"	property="unEmpIns"/>
+	<result column="pay02_nation_pns"	property="nationPns"/>
+	<result column="pay02_etc_out_amt"	property="etcOutAmt"/>
+	<result column="pay02_close_yn"		property="closeYn"/> 
+	<result column="pay02_note"			property="note"/>	
+	
+	<association property="userModel" 
+		javaType="com.tmc.client.app.sys.model.UserModel" 
+		resultMap="sys02_user.mapper"
+	/>
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	a.*, 
+			b.*,  
+			dbo.f_cdnm('GenderCode', sys02_gender_cd) sys02_gender_nm, 
+			dbo.f_cdnm('NationCode', sys02_nation_cd) sys02_nation_nm, 
+			dbo.f_cdnm('MilitaryTypeCode', sys02_military_type_cd) sys02_military_type_nm, 
+			dbo.f_cdnm('BankCode', sys02_bank_cd) sys02_bank_nm
+	from 	pay02_pay a, 
+			sys02_user b
+	where	pay02_pay_id = #{pay_id}
+	and		a.pay02_user_id = b.sys02_user_id
+	
+</select>
+
+<select id="selectByPaydayId" resultMap="mapper" parameterType="Long">
+	select 	a.*, 
+			b.*,  
+			dbo.f_cdnm('GenderCode', sys02_gender_cd) sys02_gender_nm, 
+			dbo.f_cdnm('NationCode', sys02_nation_cd) sys02_nation_nm, 
+			dbo.f_cdnm('MilitaryTypeCode', sys02_military_type_cd) sys02_military_type_nm, 
+			dbo.f_cdnm('BankCode', sys02_bank_cd) sys02_bank_nm 
+	from 	pay02_pay a, 
+			sys02_user b 
+	where	a.pay02_payday_id = #{payday_id}
+	and		a.pay02_user_id = b.sys02_user_id
+	order 	by pay02_user_id
+</select>
+
+<insert id="copyByPaydayId"  parameterType="HashMap">
+	insert into pay02_pay(
+		pay02_pay_id, 
+		pay02_payday_id,
+		pay02_user_id,    
+  		pay02_base_amt, 
+		pay02_hire_amt, 
+		pay02_benefit_amt, 
+		pay02_extra_amt, 
+		pay02_etc_in_amt, 
+		pay02_income_tax, 
+		pay02_ctz_tax,  
+		pay02_health_ins, 
+		pay02_private_pns, 
+		pay02_unemp_ins, 
+		pay02_nation_pns, 
+		pay02_etc_out_amt, 
+		pay02_close_yn,   	
+		pay02_note )
+	select 
+		seq.nextval,
+		#{toPaydayId}, 
+		pay02_user_id,    
+  		pay02_base_amt, 
+		pay02_hire_amt, 
+		pay02_benefit_amt, 
+		pay02_extra_amt, 
+		pay02_etc_in_amt, 
+		pay02_income_tax, 
+		pay02_ctz_tax,  
+		pay02_health_ins, 
+		pay02_private_pns, 
+		pay02_unemp_ins, 
+		pay02_nation_pns, 
+		pay02_etc_out_amt, 
+		pay02_close_yn,   	
+		pay02_note 
+	from pay02_pay
+	where pay02_payday_id = #{fromPaydayId}
+</insert>
+
+</mapper>

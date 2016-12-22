@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys05_menu">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.sys.model.MenuModel" >
+	<id  	column="sys05_menu_id"		property="menuId" />
+	<result column="sys05_parent_id"	property="parentId" />
+	<result column="sys05_menu_nm" 		property="menuName" />
+	<result column="sys05_class_nm"		property="className" />
+	<result column="sys05_seq" 			property="seq" />
+	<result column="sys05_use_yn"		property="useYn" />
+	<result column="sys05_note"			property="note" />
+</resultMap>
+
+<select id="selectByParentId" resultMap="mapper" parameterType="Long" > 
+	select 	*
+	from 	sys05_menu
+	where 	sys05_parent_id = #{parentId}
+	order 	by sys05_seq, sys05_menu_nm
+</select>
+
+<select id="selectById" resultMap="mapper" parameterType="Long">
+	select 	* 
+	from 	sys05_menu 
+	where 	sys05_menu_id = #{menuId}
+	order 	by sys05_seq
+</select>
+
+
+</mapper>

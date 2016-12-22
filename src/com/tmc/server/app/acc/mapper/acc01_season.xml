@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="acc01_season">
+
+<!--  resultMap 이름은 반드시 mapper 이어야 한다. -->
+
+<resultMap 	id="mapper" type="com.tmc.client.app.acc.model.SeasonModel" >
+	<id  	column="acc01_season_id"	property="seasonId"/>
+	<result column="acc01_company_id"	property="companyId"/>
+	<result column="acc01_edu_office_cd"	property="eduOfficeCode"/>
+	<result column="acc01_edu_office_nm"	property="eduOfficeName"/>
+	<result column="acc01_season_nm"	property="seasonName"/>
+	<result column="acc01_start_date"	property="startDate"/>
+	<result column="acc01_close_date"	property="closeDate"/>
+	<result column="acc01_seq"			property="seq"/>
+	<result column="acc01_note"			property="note"/>
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	a.*, 
+			dbo.f_cdnm('EduOfficeCode', acc01_edu_office_cd) acc01_edu_office_nm 
+	from 	acc01_season a
+	where	acc01_season_id = #{seasonId} 
+</select>
+
+<select id="selectByCompanyId" resultMap="mapper" parameterType="Long">
+	select 	a.*, 
+			dbo.f_cdnm('EduOfficeCode', acc01_edu_office_cd) acc01_edu_office_nm 
+	from 	acc01_season a
+	where	acc01_company_id = #{companyId} 
+	order 	by acc01_start_date
+</select>
+
+</mapper>

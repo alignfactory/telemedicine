@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="psc02_teacher">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.psc.model.TeacherModel" >
+	<id  	column="psc02_teacher_id"		property="teacherId"/>
+	<result column="psc02_study_class_id"	property="studyClassId"/>
+	<result column="psc02_user_id"			property="userId"/>
+	<result column="psc02_apply_date"		property="applyDate"/>
+	<result column="psc02_teacher_type_cd"	property="teacherTypeCode"/>
+	<result column="psc02_teacher_type_nm"	property="teacherTypeName"/>
+	<result column="psc02_close_yn"			property="closeYn"/>
+	<result column="psc02_note"				property="note"/>
+	
+	<association property="userModel" 
+		javaType="com.tmc.client.app.sys.model.UserModel" 
+		resultMap="sys02_user.mapper"
+	/>
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	a.*,
+			b.*,  
+			dbo.f_cdnm('TeacherTypeCode', psc02_teacher_type_cd) psc02_teacher_type_nm
+	from 	psc02_teacher a, 
+			sys02_user b
+	where	sys02_user_id = psc02_user_id
+	and		psc02_teacher_id = #{teacherId}
+</select>
+
+<select id="selectByStudyClassId" resultMap="mapper" parameterType="Long">
+	select 	a.*,
+			b.*,  
+			dbo.f_cdnm('TeacherTypeCode', psc02_teacher_type_cd) psc02_teacher_type_nm
+	from 	psc02_teacher a, 
+			sys02_user b
+	where	b.sys02_user_id = a.psc02_user_id
+	and		a.psc02_study_class_id = #{studyClassId}
+	order 	by psc02_apply_date desc, psc02_teacher_type_cd 
+</select>
+
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys06_user_role">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.sys.model.UserRoleModel" >
+	<id  	column="sys06_user_role_id"	property="userRoleId"/>
+	<result column="sys06_user_id" 		property="userId"/>
+	<result column="sys06_role_id" 		property="roleId"/>
+	<result column="sys06_seq" 			property="seq"/>
+	<result column="sys06_note" 		property="note"/>
+
+	<association property="roleModel" 
+		javaType="com.tmc.client.app.sys.model.RoleModel" 
+		resultMap="sys04_role.mapper"
+	/>
+
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	*
+	from 	sys06_user_role,
+			sys04_role
+	where 	sys06_role_id = sys04_role_id
+	and		sys06_user_role_id = #{userRoleId}
+</select>
+
+<select id="selectByUserId" resultMap="mapper" parameterType="Long" > 
+	select 	*
+	from 	sys06_user_role,
+			sys04_role
+	where 	sys06_role_id = sys04_role_id
+	and		sys06_user_id = #{userId}
+	order 	by sys04_seq , sys06_seq 
+</select>
+ 
+</mapper>

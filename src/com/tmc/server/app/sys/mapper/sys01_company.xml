@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys01_company">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.sys.model.CompanyModel" >
+	<id  	column="sys01_company_id"		property="companyId"/>
+	<result column="sys01_company_nm"		property="companyName"/>
+	<result column="sys01_biz_no"			property="bizNo"/>
+	<result column="sys01_tel1"				property="telNo01"/>
+	<result column="sys01_tel2"				property="telNo02"/>
+	<result column="sys01_fax1"				property="faxNo01"/>
+	<result column="sys01_zip_cd"			property="zipCode"/>
+	<result column="sys01_zip_addr"			property="zipAddress"/>
+	<result column="sys01_zip_detail"		property="zipDetail"/>
+	<result column="sys01_loc_nm"			property="locationName"/>
+	<result column="sys01_anniv_date"		property="annvDate"/>
+	<result column="sys01_ceo_person_id"	property="ceoPersonId"/>
+	<result column="sys01_mgr_person_id"	property="managerPersonId"/>
+	<result column="sys01_note"				property="note"/>
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="long" > 
+	select * 
+	from sys01_company  
+	where sys01_company_id = #{companyId}
+</select>
+
+<select id="selectByAll" resultMap="mapper" > 
+	select * 
+	from sys01_company 
+</select>
+
+<select id="selectByName" resultMap="mapper" parameterType="String">
+	select 	* 
+	from 	sys01_company 
+	where 	sys01_company_nm like '%' + #{companyName} + '%'
+</select>
+
+<select id="selectByNotAssignedCompany" resultMap="mapper" parameterType="Long">
+	select 	* 
+	from 	sys01_company 
+	where 	sys01_company_id not in ( 
+				select 	sys07_company_id
+				from 	sys07_user_company
+				where 	sys07_user_id = #{userId}
+			)
+	and		sys01_company_id != 2000001
+	order 	by sys01_company_nm
+</select>
+
+</mapper>

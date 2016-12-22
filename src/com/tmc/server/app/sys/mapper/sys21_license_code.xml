@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys21_license_code">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.sys.model.LicenseCodeModel" >
+	<id  	column="sys21_license_code_id" 	property="licenseCodeId"/>
+	<result column="sys21_license_cd"		property="licenseCode"/>
+	<result column="sys21_license_nm"		property="licenseName"/>
+	<result column="sys21_issue_org_nm"		property="issueOrgName"/>
+	<result column="sys21_apply_date" 		property="applyDate"/>
+	<result column="sys21_close_yn"			property="closeYn"/>
+	<result column="sys21_note"				property="note"/>
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	*
+	from 	sys21_license_code
+	where	sys21_license_code_id = #{licenseCodeId}
+</select> 
+
+<select id="selectByName" resultMap="mapper" parameterType="String">
+	select 	*
+	from 	sys21_license_code
+	where	sys21_license_nm like '%' + #{licenseName} + '%'  
+	order by sys21_license_nm
+</select>
+
+<select id="selectByApplyDate" resultMap="mapper" parameterType="HashMap">
+	select 	* 
+	from 	sys21_license_code a
+	and		a.sys21_apply_date
+			= (	select max(b.sys21_apply_date)
+				from 	sys21_license_code b
+				where 	b.sys21_license_cd = a.sys21_license_cd
+				and		b.sys21_apply_date &lt;= #{applyDate}
+			)
+	order 	by sys21_license_nm
+</select>
+
+</mapper>
+

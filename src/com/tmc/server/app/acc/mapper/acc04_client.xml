@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="acc04_client">
+
+<!--  resultMap 이름은 반드시 mapper 이어야 한다. -->
+
+<resultMap 	id="mapper" type="com.tmc.client.app.acc.model.ClientModel" >
+	<id 	column="acc04_client_id"	property="clientId"/>
+	<result column="acc04_company_id"	property="companyId"/>
+	<result column="acc04_biz_no"		property="bizNo"/>
+	<result column="acc04_client_nm"	property="clientName"/>
+	<result column="acc04_print_nm"		property="printName"/>
+	<result column="acc04_ceo_nm"		property="ceoName"/>
+	<result column="acc04_ctz_no"		property="ctzNo"/>
+	<result column="acc04_tel1"			property="tel1"/>
+	<result column="acc04_tel2"			property="tel2"/>
+	<result column="acc04_fax1"			property="fax1"/>
+	<result column="acc04_account_no"	property="accountNo"/>
+	<result column="acc04_bank_cd"		property="bankCode"/>
+	<result column="acc04_bank_nm"		property="bankName"/>
+	<result column="acc04_account_owner"	property="accountOwner"/>
+	<result column="acc04_zip_cd"		property="zipCode"/>
+	<result column="acc04_zip_addr"		property="zipAddress"/>
+	<result column="acc04_zip_detail"	property="zipDetail"/>
+	<result column="acc04_emp_nm"		property="empName"/>
+	<result column="acc04_emp_tel1"		property="empTel1"/>
+	<result column="acc04_emp_tel2"		property="enpTel2"/>
+	<result column="acc04_emp_email"	property="empEmail"/>
+	<result column="acc04_use_yn"		property="useYn"/>
+	<result column="acc04_note"			property="note"/>
+	<result column="acc04_industry"		property="industry"/>
+	<result column="acc04_biz_type"		property="bizType"/>
+	
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	a.*, 
+			dbo.f_cdnm('BankCode', acc04_bank_cd) acc04_bank_nm
+	from 	acc04_client a
+	where	acc04_client_id = #{clientId} 
+</select>
+
+<select id="selectByCompanyId" resultMap="mapper" parameterType="Long">
+	select 	a.*, 
+			dbo.f_cdnm('BankCode', acc04_bank_cd) acc04_bank_nm
+	from 	acc04_client a
+	where	acc04_company_id = #{companyId} 
+	order 	by acc04_client_nm
+</select>
+
+<select id="selectByClientName" resultMap="mapper" parameterType="HashMap">
+	select 	a.*, 
+			dbo.f_cdnm('BankCode', acc04_bank_cd) acc04_bank_nm
+	from 	acc04_client a
+	where	acc04_company_id = #{companyId} 
+	and		acc04_client_nm like '%' + #{clientName} + '%'
+	order 	by acc04_client_nm
+</select>
+
+
+</mapper>

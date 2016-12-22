@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys02_user">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.sys.model.UserModel" >
+	<id  	column="sys02_user_id" 		property="userId"/>
+	<result column="sys02_company_id"	property="companyId"/>
+	<result column="sys02_kor_nm"		property="korName"/>
+	<result column="sys02_ctz_no"		property="ctzNo"/>
+	<result column="sys02_eng_nm"		property="engName"/>
+	<result column="sys02_chn_nm" 		property="chnName"/>
+	<result column="sys02_gender_cd"	property="genderCode"/>
+	<result column="sys02_gender_nm"	property="genderName"/>
+	
+	<result column="sys02_nation_cd"	property="nationCode"/>
+	<result column="sys02_nation_nm"	property="nationName"/>
+	<result column="sys02_birthday"		property="birthday"/>
+	<result column="sys02_email"		property="email"/>
+	<result column="sys02_tel1"			property="telNo01"/>
+	<result column="sys02_tel2"			property="telNo02"/>
+	<result column="sys02_fax"			property="faxNo"/>
+	<result column="sys02_zip_cd"		property="zipCode"/>
+	<result column="sys02_zip_addr"		property="zipAddress"/>
+	<result column="sys02_zip_detail"	property="zipDetail"/>
+	<result column="sys02_school_nm"		property="schoolName"/>
+	<result column="sys02_graduate_year"	property="graduateYear"/>
+	<result column="sys02_main_major_nm"	property="mainMajor"/>
+	<result column="sys02_sub_major_nm"		property="subMajor"/>
+	<result column="sys02_military_type_cd"	property="militaryTypeCode"/>
+	<result column="sys02_military_type_nm"	property="militaryTypeName"/>
+	<result column="sys02_scholar"		property="scholar"/>
+	<result column="sys02_career"	property="career"/>
+	<result column="sys02_login_id"	property="loginId"/>
+	<result column="sys02_passwd"	property="passwd"/>
+	<result column="sys02_login_yn"	property="loginYn"/>
+	<result column="sys02_admin_yn"	property="adminYn"/>
+	<result column="sys02_bank_cd"			property="bankCode"/>
+	<result column="sys02_bank_nm"			property="bankName"/>
+	<result column="sys02_account_no"		property="accountNo"/>
+	<result column="sys02_account_holder"	property="accountHolder"/>
+	<result column="sys02_note" property="note"/>
+</resultMap>
+	
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	sys02_user.*, 
+			dbo.f_cdnm('GenderCode', sys02_gender_cd) sys02_gender_nm, 
+			dbo.f_cdnm('NationCode', sys02_nation_cd) sys02_nation_nm, 
+			dbo.f_cdnm('MilitaryTypeCode', sys02_military_type_cd) sys02_military_type_nm, 
+			dbo.f_cdnm('BankCode', sys02_bank_cd) sys02_bank_nm
+	from 	sys02_user 
+	where	sys02_user_id = #{userId}
+</select>
+
+<select id="selectByLoginInfo" resultMap="mapper" parameterType="HashMap">
+	select 	a.*, 
+			case when sys02_company_id = 2000001 then 'true' else 'false' end sys02_admin_yn   
+	from 	sys02_user a
+	where 	sys02_login_id 	= #{loginId}
+	and		sys02_passwd 	= #{passwd}
+</select>
+
+<select id="selectAdminUserByUserName" resultMap="mapper" parameterType="String">
+	select 	a.* , 
+			dbo.f_cdnm('GenderCode', sys02_gender_cd) sys02_gender_nm, 
+			dbo.f_cdnm('NationCode', sys02_nation_cd) sys02_nation_nm, 
+			dbo.f_cdnm('MilitaryTypeCode', sys02_military_type_cd) sys02_military_type_nm, 
+			dbo.f_cdnm('BankCode', sys02_bank_cd) sys02_bank_nm
+	from 	sys02_user a
+	where 	sys02_company_id = 2000001 <!-- Admin(2000001) 사용자만 조회한다. -->
+	and		sys02_kor_nm like #{userName}
+</select>
+
+
+<select id="selectByName" resultMap="mapper" parameterType="HashMap">
+	select 	a.*, 
+			dbo.f_cdnm('GenderCode', sys02_gender_cd) sys02_gender_nm, 
+			dbo.f_cdnm('NationCode', sys02_nation_cd) sys02_nation_nm, 
+			dbo.f_cdnm('MilitaryTypeCode', sys02_military_type_cd) sys02_military_type_nm, 
+			dbo.f_cdnm('BankCode', sys02_bank_cd) sys02_bank_nm
+	from 	sys02_user a 
+	where	sys02_company_id = #{companyId}
+	and		sys02_kor_nm like #{korName}
+	order 	by sys02_kor_nm
+</select>
+
+
+<select id="selectByCompanyId" resultMap="mapper" parameterType="Long">
+	select 	sys02_user.*, 
+			dbo.f_cdnm('GenderCode', sys02_gender_cd) sys02_gender_nm, 
+			dbo.f_cdnm('NationCode', sys02_nation_cd) sys02_nation_nm, 
+			dbo.f_cdnm('MilitaryTypeCode', sys02_military_type_cd) sys02_military_type_nm, 
+			dbo.f_cdnm('BankCode', sys02_bank_cd) sys02_bank_nm 
+	from 	sys02_user 
+	where	sys02_company_id = #{companyId}
+	order by sys02_kor_nm
+</select>
+
+
+</mapper>

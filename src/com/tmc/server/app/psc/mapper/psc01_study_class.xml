@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="psc01_study_class">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.psc.model.StudyClassModel" >
+	<id  	column="psc01_study_class_id"		property="studyClassId"/>
+	<result column="psc01_company_id"			property="companyId"/>
+	<result column="psc01_study_class_cd"		property="studyClassCode"/>
+	<result column="psc01_study_class_nm"		property="studyClassName"/>
+	<result column="psc01_study_class_type_cd"	property="studyClassTypeCode"/>
+	<result column="psc01_study_class_type_nm"	property="studyClassTypeName"/>
+	<result column="psc01_use_yn" 				property="useYn"/>
+	<result column="psc01_note"					property="note"/>
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	a.*, 
+			dbo.f_cdnm('StudyClassTypeCode', psc01_study_class_type_cd) psc01_study_class_type_nm
+	from 	psc01_study_class a
+	where	psc01_study_class_id = #{studyClassId}
+</select>
+
+<select id="selectByCompanyId" resultMap="mapper" parameterType="Long">
+	select 	a.*, 
+			dbo.f_cdnm('StudyClassTypeCode', psc01_study_class_type_cd) psc01_study_class_type_nm
+	from 	psc01_study_class a
+	where	psc01_company_id = #{companyId}
+	order by psc01_study_class_cd
+</select>
+
+<select id="selectByName" resultMap="mapper" parameterType="HashMap">
+	select 	a.*, 
+			dbo.f_cdnm('StudyClassTypeCode', psc01_study_class_type_cd) psc01_study_class_type_nm
+	from 	psc01_study_class a
+	where	psc01_company_id = #{companyId}
+	and		psc01_study_class_nm like '%' + #{studyClassName} + '%' 
+	order by psc01_study_class_cd
+</select>
+
+</mapper>

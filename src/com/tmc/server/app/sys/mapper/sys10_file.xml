@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys10_file">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.sys.model.FileModel" >
+
+	<id  	column="sys10_file_id"		property="fileId"/>
+	<result column="sys10_parent_id"	property="parentId"/>
+	<result column="sys10_file_nm"		property="fileName"/>
+	<result column="sys10_reg_date"		property="regDate"/>
+	<result column="sys10_server_path"	property="serverPath"/>
+	<result column="sys10_size"			property="size"/>
+	<result column="sys10_del_date"		property="delDate"/>
+	<result column="sys08_note"			property="note"/>
+
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	*
+	from 	sys10_file
+	where	sys10_file_id = #{fileId}
+</select>
+
+<select id="selectByParentId" resultMap="mapper" parameterType="Long" > 
+	select 	*
+	from 	sys10_file
+	where	sys10_parent_id = #{parentId}
+	order by sys10_file_nm
+</select>
+
+
+<insert id="insert" parameterType="com.tmc.client.app.sys.model.FileModel">
+	insert into sys10_file
+	(	sys10_file_id
+	, 	sys10_parent_id
+	, 	sys10_file_nm
+	, 	sys10_reg_date
+	, 	sys10_server_path
+	, 	sys10_size
+	, 	sys10_del_date
+	, 	sys10_note ) 
+	values 
+	(	#{fileId}
+	,	#{parentId}
+	, 	#{fileName}
+	, 	#{regDate}
+	, 	#{serverPath}
+	, 	#{size}
+	, 	#{delDate}
+	, 	#{note} )  	
+</insert>
+
+
+</mapper>

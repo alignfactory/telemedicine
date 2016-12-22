@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="acc02_account">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.acc.model.AccountModel" >
+	<id  	column="acc02_account_id"		property="accountId"/>
+	<result column="acc02_edu_office_cd"	property="eduOfficeCode"/>
+	<result column="acc02_edu_office_nm"	property="eduOfficeName"/>
+	<result column="acc02_company_id"	property="companyId"/>
+	<result column="acc02_gwon_cd"		property="gwonCode"/>
+	<result column="acc02_gwon_nm"		property="gwonName"/>
+	<result column="acc02_hang_cd"		property="hangCode"/>
+	<result column="acc02_hang_nm"		property="hangName"/>
+	<result column="acc02_gmok_cd"		property="gmokCode"/>
+	<result column="acc02_gmok_nm"		property="gmokName"/>
+	<result column="acc02_smok_cd"		property="smokCode"/>
+	<result column="acc02_smok_nm"		property="smokName"/>
+	<result column="acc02_print_nm"		property="printName"/>
+	<result column="acc02_sum_yn"		property="sumYn"/>
+	<result column="acc02_trans_yn"		property="transYn"/>
+	<result column="acc02_inexp_cd"		property="inExpCode"/>
+	<result column="acc02_inexp_nm"		property="inExpName"/>
+	
+	<result column="acc02_resolution_yn"		property="resolutionYn"/>
+	
+	<result column="acc02_budget_yn"	property="budgetYn"/> 
+	<result column="acc02_use_yn"		property="useYn"/>
+	<result column="acc02_note"			property="note"/>	
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	a.*, 
+			dbo.f_cdnm('EduOfficeCode', acc02_edu_office_cd) acc02_edu_office_nm, 
+			dbo.f_cdnm('InExpCode', acc02_inexp_cd) acc02_inexp_nm 
+	from 	acc02_account a
+	where	acc02_account_id = #{accountId} 
+	order by acc02_gwon_cd, acc02_hang_cd, acc02_gmok_cd
+</select>
+
+<select id="selectByEduOfficeCode" resultMap="mapper" parameterType="String">
+	select 	a.*, 
+			dbo.f_cdnm('EduOfficeCode', acc02_edu_office_cd) acc02_edu_office_nm, 
+			dbo.f_cdnm('InExpCode', acc02_inexp_cd) acc02_inexp_nm 
+	from 	acc02_account a
+	where	acc02_edu_office_cd = #{eduOfficeCode}
+	and		acc02_company_id = 0 
+	order by acc02_gwon_cd, acc02_hang_cd, acc02_gmok_cd, acc02_smok_cd
+</select>
+
+<select id="selectByCompanyId" resultMap="mapper" parameterType="HashMap">
+	select 	a.*, 
+			dbo.f_cdnm('EduOfficeCode', acc02_edu_office_cd) acc02_edu_office_nm, 
+			dbo.f_cdnm('InExpCode', acc02_inexp_cd) acc02_inexp_nm 
+	from 	acc02_account a
+	where	acc02_edu_office_cd = #{eduOfficeCode} 
+	and		acc02_company_id in (0, #{companyId} )
+	order by acc02_gwon_cd, acc02_hang_cd, acc02_gmok_cd, acc02_smok_cd
+	<!--  companyID가 0이면 공통코드이다. --> 
+
+</select>
+
+
+</mapper>

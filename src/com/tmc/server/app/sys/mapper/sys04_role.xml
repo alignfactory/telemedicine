@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys04_role">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.sys.model.RoleModel" >
+	<id  	column="sys04_role_id"		property="roleId" />
+	<result column="sys04_role_nm"		property="roleName" />
+	<result column="sys04_manager_yn"	property="managerYn" />
+	<result column="sys04_seq" 			property="seq" />
+	<result column="sys04_note"			property="note" />
+</resultMap>
+
+<select id="selectByAll" resultMap="mapper" > 
+	select 	* 
+	from 	sys04_role
+	order 	by sys04_seq
+</select>
+
+<select id="selectByName" resultMap="mapper" > 
+	select 	* 
+	from 	sys04_role
+	where 	sys04_role_nm like '%' + #{roleName} + '%'
+	order 	by sys04_seq
+</select>
+
+<select id="selectById" resultMap="mapper" parameterType="Long">
+	select 	* 
+	from 	sys04_role
+	where 	sys04_role_id = #{roleId} 
+</select>
+
+<select id="selectByNotAssigned" resultMap="mapper" parameterType="Long">
+	select 	* 
+	from 	sys04_role 
+	where 	sys04_role_id not in ( 
+				select 	sys06_role_id 
+				from 	sys06_user_role
+				where 	sys06_user_id = #{userId}
+			)
+	order 	by sys04_seq
+</select>
+
+</mapper>

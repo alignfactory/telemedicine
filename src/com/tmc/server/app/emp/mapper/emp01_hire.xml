@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="emp01_hire">
+
+<resultMap 	id="hireModel" type="com.tmc.client.app.emp.model.HireModel" >
+	<id  	column="emp01_hire_id"		property="hireId"/>
+	<result column="emp01_user_id"		property="userId"/>
+	<result column="emp01_hire_date"	property="hireDate"/>
+	<result column="emp01_hire_cd"		property="hireCode"/>
+	<result column="emp01_hire_nm"		property="hireName"/>
+	<result column="emp01_hire_reason" 	property="hireReason"/>
+	<result column="emp01_retire_date"	property="retireDate"/>
+	<result column="emp01_retire_cd"	property="retireCode"/>
+	<result column="emp01_retire_nm"	property="retireName"/>
+	<result column="emp01_retire_reason"	property="retireReason"/>
+	<result column="emp01_note"			property="note"/>
+	
+	<association property="userModel" 
+		javaType="com.tmc.client.app.sys.model.UserModel" 
+		resultMap="sys02_user.mapper"
+	/>
+</resultMap>
+
+<select id="selectById" resultMap="hireModel" parameterType="Long" > 
+	select 	a.*, 	
+			dbo.f_cdnm('HireCode', emp01_hire_cd) 		emp01_hire_nm, 
+			dbo.f_cdnm('RetireCode', emp01_retire_cd) 	emp01_retire_nm
+	from 	emp01_hire a
+	where	emp01_hire_id = #{hireId}
+</select>
+
+<select id="selectByUserId" resultMap="hireModel" parameterType="Long">
+	select 	a.*, 
+			dbo.f_cdnm('HireCode', emp01_hire_cd) emp01_hire_nm, 
+			dbo.f_cdnm('RetireCode', emp01_retire_cd) emp01_retire_nm
+	from 	emp01_hire a
+	where	emp01_user_id = #{userId}
+	order by emp01_hire_date
+</select>
+
+<select id="selectByKorName" resultMap="hireModel" parameterType="HashMap">
+	select 	a.*, 
+			b.*, 
+			dbo.f_cdnm('HireCode', emp01_hire_cd) emp01_hire_nm, 
+			dbo.f_cdnm('RetireCode', emp01_retire_cd) emp01_retire_nm
+	from 	emp01_hire a, 
+			sys02_user b 
+	where	emp01_user_id = sys02_user_id
+	and		sys02_company_id = #{companyId}
+	and		sys02_kor_nm like '%' + #{korName} + '%'
+	and		sysdate between emp01_hire_date and NULLIS(emp01_retire_date, sysdate)
+	order by emp01_hire_date
+</select>
+
+<select id="selectByPayTarget" resultMap="hireModel" parameterType="HashMap">
+	select 	a.*, 
+			b.*, 
+			dbo.f_cdnm('HireCode', emp01_hire_cd) emp01_hire_nm, 
+			dbo.f_cdnm('RetireCode', emp01_retire_cd) emp01_retire_nm
+	from 	emp01_hire a, 
+			sys02_user b 
+	where	emp01_user_id = sys02_user_id
+	and		sys02_company_id = #{companyId}
+	and		sys02_kor_nm like '%' + #{korName} + '%'
+	and		emp01_hire_date  &lt; =  #{offDate}
+	and		NULLIS(emp01_retire_date, sysdate) &gt; = #{onDate}
+	order by sys02_kor_nm
+</select>
+
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="psc03_student">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.psc.model.StudentModel" >
+
+	<id  	column="psc03_student_id"		property="studentId"/>
+	<result column="psc03_company_id"	property="companyId"/>
+	<result column="psc03_student_no"	property="studentNo"/>
+	<result column="psc03_kor_nm"	property="korName"/>
+	<result column="psc03_eng_nm"	property="engName"/>
+	<result column="psc03_chn_nm"	property="chnName"/>
+	<result column="psc03_ctz_no"	property="ctzNo"/>
+	<result column="psc03_birthday"	property="birthday"/>
+	
+	<result column="psc03_gender_cd"	property="genderCode"/>
+	<result column="psc03_gender_nm"	property="genderName"/>
+	<result column="psc03_zip_cd"		property="zipCode"/>
+	<result column="psc03_zip_addr"		property="zipAddress"/>
+	<result column="psc03_zip_detail"	property="detailAddress"/>
+	<result column="psc03_tel1"			property="tel01"/>
+	<result column="psc03_tel2"			property="tel02"/>
+	<result column="psc03_email"		property="email"/>
+	<result column="psc03_career"			property="career"/>
+	<result column="psc03_child_note"		property="childNote"/>
+	<result column="psc03_character"		property="character"/>
+	<result column="psc03_speciality"		property="speciality"/>
+	<result column="psc03_habit"			property="habit"/>
+	<result column="psc03_like_food"		property="likeFood"/>
+	<result column="psc03_hate_food"		property="hateFood"/>
+	<result column="psc03_choice_school"	property="choiceSchool"/>
+	<result column="psc03_dad_nm"			property="dadName"/>
+	<result column="psc03_dad_birthday"		property="dadBirthday"/>
+	<result column="psc03_dad_job"			property="dadJob"/>
+	<result column="psc03_dad_workplace"	property="dadWorkplace"/>
+	<result column="psc03_dad_tel1"			property="dadTel01"/>
+	<result column="psc03_dad_tel2"			property="dadTel02"/>
+	<result column="psc03_dad_scholar"		property="dadScholar"/>
+	<result column="psc03_dad_religion"		property="dadReligion"/>
+	<result column="psc03_mom_nm"			property="momName"/>
+	<result column="psc03_mom_birthday"		property="momBirthday"/>
+	<result column="psc03_mom_job"			property="momJob"/>
+	<result column="psc03_mom_workplace"	property="momWorkplace"/>
+	<result column="psc03_mom_tel1"			property="momTel01"/>
+	<result column="psc03_mom_tel2"			property="momTel02"/>
+	<result column="psc03_mom_scholar"		property="momScholar"/>
+	<result column="psc03_mom_religion"		property="momReligion"/>
+	<result column="psc03_grand_father_yn"	property="grandFatherYn"/>
+	<result column="psc03_grand_mother_yn"	property="grandMotherYn"/>
+	<result column="psc03_up_brother_cnt"	property="upBrotherCount"/>
+	<result column="psc03_dwon_brother_cnt"	property="downBrotherCount"/>
+	<result column="psc03_up_sister_cnt"	property="upSisterCount"/>
+	<result column="psc03_down_sister_cnt"	property="downSisterCount"/>
+	<result column="psc03_family_note"		property="familyNote"/>
+	<result column="psc03_support_yn"		property="supportYn"/>
+	<result column="psc03_support_amt"		property="supportAmount"/>
+
+	<result column="psc03_bank_cd"			property="bankCode"/>
+	<result column="psc03_bank_nm"			property="bankName"/>
+
+	<result column="psc03_account_no"		property="accountNo"/>
+	<result column="psc03_account_holder"	property="accountHolder"/>
+	<result column="psc03_evidence_yn"		property="evidenceYn"/>
+	<result column="psc03_note"				property="note"/>
+	
+	<association property="classStudentModel" 
+		javaType="com.tmc.client.app.psc.model.ClassStudentModel" 
+		resultMap="psc04_class_student.mapper"
+	/>
+	
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	a.*, b.*, c.*, 
+			dbo.f_cdnm('GenderCode', psc03_gender_cd) psc03_gender_nm,
+			dbo.f_cdnm('BankCode', psc03_bank_cd) psc03_bank_nm			
+	from 	psc03_student a 
+			inner join psc04_class_student b
+			on psc03_student_id = psc04_student_id 
+			inner join psc01_study_class c
+			on  psc04_study_class_id = psc01_study_class_id
+	where	psc03_student_id = #{studentId}
+	and psc04_assign_date = (
+				select 	max(x.psc04_assign_date)
+				from 	psc04_class_student x
+				where 	b.psc04_student_id = x.psc04_student_id
+				)
+	order 	by psc03_kor_nm
+	
+</select>
+
+<select id="selectByCompanyId" resultMap="mapper" parameterType="Long">
+	select 	a.*, b.*, c.*, 
+			dbo.f_cdnm('GenderCode', psc03_gender_cd) psc03_gender_nm,
+			dbo.f_cdnm('BankCode', psc03_bank_cd) psc03_bank_nm			
+	from 	psc03_student a 
+			left outer join psc04_class_student b
+			on psc03_student_id = psc04_student_id 
+			left outer join psc01_study_class c
+			on  psc04_study_class_id = psc01_study_class_id
+	where	psc03_company_id = #{companyId}
+	and		psc04_assign_date = (
+				select 	max(x.psc04_assign_date)
+				from 	psc04_class_student x
+				where 	b.psc04_student_id = x.psc04_student_id
+				)
+	order 	by psc03_kor_nm
+</select>
+
+</mapper>

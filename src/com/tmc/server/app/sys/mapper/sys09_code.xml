@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys09_code">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.sys.model.CodeModel" >
+	<id  	column="sys09_code_id" 		property="codeId"/>
+	<result column="sys09_code_kind_id"	property="codeKindId"/>
+	<result column="sys09_code"			property="code"/>
+	<result column="sys09_name"			property="name"/>
+	<result column="sys09_seq"			property="seq"/>
+	<result column="sys09_apply_date" 	property="applyDate"/>
+	<result column="sys09_close_yn"		property="closeYn"/>
+	<result column="sys09_note"			property="note"/>
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	*
+	from 	sys09_code
+	where	sys09_code_id = #{codeId}
+</select>
+
+<select id="selectByCodeKindId" resultMap="mapper" parameterType="Long">
+	select 	*
+	from 	sys09_code 
+	where	sys09_code_kind_id = #{codeKindId}
+	order by sys09_seq
+</select>
+
+
+<select id="selectByCodeKind" resultMap="mapper" parameterType="String">
+	select 	*
+	from 	sys09_code c, 
+			sys08_code_kind k
+	where 	sys09_code_kind_id = sys08_code_kind_id
+	and		sys08_kind_cd = #{kindCode}
+	order by sys09_seq
+</select>
+
+<select id="selectByApplyDate" resultMap="mapper" parameterType="HashMap">
+	select 	* 
+	from 	sys09_code a
+	where 	a.sys09_code_kind_id = #{codeKindId}
+	and		a.sys09_apply_date
+			= (	select max(b.sys09_apply_date)
+				from 	sys09_code b
+				where 	b.sys09_code_kind_id = a.sys09_code_kind_id
+				and		b.sys09_cd = a.sys09_cd
+				and		b.sys09_apply_date &lt;= #{applyDate}
+			)
+	order 	by sys09_seq
+</select>
+
+</mapper>

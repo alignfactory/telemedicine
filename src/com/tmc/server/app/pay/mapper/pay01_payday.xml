@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="pay01_payday">
+
+<resultMap 	id="paydayModel" type="com.tmc.client.app.pay.model.PaydayModel" >
+	<id  	column="pay01_payday_id"	property="paydayId"/>
+	<result column="pay01_company_id"	property="companyId"/>
+	<result column="pay01_pay_date"		property="payDate"/>
+	<result column="pay01_pay_type_cd"	property="payTypeCode"/>
+	<result column="pay01_pay_type_nm"	property="payTypeName"/>
+	<result column="pay01_pay_nm"		property="payName"/>
+	<result column="pay01_account_date"	property="accountDate"/>
+	<result column="pay01_on_date"		property="onDate"/>
+	<result column="pay01_off_date" 	property="offDate"/>
+	<result column="pay01_note"			property="note"/>
+</resultMap>
+
+<select id="selectById" resultMap="paydayModel" parameterType="Long" > 
+	select 	a.*, 	
+			dbo.f_cdnm('PayTypeCode', pay01_pay_type_cd)	pay01_pay_type_nm 
+	from 	pay01_payday a
+	where	pay01_payday_id != #{paydayId} 
+</select>
+
+<select id="selectByCompanyId" resultMap="paydayModel" parameterType="HashMap">
+	select 	a.*, 	
+			dbo.f_cdnm('PayTypeCode', pay01_pay_type_cd) 	pay01_pay_type_nm 
+	from 	pay01_payday a
+	where	pay01_company_id = #{companyId}
+	and		pay01_pay_date &lt; (
+				select 	pay01_pay_date 
+				from 	pay01_payday 
+				where 	pay01_payday_id  = #{paydayId} 
+				and		pay01_company_id = #{companyId} )
+	order by pay01_pay_date desc
+</select>
+
+
+<select id="selectByPayYear" resultMap="paydayModel" parameterType="HashMap">
+	select 	a.*, 	
+			dbo.f_cdnm('PayTypeCode', pay01_pay_type_cd) 	pay01_pay_type_nm 
+	from 	pay01_payday a
+	where	pay01_company_id = #{companyId}
+	and		year(pay01_pay_date) = #{payYear}
+	order by pay01_pay_date desc
+</select>
+
+<select id="selectByLastPayday" resultMap="paydayModel" parameterType="com.tmc.client.app.pay.model.PaydayModel">
+	select 	a.*, 	
+			dbo.f_cdnm('PayTypeCode', pay01_pay_type_cd) 	pay01_pay_type_nm 
+	from 	pay01_payday a
+	where	pay01_company_id 	= #{companyId}
+	and		pay01_pay_type_cd 	= #{payTypeCode}
+	and		pay01_pay_date = (
+				select 	max(pay01_pay_date)
+				from 	pay01_payday 
+				where 	pay01_company_id = a.pay01_company_id
+				and		pay01_pay_type_cd = a.pay01_pay_type_cd ) 
+</select>
+
+</mapper>

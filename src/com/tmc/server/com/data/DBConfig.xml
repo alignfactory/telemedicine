@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="dbConfig">
+
+<resultMap 	id="columnList" type="com.tmc.server.com.data.ColumnModel">
+	<result	column="table_name"		property="tableName"/>
+	<result	column="column_name"	property="columnName"/>
+	<result	column="data_type"		property="dataType"/>
+	<result	column="nullable"		property="nullable"/>
+</resultMap>	
+
+<select id="getSeq" resultType="Long"> 
+	select 	seq.nextval 
+	from 	dual
+</select>
+
+<select id="isNewData" resultType="Long" parameterType="HashMap"> 
+	select count(1)
+	from  ${tableName}
+	where ${pkName} = #{seqId}
+</select>
+
+<select id="getColumnListOracle" resultMap="columnList" parameterType="String" >
+	select	table_name
+	,		column_name
+	,		data_type
+	,		nullable
+	from 	cols
+	where	table_name = #{table_name}  	
+</select>
+
+<select id="getColumnListMSSQL" resultMap="columnList" parameterType="String" >
+	select 	upper(table_name) table_name
+	,		upper(column_name) column_name 
+	,		upper(DATA_TYPE) nullable
+	,		case when is_nullable = 'NO' then 'N' else 'Y' end data_type 
+	from 	INFORMATION_SCHEMA.COLUMNS; 
+</select>
+
+
+</mapper>

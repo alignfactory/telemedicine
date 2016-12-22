@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD GWT 2.7.0//EN" "http://gwtproject.org/doctype/2.7.0/gwt-module.dtd">
+    
+<module rename-to='telemedicine'>
+
+	<inherits name='com.google.gwt.user.User' />
+	<inherits name='com.sencha.gxt.ui.GXT' />
+	<stylesheet src="reset.css" />
+	<inherits name='com.sencha.gxt.theme.neptune.Theme' />
+
+	<!-- Specify the application entry point class. -->
+	<entry-point class='com.tmc.client.TeleMedicine'/>
+
+	<source path='client' />
+	<source path='shared' />
+
+</module>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="sys08_code_kind">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.sys.model.CodeKindModel" >
+	<id  	column="sys08_code_kind_id"	property="codeKindId"/>
+	<result column="sys08_kind_cd"		property="kindCode"/>
+	<result column="sys08_kind_nm"		property="kindName"/>
+	<result column="sys08_sys_yn"		property="sysYn"/>
+	<result column="sys08_note"			property="note"/>
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	*
+	from 	sys08_code_kind
+	where	sys08_code_kind_id = #{codeKindId}
+</select>
+
+<select id="selectByAll" resultMap="mapper" parameterType="Long" > 
+	select 	*
+	from 	sys08_code_kind
+	order 	by sys08_kind_cd
+</select>
+
+<select id="selectByName" resultMap="mapper" parameterType="String">
+	select 	* 
+	from 	sys08_code_kind
+	where 	sys08_kind_nm like '%' + #{kindName} + '%'
+	order 	by sys08_kind_cd
+</select>
+
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+
+<settings>
+<!--	MyBatis에서 null 값을 처리하기 위한 기본설정 -->   
+	<setting name="jdbcTypeForNull" value="NULL"/> 
+</settings>
+
+<environments default="ezis">
+	<environment id="ezis">
+		<transactionManager type="JDBC"/>
+		<dataSource type="POOLED">
+		 	<property name="poolMaximumActiveConnections" value="30" /> 
+		 	
+		 	<!-- **max connection 이 늘어나면 속도가 빨라질까? --> 
+
+			<!-- oracle   
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@218.236.10.173:1521:XE" />
+				<property name="username" value="psmis" />
+				<property name="password" value="psmis" />
+			-->
+			
+			<!--  sql server -->			
+			<property name="driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+			<property name="url" value="jdbc:sqlserver://fw.n3ems.co.kr:1433;DatabaseName=TelemedicineDB" />
+			<property name="username" value="medical" />
+			<property name="password" value="qwer!@34" />
+
+			
+		</dataSource>
+	</environment>
+</environments>
+
+<mappers>
+
+	<!-- database 공통 처리 -->
+	<mapper resource="com/tmc/server/com/data/DBConfig.xml"/>
+	
+	<mapper resource="com/tmc/server/app/sys/mapper/sys01_company.xml"/>
+	<mapper resource="com/tmc/server/app/sys/mapper/sys02_user.xml"/>
+	<mapper resource="com/tmc/server/app/sys/mapper/sys04_role.xml"/>
+	<mapper resource="com/tmc/server/app/sys/mapper/sys05_menu.xml"/>
+	<mapper resource="com/tmc/server/app/sys/mapper/sys06_user_role.xml"/>
+	<mapper resource="com/tmc/server/app/sys/mapper/sys07_user_company.xml"/>
+	<mapper resource="com/tmc/server/app/sys/mapper/sys08_code_kind.xml"/>
+	<mapper resource="com/tmc/server/app/sys/mapper/sys09_code.xml"/>
+	<mapper resource="com/tmc/server/app/sys/mapper/sys10_file.xml"/>
+	
+	<mapper resource="com/tmc/server/app/sys/mapper/sys21_license_code.xml"/>
+	
+	<mapper resource="com/tmc/server/app/emp/mapper/emp01_hire.xml"/>
+	<mapper resource="com/tmc/server/app/emp/mapper/emp02_license.xml"/>
+	
+	<mapper resource="com/tmc/server/app/pay/mapper/pay01_payday.xml"/>
+	<mapper resource="com/tmc/server/app/pay/mapper/pay02_pay.xml"/>
+	
+	<mapper resource="com/tmc/server/app/psc/mapper/psc01_study_class.xml"/>
+	<mapper resource="com/tmc/server/app/psc/mapper/psc02_teacher.xml"/>
+	<mapper resource="com/tmc/server/app/psc/mapper/psc03_student.xml"/>
+	<mapper resource="com/tmc/server/app/psc/mapper/psc04_class_student.xml"/>
+	<mapper resource="com/tmc/server/app/psc/mapper/psc05_register.xml"/>
+	
+	<mapper resource="com/tmc/server/app/bbs/mapper/bbs01_board.xml"/>
+	
+	<mapper resource="com/tmc/server/app/acc/mapper/acc01_season.xml"/>
+	<mapper resource="com/tmc/server/app/acc/mapper/acc02_account.xml"/>
+	<mapper resource="com/tmc/server/app/acc/mapper/acc04_client.xml"/>
+		
+</mappers>
+
+</configuration>
