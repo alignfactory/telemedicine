@@ -11,8 +11,7 @@
 </resultMap>	
 
 <select id="getSeq" resultType="Long"> 
-	select 	seq.nextval 
-	from 	dual
+	select next value for seq ; 
 </select>
 
 <select id="isNewData" resultType="Long" parameterType="HashMap"> 

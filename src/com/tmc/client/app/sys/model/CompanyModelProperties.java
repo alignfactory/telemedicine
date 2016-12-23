@@ -12,6 +12,8 @@ public interface CompanyModelProperties extends PropertyAccess<CompanyModel> {
 	
 	ValueProvider<CompanyModel, Long >	companyId() ; 	
 	ValueProvider<CompanyModel, String> companyName() ;
+	ValueProvider<CompanyModel, String> companyTypeCode() ;
+	ValueProvider<CompanyModel, String> companyTypeName() ;
 	ValueProvider<CompanyModel, String>	bizNo() ;
 	ValueProvider<CompanyModel, String>	telNo01() ;
 	ValueProvider<CompanyModel, String>	telNo02() ;

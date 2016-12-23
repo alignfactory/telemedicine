@@ -7,19 +7,21 @@ import com.tmc.client.ui.AbstractDataModel;
 public class CompanyModel extends AbstractDataModel { 
 
 	private Long 	companyId ; 	
-	private String companyName ;
-	private String bizNo ;
-	private String telNo01 ;
-	private String telNo02 ;
-	private String faxNo01 ;
-	private String zipCode ;
-	private String zipAddress ;
-	private String zipDetail ;
-	private String locationName ;
+	private String 	companyName ;
+	private String 	companyTypeCode ;
+	private String 	companyTypeName ;
+	private String 	bizNo ;
+	private String 	telNo01 ;
+	private String 	telNo02 ;
+	private String 	faxNo01 ;
+	private String 	zipCode ;
+	private String 	zipAddress ;
+	private String 	zipDetail ;
+	private String 	locationName ;
 	private Date 	annvDate ;
-	private String ceoPersonId ;
-	private String managerPersonId ;
-	private String note ;
+	private String 	ceoPersonId ;
+	private String 	managerPersonId ;
+	private String 	note ;
 	
 	@Override
 	public void setKeyId(Long id) {
@@ -46,7 +48,22 @@ public class CompanyModel extends AbstractDataModel {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
+	
+	public String getCompanyTypeCode() {
+		return companyTypeCode;
+	}
 
+	public void setCompanyTypeCode(String companyTypeCode) {
+		this.companyTypeCode = companyTypeCode;
+	}
+
+	public String getCompanyTypeName() {
+		return companyTypeName;
+	}
+
+	public void setCompanyTypeName(String companyTypeName) {
+		this.companyTypeName = companyTypeName;
+	}
 	public String getBizNo() {
 		return bizNo;
 	}

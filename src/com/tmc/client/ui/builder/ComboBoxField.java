@@ -25,6 +25,10 @@ public class ComboBoxField extends StringComboBox implements InterfaceServiceCal
 		this.setTriggerAction(TriggerAction.ALL);
   	}  	
 
+//	public void addAllString(String str){
+//		this.add(str);
+//	}
+	
 	public String getCode(){
   		CodeModel code = codeList.get(this.getCurrentValue()); 
   		if(code != null){

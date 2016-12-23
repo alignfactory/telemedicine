@@ -6,6 +6,8 @@
 <resultMap 	id="mapper" type="com.tmc.client.app.sys.model.CompanyModel" >
 	<id  	column="sys01_company_id"		property="companyId"/>
 	<result column="sys01_company_nm"		property="companyName"/>
+	<result column="sys01_company_type_cd"		property="companyTypeCode"/>
+	<result column="sys01_company_type_nm"		property="companyTypeName"/>
 	<result column="sys01_biz_no"			property="bizNo"/>
 	<result column="sys01_tel1"				property="telNo01"/>
 	<result column="sys01_tel2"				property="telNo02"/>
@@ -21,20 +23,26 @@
 </resultMap>
 
 <select id="selectById" resultMap="mapper" parameterType="long" > 
-	select * 
-	from sys01_company  
+	select 	a.*,
+			dbo.f_cdnm('CompanyTypeCode', sys01_company_type_cd) sys01_company_type_nm 
+	from 	sys01_company a
 	where sys01_company_id = #{companyId}
 </select>
 
 <select id="selectByAll" resultMap="mapper" > 
-	select * 
-	from sys01_company 
+	select 	a.*,
+			dbo.f_cdnm('CompanyTypeCode', sys01_company_type_cd) sys01_company_type_nm 
+	from 	sys01_company a
+	order by sys01_company_type_cd, sys01_company_nm
 </select>
 
 <select id="selectByName" resultMap="mapper" parameterType="String">
-	select 	* 
-	from 	sys01_company 
-	where 	sys01_company_nm like '%' + #{companyName} + '%'
+	select 	a.*,
+			dbo.f_cdnm('CompanyTypeCode', sys01_company_type_cd) sys01_company_type_nm 
+	from 	sys01_company a 
+	where 	sys01_company_nm like #{companyName}
+	and		sys01_company_type_cd like #{companyTypeCode}
+	order by sys01_company_type_cd, sys01_company_nm
 </select>
 
 <select id="selectByNotAssignedCompany" resultMap="mapper" parameterType="Long">

@@ -122,7 +122,11 @@ public class UpdateDataModel<T extends AbstractDataModel> {
 		
 		for(ColumnModel columnModel: columnList){
 			String propertyName = resultMap.get(columnModel.getColumnName());
+			
 			if(propertyName != null){
+				
+				// System.out.println("update column is " + propertyName);
+				
 				String dataString = this.getDataString(dataMap.get(propertyName)); 
 				if(columnModel.getColumnName().equals(keyColumnName)) { 
 					SqlBuilder.WHERE(columnModel.getColumnName() + " = " +  updateModel.getKeyId()); 

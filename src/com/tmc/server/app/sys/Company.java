@@ -1,6 +1,8 @@
 package com.tmc.server.app.sys;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -19,9 +21,26 @@ public class Company {
 		result.setRetrieveResult(1, "select ok", list);
 	}
 
-	public void selectByClientName(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
-		String clientName = request.getString("companyName"); 
-		List<AbstractDataModel> list = sqlSession.selectList("sys01_company.selectByName",  clientName);
+	public void selectByName(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
+		String companyTypeCode = request.getString("companyTypeCode");
+		String companyName = request.getString("companyName");
+		
+		if(companyName != null){
+			companyName = "%" + companyName + "%";
+		}
+		else {
+			companyName = "%"; 
+		}
+		
+		if(companyTypeCode == null){
+			companyTypeCode = "%"; 
+		}
+		
+		Map<String, String> param = new HashMap<String, String>(); 
+		param.put("companyTypeCode", companyTypeCode);
+		param.put("companyName", companyName);
+		
+		List<AbstractDataModel> list = sqlSession.selectList("sys01_company.selectByName",  param);
 		result.setRetrieveResult(1, "select ok", list);
 	}
 	
@@ -34,7 +53,6 @@ public class Company {
 		List<AbstractDataModel> userRoleList = sqlSession.selectList(mapperName + ".selectByNotAssignedCompany", userId) ;
 		result.setRetrieveResult(1, "사용자별 미등록 고객조회", userRoleList);
 	}
-
 	
 	public void update(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		UpdateDataModel<CompanyModel> updateModel = new UpdateDataModel<CompanyModel>(); 
