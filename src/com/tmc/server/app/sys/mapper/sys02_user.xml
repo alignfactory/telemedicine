@@ -54,12 +54,14 @@
 	
 <select id="selectById" resultMap="mapper" parameterType="Long" > 
 	select 	sys02_user.*, 
+			sys01_company.*, 
 			dbo.f_cdnm('GenderCode', sys02_gender_cd) sys02_gender_nm, 
 			dbo.f_cdnm('NationCode', sys02_nation_cd) sys02_nation_nm, 
 			dbo.f_cdnm('MilitaryTypeCode', sys02_military_type_cd) sys02_military_type_nm, 
 			dbo.f_cdnm('BankCode', sys02_bank_cd) sys02_bank_nm
-	from 	sys02_user 
-	where	sys02_user_id = #{userId}
+	from 	sys02_user, sys01_company  
+	where	sys02_company_id = sys01_company_id
+	and		sys02_user_id = #{userId}
 </select>
 
 <select id="selectByLoginInfo" resultMap="mapper" parameterType="HashMap">

@@ -50,7 +50,7 @@ public class UserModel extends AbstractDataModel {
 	private Date startDate; 
 	private Date closeDate; 
 	
-	private CompanyModel companyModel = null; 
+	private CompanyModel companyModel = new CompanyModel(); 
 	
 	public String getAccountNo() {
 		return accountNo;

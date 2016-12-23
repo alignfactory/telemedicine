@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.tmc.client.app.sys.model.RoleModel;
+import com.tmc.client.app.sys.model.UserModel;
 import com.tmc.client.app.sys.model.MenuModel;
 import com.tmc.client.app.sys.model.UserRoleModel;
 import com.tmc.client.service.ServiceRequest;
@@ -33,8 +34,33 @@ public class Menu {
 		System.out.println("user id is " + userId); 
 		
 		List<AbstractDataModel> roleObjectList = new ArrayList<AbstractDataModel>(); 
+		List<UserRoleModel> roleList = new ArrayList<UserRoleModel>(); // sqlSession.selectList("sys06_user_role.selectByUserId", userId);
+		//roleList = sqlSession.selectList("sys06_user_role.selectByUserId", userId);
 		
-		List<UserRoleModel> roleList = sqlSession.selectList("sys06_user_role.selectByUserId", userId); 
+		UserModel userModel = sqlSession.selectOne("sys02_user.selectById", userId);
+
+		Long roleId = Long.parseLong("0"); 
+		
+		if("10".equals(userModel.getCompanyModel().getCompanyTypeCode())){
+			// 보건소
+			roleId = Long.parseLong("1000394"); 
+		}
+
+		if("20".equals(userModel.getCompanyModel().getCompanyTypeCode())){
+			// 병원 
+			roleId = Long.parseLong("2000192"); 
+		}
+
+		if("90".equals(userModel.getCompanyModel().getCompanyTypeCode())){
+			// 센터
+			roleId = Long.parseLong("1000277"); 
+		}
+		
+		UserRoleModel userRoleModel = new UserRoleModel(); 
+		userRoleModel.setUserId(userId);
+		userRoleModel.setRoleId(roleId);
+		
+		roleList.add(userRoleModel); 
 		
 		for(UserRoleModel userRole : roleList){
 			List<AbstractDataModel> childList = getChild(sqlSession, userRole.getRoleId());
