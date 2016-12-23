@@ -7,7 +7,7 @@
 	<id  	column="sys01_company_id"		property="companyId"/>
 	<result column="sys01_company_nm"		property="companyName"/>
 	<result column="sys01_company_type_cd"		property="companyTypeCode"/>
-	<result column="sys01_company_type_nm"		property="companyTypeName"/>
+	<result column="sys01_company_type_nm"		property="companyTypeName"/>  
 	<result column="sys01_biz_no"			property="bizNo"/>
 	<result column="sys01_tel1"				property="telNo01"/>
 	<result column="sys01_tel2"				property="telNo02"/>
