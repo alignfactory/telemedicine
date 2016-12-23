@@ -88,6 +88,13 @@ public class User {
 		param.put("companyId", request.getLong("companyId"));
 		param.put("korName", userName);
 		
+		
+		if(request.getLong("companyId") != null){
+			System.out.println("company id is not null"); 
+		}
+		else {
+			System.out.println("company id is null");
+		}
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByName", param);
 		result.setRetrieveResult(1, "select ok", list);
 	}

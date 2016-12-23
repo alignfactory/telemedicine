@@ -4,11 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.tmc.client.app.acc.model.ClientModel;
-import com.tmc.client.app.acc.model.SeasonModel;
 import com.tmc.client.app.sys.model.CompanyModel;
 import com.tmc.client.app.sys.model.CompanyModelProperties;
-import com.tmc.client.main.LoginUser;
 import com.tmc.client.service.GridDeleteData;
 import com.tmc.client.service.GridInsertRow;
 import com.tmc.client.service.GridRetrieveData;
@@ -36,9 +33,12 @@ public class Tab_Company extends VerticalLayoutContainer implements InterfaceGri
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addComboBox(companyTypeName, "기관구분", 200, 60); 
+
 		companyTypeName.add("전체");
+		companyTypeName.setText("전체");
 		
 		searchBarBuilder.addLabel(companyName, "기관명", 150, 50, true); 
+
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();

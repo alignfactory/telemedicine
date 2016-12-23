@@ -39,7 +39,17 @@
 	<result column="sys02_bank_nm"			property="bankName"/>
 	<result column="sys02_account_no"		property="accountNo"/>
 	<result column="sys02_account_holder"	property="accountHolder"/>
+	
+	<result column="sys02_start_date"	property="startDate"/>
+	<result column="sys02_close_date"	property="closeDate"/>
 	<result column="sys02_note" property="note"/>
+	
+	<association property="companyModel" 
+		javaType="com.tmc.client.app.sys.model.CompanyModel" 
+		resultMap="sys01_company.mapper"
+	/>
+	
+	
 </resultMap>
 	
 <select id="selectById" resultMap="mapper" parameterType="Long" > 
@@ -73,13 +83,19 @@
 
 
 <select id="selectByName" resultMap="mapper" parameterType="HashMap">
-	select 	a.*, 
+	select 	a.*, b.*, 
 			dbo.f_cdnm('GenderCode', sys02_gender_cd) sys02_gender_nm, 
 			dbo.f_cdnm('NationCode', sys02_nation_cd) sys02_nation_nm, 
 			dbo.f_cdnm('MilitaryTypeCode', sys02_military_type_cd) sys02_military_type_nm, 
 			dbo.f_cdnm('BankCode', sys02_bank_cd) sys02_bank_nm
-	from 	sys02_user a 
-	where	sys02_company_id = #{companyId}
+	from 	sys02_user a, 
+			sys01_company b
+	where	sys02_company_id = sys01_company_id
+	
+	<if test="companyId != null ">
+	and		sys02_company_id = #{companyId}
+	</if>
+	
 	and		sys02_kor_nm like #{korName}
 	order 	by sys02_kor_nm
 </select>

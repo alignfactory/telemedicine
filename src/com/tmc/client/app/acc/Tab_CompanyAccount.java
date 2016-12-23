@@ -3,10 +3,10 @@ package com.tmc.client.app.acc;
 import java.util.List;
 
 import com.tmc.client.app.acc.model.AccountModelProperties;
+import com.tmc.client.app.sys.Lookup_Company;
 import com.tmc.client.app.sys.model.CompanyModel;
 import com.tmc.client.app.sys.model.UserCompanyModel;
 import com.tmc.client.app.acc.model.AccountModel;
-import com.tmc.client.main.Lookup_Company;
 import com.tmc.client.service.GridDeleteData;
 import com.tmc.client.service.GridInsertRow;
 import com.tmc.client.service.GridRetrieveData;

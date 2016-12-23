@@ -93,15 +93,15 @@ public class Login implements InterfaceServiceCall {
 			UserModel user = (UserModel) result.getResult(0); 
 			LoginUser.setLoginUser(user); 
 			
-			if(LoginUser.isAdmin()) {
-				// 관리자이다. 로그인할 회사를 선택한다. 
-				Select_Company loginCompany = new Select_Company();
-				loginCompany.show();
-			}
-			else {
+//			if(LoginUser.isAdmin()) {
+//				// 관리자이다. 로그인할 회사를 선택한다. 
+//				Select_Company loginCompany = new Select_Company();
+//				loginCompany.show();
+//			}
+//			else {
 				// 일반 사용자이다. 회사 선택없이 로드인한다. 
 				new MainWindow();  
-			}
+//			}
 			
 			loginDialog.hide();
 		}

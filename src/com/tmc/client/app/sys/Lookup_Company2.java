@@ -1,7 +1,8 @@
-package com.tmc.client.main;
+package com.tmc.client.app.sys;
 
 import com.tmc.client.app.sys.model.UserCompanyModel;
 import com.tmc.client.app.sys.model.UserCompanyModelProperties;
+import com.tmc.client.main.LoginUser;
 import com.tmc.client.service.GridRetrieveData;
 import com.tmc.client.ui.InterfaceLookupResult;
 import com.tmc.client.ui.SimpleMessage;
@@ -13,14 +14,14 @@ import com.sencha.gxt.widget.core.client.event.RowDoubleClickEvent;
 import com.sencha.gxt.widget.core.client.event.RowDoubleClickEvent.RowDoubleClickHandler;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
-public class Lookup_Company extends AbstractLookupWindow {
+public class Lookup_Company2 extends AbstractLookupWindow {
 
 	private UserCompanyModelProperties properties = GWT.create(UserCompanyModelProperties.class); // 계약정보로 대체되어야 한다.
 	private InterfaceLookupResult lookupParent; 
 	private Grid<UserCompanyModel> grid = this.buildGrid(); 
 	 
 	
-	public Lookup_Company(InterfaceLookupResult lookupParent){
+	public Lookup_Company2(InterfaceLookupResult lookupParent){
 		
 		// callback parent setting 
 		this.lookupParent = lookupParent;

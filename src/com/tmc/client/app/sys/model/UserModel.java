@@ -47,6 +47,11 @@ public class UserModel extends AbstractDataModel {
 	private String accountNo; 
 	private String accountHolder; 
 	
+	private Date startDate; 
+	private Date closeDate; 
+	
+	private CompanyModel companyModel = null; 
+	
 	public String getAccountNo() {
 		return accountNo;
 	}
@@ -315,6 +320,30 @@ public class UserModel extends AbstractDataModel {
 
 	public void setLoginYn(String loginYn) {
 		this.loginYn = loginYn;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getCloseDate() {
+		return closeDate;
+	}
+
+	public void setCloseDate(Date closeDate) {
+		this.closeDate = closeDate;
+	}
+
+	public CompanyModel getCompanyModel() {
+		return companyModel;
+	}
+
+	public void setCompanyModel(CompanyModel companyModel) {
+		this.companyModel = companyModel;
 	}
 
 }

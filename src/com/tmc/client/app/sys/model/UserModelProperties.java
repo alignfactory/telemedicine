@@ -51,5 +51,9 @@ public interface UserModelProperties  extends PropertyAccess<UserModel> {
 	ValueProvider<UserModel, String> 	accountHolder();
 	
 	ValueProvider<UserModel, String> 	note();
+	
+	ValueProvider<UserModel, Date> 		startDate();
+	ValueProvider<UserModel, Date> 		closeDate();
+	
 	// ValueProvider<UserModel, Boolean> 	managerYnBoolean();
 }
