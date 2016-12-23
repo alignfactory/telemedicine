@@ -42,7 +42,7 @@ public class Tab_CompanyAccount2 extends VerticalLayoutContainer implements Inte
 	private LookupTriggerField lookupCompanyName = new LookupTriggerField() ; 
 	private CompanyModel companyModel;
 	
-	ComboBoxField eduOfficeName = new ComboBoxField("EduOfficeCode_CCCCCXXXXCCCC");
+	ComboBoxField eduOfficeName = new ComboBoxField("EduOfficeCode_CCCCCXXXXXCCCC");
 	
 	public Tab_CompanyAccount2() {
 		
