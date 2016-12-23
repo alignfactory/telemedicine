@@ -8,9 +8,8 @@ public interface AccountModelProperties extends PropertyAccess<AccountModel> {
 	
 	ModelKeyProvider<AccountModel> keyId();
 	
-	
 	ValueProvider<AccountModel, Long> accountId() ;
-	ValueProvider<AccountModel, String> eduOfficeCode() ;
+	ValueProvider<AccountModel, String> eduOfficeCode() ; 
 	ValueProvider<AccountModel, String> eduOfficeName() ;
 	ValueProvider<AccountModel, Long> companyId() ;
 	ValueProvider<AccountModel, String> gwonCode() ;

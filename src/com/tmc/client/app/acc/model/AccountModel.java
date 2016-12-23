@@ -3,7 +3,7 @@ package com.tmc.client.app.acc.model;
 import com.tmc.client.ui.AbstractDataModel;
 
 public class AccountModel extends AbstractDataModel {
-	
+
 	private Long accountId ;
 	private String eduOfficeCode;
 	private String eduOfficeName ;
@@ -37,6 +37,7 @@ public class AccountModel extends AbstractDataModel {
 	public Long getKeyId() {
 		return this.getAccountId(); 
 	}
+	
 	public Long getAccountId() {
 		return accountId;
 	}

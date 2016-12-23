@@ -27,14 +27,14 @@ import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 
-public class Tab_Student extends BorderLayoutContainer implements InterfaceGridOperate {
+public class Tab_Student2 extends BorderLayoutContainer implements InterfaceGridOperate {
 
 	private StudentModelProperties properties = GWT.create(StudentModelProperties.class);
 	private Grid<StudentModel> grid = this.buildGrid();
 	private TextField korName  = new TextField();
 	private PlainTabPanel tabPanel = new PlainTabPanel();
 	
-	public Tab_Student() {
+	public Tab_Student2() {
 
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLabel(korName, "원생명", 150, 50, true); 

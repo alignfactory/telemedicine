@@ -29,7 +29,12 @@ public class Student {
 	
 	
 	public void selectByCompanyId(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
+		
+		
 		Long companyId = request.getLong("companyId"); 
+		
+		System.out.println("company Id is " + companyId); 
+		
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByCompanyId", companyId);
 		result.setRetrieveResult(1, "select ok", list);
 	}
