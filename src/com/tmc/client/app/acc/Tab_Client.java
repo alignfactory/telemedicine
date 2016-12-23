@@ -91,12 +91,12 @@ public class Tab_Client extends VerticalLayoutContainer implements InterfaceGrid
 		gridBuilder.addHeaderGroupMap(new HeaderGroupMap(0, 11, new HeaderGroupConfig("계좌정보", 1, 3)));
 		gridBuilder.addHeaderGroupMap(new HeaderGroupMap(0, 14, new HeaderGroupConfig("담당자", 1, 4)));
 		
-		gridBuilder.addText(properties.clientName(), 150, "거래처명"); //, new TextField());
-		gridBuilder.addText(properties.bizNo(), 100, "사업자번호"); //, new TextField());, new TextField());
-		gridBuilder.addText(properties.ceoName(), 100, "대표자"); //, new TextField());
-		gridBuilder.addText(properties.ctzNo(), 80, "주민번호"); //, new TextField());
-		gridBuilder.addText(properties.industry(), 100, "업태"); //, new TextField());
-		gridBuilder.addText(properties.bizType(), 100, "업종"); //, new TextField());
+		gridBuilder.addText(properties.clientName(), 150, "거래처명", new TextField());
+		gridBuilder.addText(properties.bizNo(), 100, "사업자번호", new TextField());
+		gridBuilder.addText(properties.ceoName(), 100, "대표자", new TextField());
+		gridBuilder.addText(properties.ctzNo(), 80, "주민번호", new TextField());
+		gridBuilder.addText(properties.industry(), 100, "업태", new TextField());
+		gridBuilder.addText(properties.bizType(), 100, "업종", new TextField());
 		gridBuilder.addText(properties.tel1(), 80, "전화(1)"); //, new TextField());
 		gridBuilder.addText(properties.tel2(), 80, "전화(2)"); //, new TextField());
 		gridBuilder.addText(properties.fax1(), 80, "팩스번호"); //, new TextField());
