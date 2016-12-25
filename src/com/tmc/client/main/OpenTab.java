@@ -39,6 +39,10 @@ public class OpenTab {
 			return (Widget) GWT.create(com.tmc.client.app.sys.Tab_User.class) ;
 		}
 
+		if("Tab_Patient".equals(className)) {
+			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_Patient.class) ;
+		}
+
 		if("Tab_Payday".equals(className)) {
 			return (Widget) GWT.create(com.tmc.client.app.pay.Tab_Payday.class) ;
 		}
