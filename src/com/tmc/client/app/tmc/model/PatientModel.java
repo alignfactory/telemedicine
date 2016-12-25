@@ -21,6 +21,7 @@ public class PatientModel extends AbstractDataModel {
 	private String viewPoint;
 	private Date 	birthday;
 	private String genderCode;
+	private String genderName;
 	private String insNo;
 	private Long 	companyId;
 	private String note;
@@ -171,6 +172,14 @@ public class PatientModel extends AbstractDataModel {
 
 	public void setCompanyModel(CompanyModel companyModel) {
 		this.companyModel = companyModel;
+	}
+
+	public String getGenderName() {
+		return genderName;
+	}
+
+	public void setGenderName(String genderName) {
+		this.genderName = genderName;
 	}
 
 }
