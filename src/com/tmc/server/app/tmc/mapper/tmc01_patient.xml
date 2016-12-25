@@ -40,7 +40,7 @@
 </select>
 
 
-<select id="selectByKorName" resultMap="mapper" parameterType="HashMap" > 
+<select id="selectByName" resultMap="mapper" parameterType="HashMap" > 
 	select 	tmc01_patient.*, 
 			sys01_company.*,  
 			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm

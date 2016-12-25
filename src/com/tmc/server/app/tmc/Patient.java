@@ -21,16 +21,16 @@ public class Patient {
 	}
 	
 	
-	public void selectByKorName(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
+	public void selectByName(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		
 		Long companyId = request.getLong("companyId"); 
-		String korName = request.getString("korName"); 
+		String patientName = request.getString("patientName"); 
 		
 		Map<String, Object> param = new HashMap<String, Object>(); 
 		param.put("companyId", companyId);
-		param.put("korName", korName); 
+		param.put("patientName", patientName); 
 		
-		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByKorName", param);
+		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByName", param);
 		result.setRetrieveResult(1, "select ok", list);
 	}
 

@@ -1,10 +1,12 @@
 package com.tmc.client.app.tmc;
 
+import java.util.Date;
 import java.util.List;
 
+import com.tmc.client.app.sys.Lookup_Company;
 import com.tmc.client.app.sys.model.CompanyModel;
-import com.tmc.client.app.sys.model.UserModel;
-import com.tmc.client.app.sys.model.UserModelProperties;
+import com.tmc.client.app.tmc.model.PatientModel;
+import com.tmc.client.app.tmc.model.PatientModelProperties;
 import com.tmc.client.service.GridDeleteData;
 import com.tmc.client.service.GridInsertRow;
 import com.tmc.client.service.GridRetrieveData;
@@ -19,6 +21,7 @@ import com.tmc.client.ui.field.LookupTriggerField;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.CollapseEvent;
@@ -32,17 +35,17 @@ import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.info.Info;
 
-public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOperate, InterfaceLookupResult  {
+public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGridOperate, InterfaceLookupResult  {
 	
-	private UserModelProperties properties = GWT.create(UserModelProperties.class);
-	private Grid<UserModel> grid = this.buildGrid();
-	private TextField userNameField = new TextField();
+	private PatientModelProperties properties = GWT.create(PatientModelProperties.class);
+	private Grid<PatientModel> grid = this.buildGrid();
+	private TextField patientNameField = new TextField();
 	private Lookup_Company lookupCompany = new Lookup_Company(this);
 	private CompanyModel companyModel = new CompanyModel();
 	
 	private LookupTriggerField lookupCompanyName = new LookupTriggerField() ;
 	
-	public Tab_User() {
+	public Tab_Patient() {
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		
@@ -56,7 +59,7 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
    	 	}); 
 
 		searchBarBuilder.addLookupTriggerField(lookupCompanyName, "기관명", 250, 48); 
-		searchBarBuilder.addLabel(userNameField, "담당자", 150, 46, true); 
+		searchBarBuilder.addLabel(patientNameField, "담당자", 150, 46, true); 
 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
@@ -67,43 +70,34 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 		this.add(grid, new VerticalLayoutData(1, 1));
 	}
 	
-	public Grid<UserModel> buildGrid(){
-		
-		GridBuilder<UserModel> gridBuilder = new GridBuilder<UserModel>(properties.keyId());  
+	public Grid<PatientModel> buildGrid(){
+
+		GridBuilder<PatientModel> gridBuilder = new GridBuilder<PatientModel>(properties.keyId());  
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
-		gridBuilder.addText(properties.ctzNo(), 80, "직원번호", new TextField()) ;		
-		gridBuilder.addText(properties.korName(), 80, "이름 ", new TextField()) ;
-
+		gridBuilder.addText(properties.insNo(), 80, "보험번호", new TextField()) ;
+		gridBuilder.addText(properties.korName(), 80, "환자명", new TextField()) ;
+		gridBuilder.addText(properties.zipCode(), 80, "우편번호", new TextField()) ;
+		gridBuilder.addText(properties.address(), 80, "주소", new TextField()) ;
+		gridBuilder.addText(properties.tel1(), 120, "전화번호1", new TextField()) ;
+		gridBuilder.addText(properties.tel2(), 120, "전화번호2", new TextField()) ;
+		gridBuilder.addText(properties.guardianName(), 80, "보호자명", new TextField()) ;
+		gridBuilder.addText(properties.guardianTel1(), 120, "전화번호1", new TextField()) ;
+		gridBuilder.addText(properties.guardianTel2(), 120, "전화번호2", new TextField()) ;
+		gridBuilder.addText(properties.guardianRelationName(), 80, "보호자관계", new TextField()) ;
+		gridBuilder.addText(properties.viewPoint(), 80, "이력", new TextField()) ;
+		gridBuilder.addDate(properties.birthday(), 100, "생년월일", new DateField()) ;
+		gridBuilder.addText(properties.genderCode(), 60, "성별", new TextField()) ;
 		final ComboBoxField genderComboBox = new ComboBoxField("GenderCode");  
 		genderComboBox.addCollapseHandler(new CollapseHandler(){
 			@Override
 			public void onCollapse(CollapseEvent event) {
-				UserModel data = grid.getSelectionModel().getSelectedItem(); 
+				PatientModel data = grid.getSelectionModel().getSelectedItem(); 
 				grid.getStore().getRecord(data).addChange(properties.genderCode(), genderComboBox.getCode());
 			}
 		}); 
-		gridBuilder.addText(properties.genderName(), 60, "성별", genderComboBox) ;
-		gridBuilder.addDate(properties.birthday(), 100, "생년월일", new DateField()) ;
-		gridBuilder.addText(properties.mainMajor(), 160, "전공과목", new TextField()) ;		
-		gridBuilder.addDate(properties.startDate(), 100, "근무시작일", new DateField()) ;
-		gridBuilder.addDate(properties.closeDate(), 100, "근무종료일", new DateField()) ;
-		gridBuilder.addText(properties.email(), 150, "이메일주소", new TextField()) ;
-		gridBuilder.addText(properties.telNo01(), 120, "전화번호(1)", new TextField()) ;
-		gridBuilder.addText(properties.telNo02(), 120, "전화번호(2)", new TextField()) ;
-		gridBuilder.addText(properties.loginId(), 100, "로그인아이디", new TextField()) ;
-		ColumnConfig<UserModel, String> password = gridBuilder.addText(properties.passwd(), 100, "패스워드", new PasswordField());
-
-		password.setCell(new AbstractCell<String>() {
-			@Override
-			public void render(com.google.gwt.cell.client.Cell.Context arg0, String arg1, SafeHtmlBuilder arg2) {
-				arg2.appendHtmlConstant("********");   
-			}
-		});
-
-		gridBuilder.addText(properties.zipCode(), 80, "우편번호", new TextField()) ;
-		gridBuilder.addText(properties.zipAddress(), 250, "주소", new TextField()) ;
-		gridBuilder.addText(properties.note(), 400, "비고", new TextField());
+//		gridBuilder.addText(properties.companyId(), 80, "관할기관", new TextField()) ;
+		gridBuilder.addText(properties.note(), 400, "비고", new TextField()) ;
 
 		return gridBuilder.getGrid(); 
 		
@@ -117,16 +111,16 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 			return ; 
 		} 
 		
-		GridRetrieveData<UserModel> service = new GridRetrieveData<UserModel>(grid.getStore());
+		GridRetrieveData<PatientModel> service = new GridRetrieveData<PatientModel>(grid.getStore());
 		service.addParam("companyId", this.companyModel.getCompanyId());
-		service.addParam("userName", userNameField.getValue());
-		service.retrieve("sys.User.selectByName");
+		service.addParam("patientName", patientNameField.getValue());
+		service.retrieve("tmc.Patient.selectByName");
 	}
 	
 	@Override
 	public void update(){
-		GridUpdateData<UserModel> service = new GridUpdateData<UserModel>(); 
-		service.update(grid.getStore(), "sys.User.update"); 
+		GridUpdateData<PatientModel> service = new GridUpdateData<PatientModel>(); 
+		service.update(grid.getStore(), "tmc.Patient.update"); 
 	}
 	
 	@Override
@@ -136,17 +130,17 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 			return ; 
 		}
 		
-		GridInsertRow<UserModel> service = new GridInsertRow<UserModel>(); 
-		UserModel userModel = new UserModel();
-		userModel.setCompanyId(this.companyModel.getCompanyId());
-		service.insertRow(grid, userModel);
+		GridInsertRow<PatientModel> service = new GridInsertRow<PatientModel>(); 
+		PatientModel patientModel = new PatientModel();
+		patientModel.setCompanyId(this.companyModel.getCompanyId());
+		service.insertRow(grid, patientModel);
 	}
 	
 	@Override
 	public void deleteRow(){
-		GridDeleteData<UserModel> service = new GridDeleteData<UserModel>();
-		List<UserModel> checkedList = grid.getSelectionModel().getSelectedItems() ; 
-		service.deleteRow(grid.getStore(), checkedList, "sys.User.delete");
+		GridDeleteData<PatientModel> service = new GridDeleteData<PatientModel>();
+		List<PatientModel> checkedList = grid.getSelectionModel().getSelectedItems() ; 
+		service.deleteRow(grid.getStore(), checkedList, "tmc.Patient.delete");
 	}
 
 	@Override
