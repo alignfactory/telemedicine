@@ -71,6 +71,7 @@
 	<mapper resource="com/tmc/server/app/acc/mapper/acc04_client.xml"/>
 		
 	<mapper resource="com/tmc/server/app/tmc/mapper/tmc01_patient.xml"/>
+
 </mappers>
 
 </configuration>
