@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 
-<mapper namespace="psc03_student">
+<mapper namespace="tmc01_patient">
 
-<resultMap 	id="mapper" type="com.tmc.client.app.psc.model.StudentModel" >
+<resultMap 	id="mapper" type="com.tmc.client.app.tmc.model.PatientModel" >
 
 	<id  	column="tmc01_patient_id"  		property="patientId"/>
  	<result column="tmc01_company_id"		property="companyId"/>
@@ -33,18 +33,17 @@
 <select id="selectById" resultMap="mapper" parameterType="Long" > 
 	select 	tmc01_patient.*, 
 			sys01_company.*,  
-			dbo.f_cdnm('GenderCode', psc03_gender_cd) psc03_gender_nm
+			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm
 	from 	tmc01_patient, sys01_company
-	where	tmc01_company_id = sys01_company_id'
+	where	tmc01_company_id = sys01_company_id
 	and		tmc01_patient_id = #{patientId} 
-	order 	by tmc01_kor_nm
 </select>
 
 
 <select id="selectByKorName" resultMap="mapper" parameterType="HashMap" > 
 	select 	tmc01_patient.*, 
 			sys01_company.*,  
-			dbo.f_cdnm('GenderCode', psc03_gender_cd) psc03_gender_nm
+			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm
 	from 	tmc01_patient, sys01_company
 	where	tmc01_company_id = sys01_company_id
 	and		tmc01_company_id = #{companyId}
@@ -55,7 +54,7 @@
 <select id="selectByInsuranceNo" resultMap="mapper" parameterType="HashMap" > 
 	select 	tmc01_patient.*, 
 			sys01_company.*,  
-			dbo.f_cdnm('GenderCode', psc03_gender_cd) psc03_gender_nm
+			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm
 	from 	tmc01_patient, sys01_company
 	where	tmc01_company_id = sys01_company_id
 	and		tmc01_company_id = #{companyId}
