@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="tmc02_request">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.tmc.model.RequestModel" >
+
+	<id  	column="tmc02_request_id"  		property="requestId"/>
+	<result column="tmc02_patient_id"  		property="patientId"/>
+
+	<result column="tmc02_request_type_cd"  property="requestTypeCode"/>
+	<result column="tmc02_request_user_id"  property="requestUserId"/>
+	<result column="tmc02_request_date"  	property="requestDate"/>
+	<result column="tmc02_request_note"  	property="requestNote"/>
+
+	<result column="tmc02_treat_date"  		property="treatDate"/>
+	<result column="tmc02_treat_user_id"  	property="treatUserId"/>
+	<result column="tmc02_treat_note"  		property="treatNote"/>
+
+	<result column="tmc02_reg_user_id"  	property="regUserId"/>
+	<result column="tmc02_reg_date"  		property="regDate"/>
+	
+	<association property="patientModel" 
+		javaType="com.tmc.client.app.tmc.model.PatientModel" 
+		resultMap="tmc01_patient.mapper"
+	/>
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	tmc01_patient.*, 
+			tmc02_request.*,  
+			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm
+	from 	tmc02_request, 
+			tmc01_patient
+	where	tmc02_patient_id = tmc01_patient_id
+	and		tmc02_request_id = #{requestId} 
+</select>
+
+
+<select id="selectByPatientId" resultMap="mapper" parameterType="Long" > 
+	select 	tmc02_request.*, 
+			tmc01_patient.*,  
+			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm
+	from 	tmc02_request, 
+			tmc01_patient
+	where	tmc02_patient_id = tmc01_patient_id
+	and		tmc01_patient_id = #{patientId}
+	order 	by tmc01_kor_nm
+</select>
+
+</mapper>
