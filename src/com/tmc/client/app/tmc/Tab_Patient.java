@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.tmc.client.app.sys.Lookup_Company;
 import com.tmc.client.app.sys.model.CompanyModel;
+import com.tmc.client.app.sys.model.UserModel;
 import com.tmc.client.app.tmc.model.PatientModel;
 import com.tmc.client.app.tmc.model.PatientModelProperties;
 import com.tmc.client.service.GridDeleteData;
@@ -54,7 +55,7 @@ public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGri
    	 	}); 
 
 		searchBarBuilder.addLookupTriggerField(lookupCompanyName, "기관명", 250, 48); 
-		searchBarBuilder.addLabel(patientNameField, "담당자", 150, 46, true); 
+		searchBarBuilder.addLabel(patientNameField, "환자", 150, 46, true); 
 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
@@ -70,19 +71,9 @@ public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGri
 		GridBuilder<PatientModel> gridBuilder = new GridBuilder<PatientModel>(properties.keyId());  
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
-		gridBuilder.addText(properties.insNo(), 80, "보험번호", new TextField()) ;
-		gridBuilder.addText(properties.korName(), 80, "환자명", new TextField()) ;
-		gridBuilder.addText(properties.zipCode(), 80, "우편번호", new TextField()) ;
-		gridBuilder.addText(properties.address(), 80, "주소", new TextField()) ;
-		gridBuilder.addText(properties.tel1(), 120, "전화번호1", new TextField()) ;
-		gridBuilder.addText(properties.tel2(), 120, "전화번호2", new TextField()) ;
-		gridBuilder.addText(properties.guardianName(), 80, "보호자명", new TextField()) ;
-		gridBuilder.addText(properties.guardianTel1(), 120, "전화번호1", new TextField()) ;
-		gridBuilder.addText(properties.guardianTel2(), 120, "전화번호2", new TextField()) ;
-		gridBuilder.addText(properties.guardianRelationName(), 80, "보호자관계", new TextField()) ;
-		gridBuilder.addText(properties.viewPoint(), 80, "이력", new TextField()) ;
-		gridBuilder.addDate(properties.birthday(), 100, "생년월일", new DateField()) ;
-		gridBuilder.addText(properties.genderCode(), 60, "성별", new TextField()) ;
+		gridBuilder.addText(properties.insNo(), 80, "의보NO", new TextField()) ;
+		gridBuilder.addText(properties.korName(), 70, "환자명", new TextField()) ;
+		gridBuilder.addDate(properties.birthday(), 90, "생년월일", new DateField()) ;
 		final ComboBoxField genderComboBox = new ComboBoxField("GenderCode");  
 		genderComboBox.addCollapseHandler(new CollapseHandler(){
 			@Override
@@ -91,6 +82,17 @@ public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGri
 				grid.getStore().getRecord(data).addChange(properties.genderCode(), genderComboBox.getCode());
 			}
 		}); 
+		gridBuilder.addText(properties.genderName(), 60, "성별", genderComboBox) ;
+		gridBuilder.addText(properties.tel1(), 90, "전화번호1", new TextField()) ;
+		gridBuilder.addText(properties.tel2(), 90, "전화번호2", new TextField()) ;
+		gridBuilder.addText(properties.viewPoint(), 80, "병력", new TextField()) ;
+		gridBuilder.addText(properties.zipCode(), 60, "우편번호", new TextField()) ;
+		gridBuilder.addText(properties.address(), 300, "주소", new TextField()) ;
+		gridBuilder.addText(properties.guardianName(), 70, "보호자명", new TextField()) ;
+		gridBuilder.addText(properties.guardianRelationName(), 100, "보호자관계", new TextField()) ;
+		gridBuilder.addText(properties.guardianTel1(), 90, "보호자전화1", new TextField()) ;
+		gridBuilder.addText(properties.guardianTel2(), 90, "보호자번호2", new TextField()) ;
+
 //		gridBuilder.addText(properties.companyId(), 80, "관할기관", new TextField()) ;
 		gridBuilder.addText(properties.note(), 400, "비고", new TextField()) ;
 
