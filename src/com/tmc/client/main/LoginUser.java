@@ -36,6 +36,6 @@ public class LoginUser {
 	}
 	
 	public static String getToday(){
-		return DateTimeFormat.getFormat( "yyyy-mm-dd" ).format( new Date()) ; 
+		return DateTimeFormat.getFormat( "yyyy-mm-dd" ).format(new Date()) ; 
 	}
 }

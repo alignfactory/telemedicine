@@ -3,6 +3,8 @@ package com.tmc.server.app.tmc;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+
+import com.tmc.client.app.tmc.model.RequestModel;
 import com.tmc.client.service.ServiceRequest;
 import com.tmc.client.service.ServiceResult;
 import com.tmc.client.ui.AbstractDataModel;
@@ -33,6 +35,16 @@ public class Request {
 	}
 	
 	public void update(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
+		List<AbstractDataModel> list = request.getList(); 
+
+		System.out.println("start log"); 
+		for(AbstractDataModel data : list){
+			RequestModel requestModel = (RequestModel)data;
+			System.out.println("request user id is " + requestModel.getRequestUserId()); 
+			
+		}
+		System.out.println("close log"); 
+		
 		UpdateDataModel<AbstractDataModel> updateModel = new UpdateDataModel<AbstractDataModel>(); 
 		updateModel.updateModel(sqlSession, request.getList(), mapperName, result);
 	}

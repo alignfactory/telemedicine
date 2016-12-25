@@ -20,26 +20,57 @@
 	<result column="tmc02_reg_user_id"  	property="regUserId"/>
 	<result column="tmc02_reg_date"  		property="regDate"/>
 	
+	<!--  request user  -->
+	<result column="request_user.sys02_user_id" 		property="request_user_userId"/>
+	<result column="request_user.sys02_company_id"		property="request_user_companyId"/>
+	<result column="request_user.sys02_kor_nm"			property="request_user_korName"/>
+	<result column="request_user.sys02_ctz_no"			property="request_user_ctzNo"/>
+	<result column="request_user.sys02_gender_cd"		property="request_user_genderCode"/>
+	<result column="request_user.sys02_gender_nm"		property="request_user_genderName"/>
+	<result column="request_user.sys02_nation_cd"		property="request_user_nationCode"/>
+	<result column="request_user.sys02_nation_nm"		property="request_user_nationName"/>
+	<result column="request_user.sys02_birthday"		property="request_user_birthday"/>
+	<result column="request_user.sys02_email"			property="request_user_email"/>
+	<result column="request_user.sys02_tel1"			property="request_user_telNo01"/>
+	<result column="request_user.sys02_tel2"			property="request_user_telNo02"/>
+	<result column="request_user.sys02_fax"				property="request_user_faxNo"/>
+	<result column="request_user.sys02_zip_cd"			property="request_user_zipCode"/>
+	<result column="request_user.sys02_zip_addr"		property="request_user_zipAddress"/>
+	<result column="request_user.sys02_zip_detail"		property="request_user_zipDetail"/>
+	<result column="request_user.sys02_school_nm"		property="request_user_schoolName"/>
+	<result column="request_user.sys02_graduate_year"	property="request_user_graduateYear"/>
+	<result column="request_user.sys02_main_major_nm"	property="request_user_mainMajor"/>
+	<result column="request_user.sys02_sub_major_nm"	property="request_user_subMajor"/>
+	<result column="request_user.sys02_scholar"			property="request_user_scholar"/>
+	<result column="request_user.sys02_career"			property="request_user_career"/>
+	<result column="request_user.sys02_login_id"		property="request_user_loginId"/>
+	<result column="request_user.sys02_passwd"			property="request_user_passwd"/>
+	<result column="request_user.sys02_login_yn"		property="request_user_loginYn"/>
+	<result column="request_user.sys02_admin_yn"		property="request_user_adminYn"/>
+	
+	<result column="request_user.sys02_start_date"		property="request_user_startDate"/>
+	<result column="request_user.sys02_close_date"		property="request_user_closeDate"/>
+	<result column="request_user.sys02_note" 			property="request_user_note"/>
+	
 	<association property="patientModel" 
 		javaType="com.tmc.client.app.tmc.model.PatientModel" 
 		resultMap="tmc01_patient.mapper"
 	/>
 
-	<association property=requestUserModel columnPrefix="request_user_"
+	<association property="requestUserModel" columnPrefix="request_user_"
 		javaType="com.tmc.client.app.sys.model.UserModel" 
 		resultMap="sys02_user.mapper"
 	/>
 
-	<association property=treatUserModel columnPrefix="treat_user_"
+	<association property="treatUserModel" columnPrefix="treat_user"
 		javaType="com.tmc.client.app.sys.model.UserModel" 
 		resultMap="sys02_user.mapper"
 	/>
 
-	<association property=regUserModel columnPrefix="reg_user_"
+	<association property="regUserModel" columnPrefix="reg_user"
 		javaType="com.tmc.client.app.sys.model.UserModel" 
 		resultMap="sys02_user.mapper"
 	/>
-
 </resultMap>
 
 <select id="selectById" resultMap="mapper" parameterType="Long" > 
@@ -55,7 +86,7 @@
 			join sys02_user request_user 
 				on tmc02_request_user_id = request_user.sys02_user_id 
 			join sys02_user reg_user  
-				on tmc02_treat_user_id = reg_user.sys02_user_id
+				on tmc02_reg_user_id = reg_user.sys02_user_id
 			left outer join sys02_user treat_user 
 				on tmc02_reg_user_id = treat_user.sys02_user_id
 	where 	tmc02_request_id = #{requestId} 
@@ -74,8 +105,8 @@
 			join sys02_user request_user 
 				on tmc02_request_user_id = request_user.sys02_user_id 
 			join sys02_user reg_user  
-				on tmc02_treat_user_id = reg_user.sys02_user_id
-			left outer join sys02_user treat_user 
+				on tmc02_reg_user_id = reg_user.sys02_user_id
+			left join sys02_user treat_user 
 				on tmc02_reg_user_id = treat_user.sys02_user_id
 	where 	tmc02_patient_id = #{patientId}
 	order 	by tmc02_request_date
@@ -94,7 +125,7 @@
 			join sys02_user request_user 
 				on tmc02_request_user_id = request_user.sys02_user_id 
 			join sys02_user reg_user  
-				on tmc02_treat_user_id = reg_user.sys02_user_id
+				on tmc02_reg_user_id = reg_user.sys02_user_id
 			left outer join sys02_user treat_user 
 				on tmc02_reg_user_id = treat_user.sys02_user_id
 	where 	tmc01_company_id = #{companyId}

@@ -21,17 +21,11 @@ public class PatientModel extends AbstractDataModel {
 	private String viewPoint;
 	private Date 	birthday;
 	private String genderCode;
-	private	String	genderName;
 	private String insNo;
 	private Long 	companyId;
 	private String note;
 	
 	private CompanyModel companyModel = new CompanyModel(); 
-	
-	private UserModel requestUserModel = new UserModel(); 
-	private UserModel treatUserModel = new UserModel();
-	private UserModel regUserModel = new UserModel();
-	
 
 	@Override
 	public void setKeyId(Long id) {
@@ -179,36 +173,5 @@ public class PatientModel extends AbstractDataModel {
 		this.companyModel = companyModel;
 	}
 
-	public UserModel getRequestUserModel() {
-		return requestUserModel;
-	}
-
-	public void setRequestUserModel(UserModel requestUserModel) {
-		this.requestUserModel = requestUserModel;
-	}
-
-	public UserModel getTreatUserModel() {
-		return treatUserModel;
-	}
-
-	public void setTreatUserModel(UserModel treatUserModel) {
-		this.treatUserModel = treatUserModel;
-	}
-
-	public UserModel getRegUserModel() {
-		return regUserModel;
-	}
-
-	public void setRegUserModel(UserModel regUserModel) {
-		this.regUserModel = regUserModel;
-	}
-
-	public String getGenderName() {
-		return genderName;
-	}
-
-	public void setGenderName(String genderName) {
-		this.genderName = genderName;
-	}
 }
 
