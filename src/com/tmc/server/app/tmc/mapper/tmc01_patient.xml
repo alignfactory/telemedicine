@@ -47,7 +47,7 @@
 	from 	tmc01_patient, sys01_company
 	where	tmc01_company_id = sys01_company_id
 	and		tmc01_company_id = #{companyId}
-	and	 	tmc01_kor_nm like #{korName}
+	and	 	tmc01_kor_nm like #{patientName}
 	order 	by tmc01_kor_nm
 </select>
 

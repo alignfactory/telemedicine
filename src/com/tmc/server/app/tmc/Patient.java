@@ -25,7 +25,12 @@ public class Patient {
 		
 		Long companyId = request.getLong("companyId"); 
 		String patientName = request.getString("patientName"); 
-		
+		if	(patientName	==	null)	{
+			patientName	=	"%";
+		}
+		else {
+			patientName	=	"%"	+	patientName	+	"%";
+		}
 		Map<String, Object> param = new HashMap<String, Object>(); 
 		param.put("companyId", companyId);
 		param.put("patientName", patientName); 
