@@ -77,6 +77,11 @@ public class OpenTab {
 			return (Widget) GWT.create(com.tmc.client.app.acc.Tab_Client.class) ;
 		}
 
+		if("Tab_Request".equals(className)) {
+			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_Request.class) ;
+		}
+
+		
 		return null; 
 	}
 	
