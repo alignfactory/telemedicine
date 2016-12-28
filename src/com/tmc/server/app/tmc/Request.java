@@ -40,16 +40,10 @@ public class Request {
 			
 		}
 		System.out.println("close log"); 
-
-		
-		
 		result.setRetrieveResult(1, "select ok", list);
 	}
 	
 	public void update(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
-		List<AbstractDataModel> list = request.getList(); 
-
-		
 		UpdateDataModel<AbstractDataModel> updateModel = new UpdateDataModel<AbstractDataModel>(); 
 		updateModel.updateModel(sqlSession, request.getList(), mapperName, result);
 	}
