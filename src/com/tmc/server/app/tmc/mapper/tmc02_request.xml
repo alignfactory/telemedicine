@@ -20,54 +20,29 @@
 	<result column="tmc02_reg_user_id"  	property="regUserId"/>
 	<result column="tmc02_reg_date"  		property="regDate"/>
 	
-	<!--  request user  -->
-	<result column="request_user.sys02_user_id" 		property="request_user_userId"/>
-	<result column="request_user.sys02_company_id"		property="request_user_companyId"/>
-	<result column="request_user.sys02_kor_nm"			property="request_user_korName"/>
-	<result column="request_user.sys02_ctz_no"			property="request_user_ctzNo"/>
-	<result column="request_user.sys02_gender_cd"		property="request_user_genderCode"/>
-	<result column="request_user.sys02_gender_nm"		property="request_user_genderName"/>
-	<result column="request_user.sys02_nation_cd"		property="request_user_nationCode"/>
-	<result column="request_user.sys02_nation_nm"		property="request_user_nationName"/>
-	<result column="request_user.sys02_birthday"		property="request_user_birthday"/>
-	<result column="request_user.sys02_email"			property="request_user_email"/>
-	<result column="request_user.sys02_tel1"			property="request_user_telNo01"/>
-	<result column="request_user.sys02_tel2"			property="request_user_telNo02"/>
-	<result column="request_user.sys02_fax"				property="request_user_faxNo"/>
-	<result column="request_user.sys02_zip_cd"			property="request_user_zipCode"/>
-	<result column="request_user.sys02_zip_addr"		property="request_user_zipAddress"/>
-	<result column="request_user.sys02_zip_detail"		property="request_user_zipDetail"/>
-	<result column="request_user.sys02_school_nm"		property="request_user_schoolName"/>
-	<result column="request_user.sys02_graduate_year"	property="request_user_graduateYear"/>
-	<result column="request_user.sys02_main_major_nm"	property="request_user_mainMajor"/>
-	<result column="request_user.sys02_sub_major_nm"	property="request_user_subMajor"/>
-	<result column="request_user.sys02_scholar"			property="request_user_scholar"/>
-	<result column="request_user.sys02_career"			property="request_user_career"/>
-	<result column="request_user.sys02_login_id"		property="request_user_loginId"/>
-	<result column="request_user.sys02_passwd"			property="request_user_passwd"/>
-	<result column="request_user.sys02_login_yn"		property="request_user_loginYn"/>
-	<result column="request_user.sys02_admin_yn"		property="request_user_adminYn"/>
+	<!--  request user  
+	<result column="req_sys02_user_id" 		property="request_user_userId"/>
+	<result column="req_sys02_company_id"	property="request_user_companyId"/>
+	<result column="req_sys02_kor_nm"		property="request_user_korName"/>
+	-->
 	
-	<result column="request_user.sys02_start_date"		property="request_user_startDate"/>
-	<result column="request_user.sys02_close_date"		property="request_user_closeDate"/>
-	<result column="request_user.sys02_note" 			property="request_user_note"/>
 	
 	<association property="patientModel" 
 		javaType="com.tmc.client.app.tmc.model.PatientModel" 
 		resultMap="tmc01_patient.mapper"
 	/>
 
-	<association property="requestUserModel" columnPrefix="request_user_"
+	<association property="requestUserModel" columnPrefix="req_"
 		javaType="com.tmc.client.app.sys.model.UserModel" 
 		resultMap="sys02_user.mapper"
 	/>
 
-	<association property="treatUserModel" columnPrefix="treat_user"
+	<association property="treatUserModel" columnPrefix="treat_user_"
 		javaType="com.tmc.client.app.sys.model.UserModel" 
 		resultMap="sys02_user.mapper"
 	/>
 
-	<association property="regUserModel" columnPrefix="reg_user"
+	<association property="regUserModel" columnPrefix="reg_user_"
 		javaType="com.tmc.client.app.sys.model.UserModel" 
 		resultMap="sys02_user.mapper"
 	/>
@@ -76,7 +51,9 @@
 <select id="selectById" resultMap="mapper" parameterType="Long" > 
 	select 	tmc01_patient.*, 
 			tmc02_request.*,  
-			request_user.*, 
+			request_user.sys02_company_id req_sys02_company_id, 
+			request_user.sys02_user_id req_sys02_user_id,
+			request_user.sys02_kor_nm req_sys02_kor_nm,
 			treat_user.*,
 			reg_user.*,
 			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm
@@ -94,7 +71,11 @@
 
 <select id="selectByPatientId" resultMap="mapper" parameterType="Long" > 
 	select 	tmc01_patient.*, 
-			tmc02_request.*,  
+
+			request_user.sys02_company_id 	req_sys02_company_id, 
+			request_user.sys02_user_id 		req_sys02_user_id,
+			 request_user.sys02_kor_nm 		req_sys02_kor_nm,
+
 			request_user.*, 
 			treat_user.*,
 			reg_user.*,
@@ -114,8 +95,11 @@
 
 <select id="selectByCompanyId" resultMap="mapper" parameterType="Long"> 
 	select 	tmc01_patient.*, 
+			request_user.sys02_company_id 	req_sys02_company_id, 
+			request_user.sys02_user_id 		req_sys02_user_id,
+			request_user.sys02_kor_nm 		req_sys02_kor_nm,
 			tmc02_request.*,  
-			request_user.*, 
+			request_user.*,  
 			treat_user.*,
 			reg_user.*,
 			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm

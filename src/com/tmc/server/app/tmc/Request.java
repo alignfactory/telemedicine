@@ -23,7 +23,6 @@ public class Request {
 	public void selectByPatientId(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		
 		Long patientId = request.getLong("patientId"); 
-		
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByPatientId", patientId);
 		result.setRetrieveResult(1, "select ok", list);
 	}
@@ -31,19 +30,25 @@ public class Request {
 	public void selectByCompanyId(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		Long companyId = request.getLong("companyId"); 
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByCompanyId", companyId);
+
+		
+		System.out.println("start log"); 
+		for(AbstractDataModel data : list){
+			RequestModel requestModel = (RequestModel)data;
+			System.out.println("request user id is " + requestModel.getRequestUserId());
+			System.out.println("request user Model id is " + requestModel.getRegUserModel().getKorName());
+			
+		}
+		System.out.println("close log"); 
+
+		
+		
 		result.setRetrieveResult(1, "select ok", list);
 	}
 	
 	public void update(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		List<AbstractDataModel> list = request.getList(); 
 
-		System.out.println("start log"); 
-		for(AbstractDataModel data : list){
-			RequestModel requestModel = (RequestModel)data;
-			System.out.println("request user id is " + requestModel.getRequestUserId()); 
-			
-		}
-		System.out.println("close log"); 
 		
 		UpdateDataModel<AbstractDataModel> updateModel = new UpdateDataModel<AbstractDataModel>(); 
 		updateModel.updateModel(sqlSession, request.getList(), mapperName, result);

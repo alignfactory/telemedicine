@@ -25,7 +25,7 @@ public interface RequestModelProperties  extends PropertyAccess<RequestModel> {
 	ValueProvider<RequestModel, Long> 	requestUserId();
 
 	@Path("requestUserModel.korName")
-	ValueProvider<RequestModel, String> requestKorName();
+	ValueProvider<RequestModel, String> korName();
 
 	ValueProvider<RequestModel, String> requestTypeCode();
 	ValueProvider<RequestModel, Date> 	requestDate();

@@ -29,6 +29,7 @@ import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.DateField;
+import com.sencha.gxt.widget.core.client.form.LongField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.info.Info;
@@ -111,7 +112,8 @@ public class Tab_Request extends VerticalLayoutContainer implements InterfaceGri
 		gridBuilder.addText(properties.insNo(), 100, "보험번호", new TextField()) ;
 		gridBuilder.addText(properties.patientKorName(), 100, "환자명", patientLookupField) ;
 		
-		gridBuilder.addText(properties.requestKorName(), 100, "담당의사", userLookupField) ;
+		gridBuilder.addText(properties.korName(), 100, "담당의사", userLookupField) ;
+		gridBuilder.addLong(properties.requestUserId(), 100, "담당의사ID", new LongField()) ;
 
 		//gridBuilder.addText(properties.requestTypeCode(), 80, "요청구분", new TextField()) ;
 		gridBuilder.addDate(properties.requestDate(), 80, "요쳥일", new DateField()) ;
@@ -193,7 +195,7 @@ public class Tab_Request extends VerticalLayoutContainer implements InterfaceGri
 			if(result != null) {
 				UserModel userModel = (UserModel)result; 
 				RequestModel data = grid.getSelectionModel().getSelectedItem(); 
-				grid.getStore().getRecord(data).addChange(properties.requestKorName(), userModel.getKorName());
+				grid.getStore().getRecord(data).addChange(properties.korName(), userModel.getKorName());
 				grid.getStore().getRecord(data).addChange(properties.requestUserId(), userModel.getUserId());
 			}
 

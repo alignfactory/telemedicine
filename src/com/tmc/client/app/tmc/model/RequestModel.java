@@ -29,6 +29,7 @@ public class RequestModel extends AbstractDataModel {
 	private UserModel treatUserModel = new UserModel();
 	private UserModel regUserModel = new UserModel();
 
+	
 	@Override
 	public void setKeyId(Long id) {
 		this.setRequestId(id);
