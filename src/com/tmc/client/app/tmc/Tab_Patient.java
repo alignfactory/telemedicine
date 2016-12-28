@@ -1,11 +1,9 @@
 package com.tmc.client.app.tmc;
 
-import java.util.Date;
 import java.util.List;
 
 import com.tmc.client.app.sys.Lookup_Company;
 import com.tmc.client.app.sys.model.CompanyModel;
-import com.tmc.client.app.sys.model.UserModel;
 import com.tmc.client.app.tmc.model.PatientModel;
 import com.tmc.client.app.tmc.model.PatientModelProperties;
 import com.tmc.client.service.GridDeleteData;

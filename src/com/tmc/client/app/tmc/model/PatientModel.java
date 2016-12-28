@@ -3,7 +3,6 @@ package com.tmc.client.app.tmc.model;
 import java.util.Date;
 
 import com.tmc.client.app.sys.model.CompanyModel;
-import com.tmc.client.app.sys.model.UserModel;
 import com.tmc.client.ui.AbstractDataModel;
 
 public class PatientModel extends AbstractDataModel {

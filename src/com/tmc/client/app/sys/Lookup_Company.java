@@ -2,9 +2,6 @@ package com.tmc.client.app.sys;
 
 import com.tmc.client.app.sys.model.CompanyModel;
 import com.tmc.client.app.sys.model.CompanyModelProperties;
-import com.tmc.client.app.sys.model.UserCompanyModel;
-import com.tmc.client.app.sys.model.UserCompanyModelProperties;
-import com.tmc.client.main.LoginUser;
 import com.tmc.client.service.GridRetrieveData;
 import com.tmc.client.ui.InterfaceLookupResult;
 import com.tmc.client.ui.SimpleMessage;

@@ -3,8 +3,6 @@ package com.tmc.client.app.tmc;
 import java.util.Date;
 import java.util.List;
 
-import com.tmc.client.app.pay.TabPage_Pay;
-import com.tmc.client.app.pay.model.PayModel;
 import com.tmc.client.app.psc.Lookup_User;
 import com.tmc.client.app.sys.Lookup_Company;
 import com.tmc.client.app.sys.model.CompanyModel;
@@ -32,7 +30,6 @@ import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.LongField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
-import com.sencha.gxt.widget.core.client.info.Info;
 
 public class Tab_Request extends VerticalLayoutContainer implements InterfaceGridOperate, InterfaceLookupResult  {
 	

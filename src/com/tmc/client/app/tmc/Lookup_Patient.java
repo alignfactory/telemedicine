@@ -2,7 +2,6 @@ package com.tmc.client.app.tmc;
 
 import com.tmc.client.app.tmc.model.PatientModel;
 import com.tmc.client.app.tmc.model.PatientModelProperties;
-import com.tmc.client.main.LoginUser;
 import com.tmc.client.service.GridRetrieveData;
 import com.tmc.client.ui.InterfaceLookupResult;
 import com.tmc.client.ui.SimpleMessage;
