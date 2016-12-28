@@ -68,7 +68,7 @@ public class Lookup_RequestUser extends AbstractLookupWindow {
 		if(this.getCompanyModel() != null){
 			GridRetrieveData<UserModel> service = new GridRetrieveData<UserModel>(grid.getStore());
 			service.addParam("companyId", this.getCompanyModel().getCompanyId());
-			service.addParam("korName", userNameField.getText());
+			service.addParam("userName", userNameField.getText());
 			service.retrieve("sys.User.selectByName");
 		} 
 		else {
