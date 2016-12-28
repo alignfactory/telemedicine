@@ -6,6 +6,7 @@ import com.tmc.client.app.sys.Lookup_Company;
 import com.tmc.client.app.sys.model.CompanyModel;
 import com.tmc.client.app.tmc.model.PatientModel;
 import com.tmc.client.app.tmc.model.PatientModelProperties;
+import com.tmc.client.main.LoginUser;
 import com.tmc.client.service.GridDeleteData;
 import com.tmc.client.service.GridInsertRow;
 import com.tmc.client.service.GridRetrieveData;
@@ -27,7 +28,6 @@ import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHan
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
-import com.sencha.gxt.widget.core.client.info.Info;
 
 public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGridOperate, InterfaceLookupResult  {
 	
@@ -37,22 +37,25 @@ public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGri
 	private Lookup_Company lookupCompany = new Lookup_Company(this);
 	private CompanyModel companyModel = new CompanyModel();
 	
-	private LookupTriggerField lookupCompanyName = new LookupTriggerField() ;
+	private LookupTriggerField lookupCompanyField= new LookupTriggerField() ;
 	
 	public Tab_Patient() {
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		
-		lookupCompanyName.setEditable(false);
-		lookupCompanyName.addTriggerClickHandler(new TriggerClickHandler(){
+		lookupCompanyField.setEditable(false);
+		lookupCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
    	 		@Override
 			public void onTriggerClick(TriggerClickEvent event) {
-   	 			Info.display("lookup", "Company");
+   	 			//Info.display("lookup", "Company");
    	 			lookupCompany.show();
 			}
    	 	}); 
 
-		searchBarBuilder.addLookupTriggerField(lookupCompanyName, "기관명", 250, 48); 
+		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48); 
+		this.companyModel = LoginUser.getLoginUser().getCompanyModel(); 
+		lookupCompanyField.setText(companyModel.getCompanyName());
+		
 		searchBarBuilder.addLabel(patientNameField, "환자", 150, 46, true); 
 
 		searchBarBuilder.addRetrieveButton(); 
@@ -143,11 +146,11 @@ public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGri
 		if(result != null) {
 //			CompanyModel companyModel =  
 			this.companyModel = (CompanyModel)result;// userCompanyModel.getCompanyModel(); 
-			lookupCompanyName.setValue(this.companyModel.getCompanyName());
+			lookupCompanyField.setValue(this.companyModel.getCompanyName());
 		}
 		else {
 			this.companyModel = new CompanyModel();  
-			lookupCompanyName.setValue(null);
+			lookupCompanyField.setValue(null);
 		}
 
 		

@@ -65,33 +65,38 @@
 </select>
 
 <select id="selectByLoginInfo" resultMap="mapper" parameterType="HashMap">
-	select 	a.*, 
+	select 	sys02_user.*,
+			sys01_company.*,  
 			case when sys02_company_id = 2000001 then 'true' else 'false' end sys02_admin_yn   
-	from 	sys02_user a
+	from 	sys02_user, sys01_company 
 	where 	sys02_login_id 	= #{loginId}
 	and		sys02_passwd 	= #{passwd}
+	and		sys02_company_id = sys01_company_id
 </select>
 
 <select id="selectAdminUserByUserName" resultMap="mapper" parameterType="String">
-	select 	a.* , 
+	select 	sys02_user.* ,
+			sys01_company.*,  
 			dbo.f_cdnm('GenderCode', sys02_gender_cd) sys02_gender_nm, 
 			dbo.f_cdnm('NationCode', sys02_nation_cd) sys02_nation_nm, 
 			dbo.f_cdnm('MilitaryTypeCode', sys02_military_type_cd) sys02_military_type_nm, 
 			dbo.f_cdnm('BankCode', sys02_bank_cd) sys02_bank_nm
-	from 	sys02_user a
+	from 	sys02_user, sys01_company 
 	where 	sys02_company_id = 2000001 <!-- Admin(2000001) 사용자만 조회한다. -->
+	and		sys02_company_id = sys01_company_id
 	and		sys02_kor_nm like #{userName}
 </select>
 
 
 <select id="selectByName" resultMap="mapper" parameterType="HashMap">
-	select 	a.*, b.*, 
+	select 	sys02_user.*, 
+			sys01_company.*, 
 			dbo.f_cdnm('GenderCode', sys02_gender_cd) sys02_gender_nm, 
 			dbo.f_cdnm('NationCode', sys02_nation_cd) sys02_nation_nm, 
 			dbo.f_cdnm('MilitaryTypeCode', sys02_military_type_cd) sys02_military_type_nm, 
 			dbo.f_cdnm('BankCode', sys02_bank_cd) sys02_bank_nm
-	from 	sys02_user a, 
-			sys01_company b
+	from 	sys02_user, 
+			sys01_company
 	where	sys02_company_id = sys01_company_id
 	
 	<if test="companyId != null ">
@@ -104,13 +109,16 @@
 
 
 <select id="selectByCompanyId" resultMap="mapper" parameterType="Long">
-	select 	sys02_user.*, 
+	select 	sys02_user.*,
+			sys01_company.*,  
 			dbo.f_cdnm('GenderCode', sys02_gender_cd) sys02_gender_nm, 
 			dbo.f_cdnm('NationCode', sys02_nation_cd) sys02_nation_nm, 
 			dbo.f_cdnm('MilitaryTypeCode', sys02_military_type_cd) sys02_military_type_nm, 
 			dbo.f_cdnm('BankCode', sys02_bank_cd) sys02_bank_nm 
-	from 	sys02_user 
-	where	sys02_company_id = #{companyId}
+	from 	sys02_user, 
+			sys01_company  
+	where	sys02_company_id = sys01_company_id
+	and		sys02_company_id = #{companyId}
 	order by sys02_kor_nm
 </select>
 

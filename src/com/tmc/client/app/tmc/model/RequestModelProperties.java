@@ -45,9 +45,6 @@ public interface RequestModelProperties  extends PropertyAccess<RequestModel> {
 	ValueProvider<RequestModel, String> regKorName();
 	
 	ValueProvider<RequestModel, Date> regDate();
-	
 
-	
-	
-
+	ValueProvider<RequestModel, String> note();
 }

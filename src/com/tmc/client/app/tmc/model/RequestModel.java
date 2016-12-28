@@ -22,13 +22,14 @@ public class RequestModel extends AbstractDataModel {
 
 	private Long 	regUserId;
 	private Date 	regDate;
+	private String	note; 
 	
 	private PatientModel patientModel = new PatientModel(); 
 	
 	private UserModel requestUserModel = new UserModel(); 
 	private UserModel treatUserModel = new UserModel();
 	private UserModel regUserModel = new UserModel();
-
+	
 	
 	@Override
 	public void setKeyId(Long id) {
@@ -158,6 +159,14 @@ public class RequestModel extends AbstractDataModel {
 
 	public void setPatientModel(PatientModel patientModel) {
 		this.patientModel = patientModel;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 	
 }
