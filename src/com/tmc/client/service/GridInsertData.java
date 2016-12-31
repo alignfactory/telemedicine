@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tmc.client.ui.AbstractDataModel;
-import com.tmc.client.ui.InterfaceCallback;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.widget.core.client.info.Info;
 
 public class GridInsertData<T extends AbstractDataModel> implements InterfaceServiceCall{
 	
-	ListStore<T> listStore ; 
-	T insertModel ; 
-	InterfaceCallback callback; 
+	private ListStore<T> listStore ; 
+	// private T insertModel ; 
+	private InterfaceCallback callBack; 
 	
 	public void insertData(ListStore<T> listStore, String serviceName, List<T> list ){
 
@@ -41,10 +40,12 @@ public class GridInsertData<T extends AbstractDataModel> implements InterfaceSer
 			listStore.add((T) model);
 		}
 		
-		callback.callback();
+		if(this.callBack != null){
+			this.callBack.callback();
+		}
 	}
 	
-	public void addCallback(InterfaceCallback callback){
-		this.callback = callback; 
+	public void addCallback(InterfaceCallback callBack){
+		this.callBack = callBack;
 	}
 }

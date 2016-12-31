@@ -1,7 +1,6 @@
 package com.tmc.client.service;
 
 import com.tmc.client.ui.AbstractDataModel;
-import com.tmc.client.ui.InterfaceCallback;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.info.Info;
 
@@ -15,7 +14,7 @@ public class GridInsertRow<T> implements InterfaceServiceCall{
 	private Grid<T> grid ; 
 	private AbstractDataModel insertModel ; 
 	private Boolean insertRow = true; // 기본값은 현재행 아래에 Insert 
-	private InterfaceCallback callback;
+	private InterfaceCallback callBack;
 	
 	public GridInsertRow(){
 	} 
@@ -65,13 +64,13 @@ public class GridInsertRow<T> implements InterfaceServiceCall{
 		
 		grid.getSelectionModel().select(false, (T)insertModel);
 		
-		if(callback != null){
-			callback.callback();
+		if(this.callBack != null){
+			callBack.callback();
 		}
 	}
 	
-	public void addCallback(InterfaceCallback callback){
-		this.callback = callback; 
+	public void addCallback(InterfaceCallback callBack){
+		this.callBack = callBack; 
 	}
 
 }

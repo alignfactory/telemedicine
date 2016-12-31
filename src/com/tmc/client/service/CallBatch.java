@@ -3,7 +3,6 @@ package com.tmc.client.service;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.tmc.client.ui.InterfaceCallback;
 import com.sencha.gxt.widget.core.client.info.Info;
 
 /*
@@ -15,9 +14,12 @@ public class CallBatch implements InterfaceServiceCall{
 	Map<String, Object> param = new HashMap<String, Object>(); 
 	InterfaceCallback callback ; 
 	
-	public CallBatch(InterfaceCallback callback){
-		this.callback = callback ; 
+	public CallBatch(){
 	} 
+	
+	public void addCallback(InterfaceCallback callback){
+		this.callback = callback ;
+	}
 	
 	public void addParam(String key, Object data){
 		param.put(key, data); 
@@ -36,9 +38,9 @@ public class CallBatch implements InterfaceServiceCall{
 			Info.display("error", result.getMessage());
 			return ; 
 		}
-		else {
-			callback.callback();
-			Info.display("배치작업 실행", "작업에 성공하였습니다.");
+		
+		if(this.callback != null){
+			this.callback.callback();
 		}
 	}
 }

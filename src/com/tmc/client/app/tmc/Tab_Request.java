@@ -14,6 +14,7 @@ import com.tmc.client.service.GridDeleteData;
 import com.tmc.client.service.GridInsertRow;
 import com.tmc.client.service.GridRetrieveData;
 import com.tmc.client.service.GridUpdateData;
+import com.tmc.client.service.InterfaceCallback;
 import com.tmc.client.ui.InterfaceLookupResult;
 import com.tmc.client.ui.SimpleMessage;
 import com.tmc.client.ui.builder.GridBuilder;
@@ -39,6 +40,7 @@ import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHan
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
+import com.sencha.gxt.widget.core.client.info.Info;
 
 public class Tab_Request extends BorderLayoutContainer implements InterfaceGridOperate, InterfaceLookupResult  {
 	
@@ -204,8 +206,16 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 	
 	private void retrieveHistory(RequestModel requestModel){
 		GridRetrieveData<RequestModel> service = new GridRetrieveData<RequestModel>(gridHistory.getStore());
+		service.addCallback(new InterfaceCallback(){
+			@Override
+			public void callback() {
+				Info.display("callback", "retrieve History");
+			}
+		});
+
 		service.addParam("patientId", requestModel.getPatientId());
 		service.retrieve("tmc.Request.selectByPatientId");
+		
 	}
 	
 	@Override
@@ -287,16 +297,5 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 				grid.getStore().getRecord(data).addChange(properties.requestUserId(), userModel.getUserId());
 			}
 		}
-		
-//		if("lookUpTreatUser".equals(this.getLookUpName())){ // 전문의 찾기 
-//			if(result != null) {
-//				UserModel userModel = (UserModel)result; 
-//				RequestModel data = grid.getSelectionModel().getSelectedItem(); 
-//				grid.getStore().getRecord(data).addChange(properties.treatKorName(), userModel.getKorName());
-//				grid.getStore().getRecord(data).addChange(properties.treatUserId(), userModel.getUserId());
-//			}
-//		}
-
-		
 	}
 }

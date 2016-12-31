@@ -9,8 +9,9 @@ import com.sencha.gxt.widget.core.client.info.Info;
 
 public class GridRetrieveData<T> implements InterfaceServiceCall{
 	
-	ListStore<T> listStore ; 
-	Map<String, Object> param = new HashMap<String, Object>(); 
+	private ListStore<T> listStore ; 
+	private Map<String, Object> param = new HashMap<String, Object>(); 
+	private InterfaceCallback callBack; 
 	
 	public GridRetrieveData(ListStore<T> listStore){
 		this.listStore = listStore;
@@ -36,6 +37,12 @@ public class GridRetrieveData<T> implements InterfaceServiceCall{
 		service.execute(request, this);
 	}
 	
+	
+	public void addCallback(InterfaceCallback callBack){
+		this.callBack = callBack;
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void getServiceResult(ServiceResult result) {
@@ -43,9 +50,11 @@ public class GridRetrieveData<T> implements InterfaceServiceCall{
 			Info.display("error", result.getMessage());
 			return ; 
 		}
-		
 		listStore.replaceAll((List<? extends T>) result.getResult());
 		
+		if(callBack != null){
+			callBack.callback();
+		}
 	}
 	
 }

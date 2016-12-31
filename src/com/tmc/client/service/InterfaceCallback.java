@@ -1,6 +1,5 @@
-package com.tmc.client.ui;
+package com.tmc.client.service;
 
 public interface InterfaceCallback {
-
 	public void callback(); 
 }

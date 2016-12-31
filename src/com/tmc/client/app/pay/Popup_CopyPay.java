@@ -5,7 +5,7 @@ import com.tmc.client.app.pay.model.PaydayModelProperties;
 import com.tmc.client.main.LoginUser;
 import com.tmc.client.service.CallBatch;
 import com.tmc.client.service.GridRetrieveData;
-import com.tmc.client.ui.InterfaceCallback;
+import com.tmc.client.service.InterfaceCallback;
 import com.tmc.client.ui.SimpleMessage;
 import com.tmc.client.ui.builder.GridBuilder;
 import com.google.gwt.core.client.GWT;
@@ -21,7 +21,7 @@ import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
-public class Popup_CopyPay extends Window implements InterfaceCallback{
+public class Popup_CopyPay extends Window {
 	
 	private PaydayModelProperties properties = GWT.create(PaydayModelProperties.class);
 	private Grid<PaydayModel> grid = this.buildGrid();
@@ -72,19 +72,18 @@ public class Popup_CopyPay extends Window implements InterfaceCallback{
 			return ; 
 		}
 		
-		CallBatch batch = new CallBatch(this);
+		CallBatch batch = new CallBatch();
+		batch.addCallback(new InterfaceCallback(){
+			@Override
+			public void callback() {
+				hide(); // 조회하고 닫는다.
+			}
+		});
+
 		
 		batch.addParam("fromPaydayId", fromPaydayModel.getPaydayId());
 		batch.addParam("toPaydayId", this.getPaydayModel().getPaydayId());
 		batch.execute("pay.Pay.copyPay");
-	}
-
-	@Override
-	public void callback() {
-//		List<PaydayModel> list = new ArrayList<PaydayModel>(); 
-//		list.add(this.paydayModel); 
-//		this.grid.getSelectionModel().setSelection(list);  // reselection paydayModel
-		this.hide(); // 조회하고 닫는다. 
 	}
 
 	public void retrieve(){

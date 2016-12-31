@@ -8,8 +8,10 @@ import com.google.gwt.user.client.ui.Image;
 import com.sencha.gxt.core.client.dom.ScrollSupport;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.ContentPanel;
+import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.form.DateField;
@@ -55,6 +57,8 @@ public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
 		editDriver.initialize(this);
 		this.setHeaderVisible(false);
 		this.add(this.getEditor());
+		this.addButton(new TextButton("저장"));
+		this.setButtonAlign(BoxLayoutPack.CENTER);
 	}
 	
 
@@ -94,5 +98,15 @@ public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
 	    form.setWidget(layout);
 	    form.setLabelWidth(60); // 모든 field 적용 후 설정한다. 
 	    return form;
+	}
+	
+	public void retrieve(RequestModel requestModel){
+		
+		if(requestModel != null){
+			this.requestModel = requestModel;
+		}
+		else {
+			this.requestModel = new RequestModel();
+		}
 	}
 }

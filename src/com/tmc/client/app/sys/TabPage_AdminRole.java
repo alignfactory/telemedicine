@@ -11,7 +11,7 @@ import com.tmc.client.service.GridDeleteData;
 import com.tmc.client.service.GridInsertRow;
 import com.tmc.client.service.GridRetrieveData;
 import com.tmc.client.service.GridUpdateData;
-import com.tmc.client.ui.InterfaceCallback;
+import com.tmc.client.service.InterfaceCallback;
 import com.tmc.client.ui.InterfaceLookupResult;
 import com.tmc.client.ui.InterfaceTabPage;
 import com.tmc.client.ui.builder.GridBuilder;
