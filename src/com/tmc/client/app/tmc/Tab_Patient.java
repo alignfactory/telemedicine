@@ -72,7 +72,7 @@ public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGri
 		GridBuilder<PatientModel> gridBuilder = new GridBuilder<PatientModel>(properties.keyId());  
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
-		gridBuilder.addText(properties.insNo(), 80, "의보NO", new TextField()) ;
+		gridBuilder.addText(properties.insNo(), 80, "보험번호", new TextField()) ;
 		gridBuilder.addText(properties.korName(), 70, "환자명", new TextField()) ;
 		gridBuilder.addDate(properties.birthday(), 90, "생년월일", new DateField()) ;
 		final ComboBoxField genderComboBox = new ComboBoxField("GenderCode");  

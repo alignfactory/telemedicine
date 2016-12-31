@@ -1,6 +1,8 @@
 package com.tmc.server.app.tmc;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -27,7 +29,14 @@ public class Request {
 
 	public void selectByCompanyId(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		Long companyId = request.getLong("companyId"); 
-		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByCompanyId", companyId);
+		String patientName = request.getString("patientName");
+		
+		patientName = "%" + patientName + "%";
+		
+		Map<String, Object> param = new HashMap<String, Object>(); 
+		param.put("companyId", companyId);
+		param.put("patientName", patientName); 
+		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByCompanyId", param);
 		result.setRetrieveResult(1, "select ok", list);
 	}
 	

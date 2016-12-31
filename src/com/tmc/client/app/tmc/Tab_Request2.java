@@ -20,32 +20,19 @@ import com.tmc.client.ui.builder.GridBuilder;
 import com.tmc.client.ui.builder.InterfaceGridOperate;
 import com.tmc.client.ui.builder.SearchBarBuilder;
 import com.tmc.client.ui.field.LookupTriggerField;
-
-import sun.font.TextLabel;
-
 import com.google.gwt.core.client.GWT;
 import com.sencha.gxt.core.client.Style.SelectionMode;
-import com.sencha.gxt.core.client.util.Margins;
-import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData;
-import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData;
-import com.sencha.gxt.widget.core.client.event.RowClickEvent;
-import com.sencha.gxt.widget.core.client.event.RowClickEvent.RowClickHandler;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
-public class Tab_Request extends BorderLayoutContainer implements InterfaceGridOperate, InterfaceLookupResult  {
+public class Tab_Request2 extends VerticalLayoutContainer implements InterfaceGridOperate, InterfaceLookupResult  {
 	
 	private RequestModelProperties properties = GWT.create(RequestModelProperties.class);
 	private Grid<RequestModel> grid = this.buildGrid();
-	private Grid<RequestModel> gridHistory = this.buildGridHistory();
-	
 	private TextField patientNameField = new TextField();
 	private Lookup_Company lookupCompany = new Lookup_Company(this);
 	private CompanyModel companyModel = new CompanyModel();
@@ -62,7 +49,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 	}
 
 	
-	public Tab_Request() {
+	public Tab_Request2() {
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		
@@ -85,38 +72,11 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		searchBarBuilder.addInsertButton();
 		searchBarBuilder.addDeleteButton();
 
-		VerticalLayoutContainer vlc = new VerticalLayoutContainer(); 
-		vlc.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 48));
-		vlc.add(grid, new VerticalLayoutData(1, 1));
-		
-		grid.addRowClickHandler(new RowClickHandler(){
-			@Override
-			public void onRowClick(RowClickEvent event) {
-				RequestModel requestModel = grid.getSelectionModel().getSelectedItem(); 
-				
-				if(requestModel != null){
-					retrieveHistory(requestModel); 
-				}
-			}
-		}); 
-		
-		
-		BorderLayoutData northLayoutData = new BorderLayoutData(300);
-		northLayoutData.setMargins(new Margins(2,0,0,0));
-		northLayoutData.setSplit(true);
-		northLayoutData.setMaxSize(1000);
-		
-		this.setNorthWidget(vlc, northLayoutData); 
-
-		BorderLayoutData westLayoutData = new BorderLayoutData(400);
-		westLayoutData.setMargins(new Margins(2,0,0,0));
-		westLayoutData.setSplit(true);
-		westLayoutData.setMaxSize(1000);
-		
-		this.setWestWidget(this.gridHistory, westLayoutData);
+		this.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 48));
+		this.add(grid, new VerticalLayoutData(1, 1));
 	}
 	
-	public Tab_Request getThis(){
+	public Tab_Request2 getThis(){
 		return this; 
 	}
 	
@@ -182,26 +142,6 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		
 	}
 
-	public Grid<RequestModel> buildGridHistory(){
-
-		GridBuilder<RequestModel> gridBuilder = new GridBuilder<RequestModel>(properties.keyId());  
-		// gridBuilder.setChecked(null);
-		gridBuilder.addText(properties.treatKorName(), 	80, "진료의"); //, lookUpTreatUserField) ;
-		gridBuilder.addDate(properties.treatDate(), 	100, "진료일"); //, new DateField());
-		gridBuilder.addDate(properties.requestDate(), 	100, "진료예정일");
-		gridBuilder.addText(properties.korName(), 		80, "담당의");
-		
-		return gridBuilder.getGrid(); 
-		
-	}
-	
-	
-	private void retrieveHistory(RequestModel requestModel){
-		GridRetrieveData<RequestModel> service = new GridRetrieveData<RequestModel>(gridHistory.getStore());
-		service.addParam("patientId", requestModel.getPatientId());
-		service.retrieve("tmc.Request.selectByPatientId");
-	}
-	
 	@Override
 	public void retrieve() {
 		
