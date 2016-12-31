@@ -100,7 +100,6 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 			}
 		}); 
 		
-		
 		BorderLayoutData northLayoutData = new BorderLayoutData(300);
 		northLayoutData.setMargins(new Margins(2,0,0,0));
 		northLayoutData.setSplit(true);
@@ -114,6 +113,13 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		westLayoutData.setMaxSize(1000);
 		
 		this.setWestWidget(this.gridHistory, westLayoutData);
+
+		BorderLayoutData centerLayoutData = new BorderLayoutData();
+		centerLayoutData.setMargins(new Margins(2,2,0,2));
+		centerLayoutData.setMaxSize(1000);
+		
+		Page_Treat pageTreat = new Page_Treat(); 
+		this.setCenterWidget(pageTreat, centerLayoutData);
 	}
 	
 	public Tab_Request getThis(){
@@ -161,7 +167,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		gridBuilder.addText(properties.insNo(), 100, "보험번호"); //, new TextField()) ;
 		gridBuilder.addText(properties.patientKorName(), 80, "환자명", lookUpPatientField) ;
 		
-		gridBuilder.addText(properties.korName(), 100, "담당의", lookUpReqUserField);
+		gridBuilder.addText(properties.korName(), 100, "보건의", lookUpReqUserField);
 		//gridBuilder.addLong(properties.requestUserId(), 100, "담당의사ID", new LongField()) ;
 
 		//gridBuilder.addText(properties.requestTypeCode(), 80, "요청구분", new TextField()) ;
@@ -186,10 +192,10 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 
 		GridBuilder<RequestModel> gridBuilder = new GridBuilder<RequestModel>(properties.keyId());  
 		// gridBuilder.setChecked(null);
-		gridBuilder.addText(properties.treatKorName(), 	80, "진료의"); //, lookUpTreatUserField) ;
 		gridBuilder.addDate(properties.treatDate(), 	100, "진료일"); //, new DateField());
+		gridBuilder.addText(properties.treatKorName(), 	80, "진료의"); //, lookUpTreatUserField) ;
 		gridBuilder.addDate(properties.requestDate(), 	100, "진료예정일");
-		gridBuilder.addText(properties.korName(), 		80, "담당의");
+		gridBuilder.addText(properties.korName(), 		80, "보건의");
 		
 		return gridBuilder.getGrid(); 
 		

@@ -25,7 +25,6 @@ public class RequestModel extends AbstractDataModel {
 	private String	note; 
 	
 	private PatientModel patientModel = new PatientModel(); 
-	
 	private UserModel requestUserModel = new UserModel(); 
 	private UserModel treatUserModel = new UserModel();
 	private UserModel regUserModel = new UserModel();
