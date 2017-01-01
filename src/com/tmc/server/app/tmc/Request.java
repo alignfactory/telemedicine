@@ -1,5 +1,6 @@
 package com.tmc.server.app.tmc;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,19 @@ public class Request {
 		param.put("companyId", companyId);
 		param.put("patientName", patientName); 
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByCompanyId", param);
+		result.setRetrieveResult(1, "select ok", list);
+	}
+	
+	public void selectBySearchList(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
+		Date startDate = request.getDate("fromDate"); 
+		Date endDate = request.getDate("toDate"); 
+		String procCD = request.getString("procCode");
+		
+		Map<String, Object> param = new HashMap<String, Object>(); 
+		param.put("fromDate", startDate);
+		param.put("toDate", endDate);
+		param.put("procCD", procCD); 
+		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectBySearchList", param);
 		result.setRetrieveResult(1, "select ok", list);
 	}
 	
