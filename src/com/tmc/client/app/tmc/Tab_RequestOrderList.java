@@ -48,19 +48,21 @@ public class Tab_RequestOrderList extends BorderLayoutContainer implements Inter
 	
 	private DateField startDate = new DateField();
 	private DateField endDate = new DateField();
-	private TextField procCd = new TextField();
+	private TextField procCode = new TextField();
 
 	private CompanyModel companyModel = new CompanyModel();
 	private LookupTriggerField lookUpCompanyField = new LookupTriggerField() ;
 	
-	private String lookUpName = "none"; 
+	private String procName = "none";
+	private TextField startDateNameField;
+	private TextField endDateNameField; 
 
 	private void setLookUpName(String name){
-		this.lookUpName = name; 
+		this.procName = name; 
 	}
 
 	private String getLookUpName(){
-		return this.lookUpName ;  
+		return this.procName ;  
 	}
 
 	
@@ -68,24 +70,25 @@ public class Tab_RequestOrderList extends BorderLayoutContainer implements Inter
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		
-		lookUpCompanyField.setEditable(false);
-		lookUpCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
-   	 		@Override
-			public void onTriggerClick(TriggerClickEvent event) {
-   	 			setLookUpName("lookUpCompany"); 
-   	 			lookupCompany.show();
-			}
-   	 	}); 
+//		lookUpCompanyField.setEditable(false);
+//		lookUpCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
+//   	 		@Override
+//			public void onTriggerClick(TriggerClickEvent event) {
+//   	 			setLookUpName("lookUpCompany"); 
+//   	 			lookupCompany.show();
+//			}
+//   	 	}); 
 
-		searchBarBuilder.addLookupTriggerField(lookUpCompanyField, "기관명", 250, 48);
-		this.companyModel = LoginUser.getLoginUser().getCompanyModel(); 
-		lookUpCompanyField.setText(companyModel.getCompanyName());
+//		searchBarBuilder.addLookupTriggerField(lookUpCompanyField, "기관명", 250, 48);
+//		this.companyModel = LoginUser.getLoginUser().getCompanyModel(); 
+//		lookUpCompanyField.setText(companyModel.getCompanyName());
 
-		searchBarBuilder.addLabel(patientNameField, "환자명", 150, 46, true); 
+		searchBarBuilder.addLabel(startDateNameField, "기간", 150, 46, true); 
+		searchBarBuilder.addLabel(endDateNameField, "~", 150, 46, true); 
 		searchBarBuilder.addRetrieveButton(); 
-		searchBarBuilder.addUpdateButton();
-		searchBarBuilder.addInsertButton();
-		searchBarBuilder.addDeleteButton();
+//		searchBarBuilder.addUpdateButton();
+//		searchBarBuilder.addInsertButton();
+//		searchBarBuilder.addDeleteButton();
 
 		VerticalLayoutContainer vlc = new VerticalLayoutContainer(); 
 		vlc.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 48));
@@ -220,7 +223,6 @@ public class Tab_RequestOrderList extends BorderLayoutContainer implements Inter
 		
 		GridRetrieveData<RequestModel> service = new GridRetrieveData<RequestModel>(grid.getStore());
 		service.addParam("companyId", this.companyModel.getCompanyId());
-		service.addParam("patientName", patientNameField.getText());
 		service.retrieve("tmc.Request.selectByCompanyId");
 	}
 	
@@ -318,11 +320,19 @@ public class Tab_RequestOrderList extends BorderLayoutContainer implements Inter
 		this.endDate = endDate;
 	}
 
-	public TextField getProcCd() {
-		return procCd;
+	public TextField getProcCode() {
+		return procCode;
 	}
 
-	public void setProcCd(TextField procCd) {
-		this.procCd = procCd;
+	public void setProcCode(TextField procCode) {
+		this.procCode = procCode;
+	}
+
+	public String getProcName() {
+		return procName;
+	}
+
+	public void setProcName(String procName) {
+		this.procName = procName;
 	}
 }
