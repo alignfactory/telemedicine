@@ -39,7 +39,7 @@ public class Login implements InterfaceServiceCall {
 		loginDialog.setBodyBorder(false);
 		loginDialog.getHeader().setIcon(ResourceIcon.INSTANCE.dBButton() ); //(+) 이미지를 가져온다. ;
 		loginDialog.setResizable(false);
-		loginDialog.setHeading("사용자 로그인");
+		loginDialog.setHeading("Telemedicine login");
 		loginDialog.setHeaderVisible(true);
 		loginDialog.setWidth(380);
 		loginDialog.setHeight(400);
@@ -60,6 +60,11 @@ public class Login implements InterfaceServiceCall {
 		
 		VerticalLayoutData vld = new VerticalLayoutData(); 
 		
+		vlc.add(new HTML("<div align='center'><br><img src='img/Telemedicine.jpg' width='345' height='100'></div>"));
+		panel.setLayoutData(new Margins(10, 0, 0, 30));
+		loginDialog.add(panel); 
+		loginDialog.show();
+
 		FieldLabel firstNameLabel = new FieldLabel(firstName, "Login ID ");
 		firstNameLabel.setLabelWidth(70);
 		firstNameLabel.setWidth(280);
@@ -70,12 +75,8 @@ public class Login implements InterfaceServiceCall {
 		passwordLabel.setWidth(280); 
 		vlc.add(passwordLabel, vld);
   
-		Label loginDesc = new HTML("<br>반갑습니다. <br>하하정보의 유치원관리 프로그램입니다.. <br>로그인 아이디는 등록된 이메일 아이디를 사용하여 주시기 바랍니다. 오류 시 담당자에게 문의하여 주시기 바랍니다.<br>");
+		Label loginDesc = new HTML("<br>로그인 아이디는 등록된 이메일 아이디를 사용 바랍니다. <br>오류 시 담당자에게 문의 바랍니다.<br>");
 		vlc.add(loginDesc);
-		vlc.add(new HTML("<div align='center'><br><img src='img/logo.gif' width='250' height='70'></div>"));
-		panel.setLayoutData(new Margins(10, 0, 0, 30));
-		loginDialog.add(panel); 
-		loginDialog.show();
 	}
 
 	public void getService(){

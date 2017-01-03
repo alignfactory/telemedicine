@@ -1,3 +1,2 @@
 # Module telemedicine
 # RPC service class, partial path of RPC policy file
-com.tmc.client.service.InterfaceServiceBroker, 039771C0ECA37AEC78AA640D53A08993.gwt.rpc
