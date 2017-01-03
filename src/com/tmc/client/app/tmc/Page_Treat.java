@@ -75,22 +75,22 @@ public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
     	row00.add(new FieldLabel(birthday, "생일"), rowLayout);
     	
     	HorizontalLayoutContainer row01 = new HorizontalLayoutContainer();
-    	row01.add(new FieldLabel(patientNote, "특기사항"), new HorizontalLayoutData(1, 60, new Margins(0, 0, 0, 0)));
+    	row01.add(new FieldLabel(patientNote, "특기사항"), new HorizontalLayoutData(1, 60));
 
     	HorizontalLayoutContainer row02 = new HorizontalLayoutContainer();
     	row02.add(new FieldLabel(requestDate, "요청일"), rowLayout);
     	row02.add(new FieldLabel(korName, "보건의"), rowLayout);
 
     	HorizontalLayoutContainer row03 = new HorizontalLayoutContainer();
-    	row03.add(new FieldLabel(requestNote, "진료요청"), new HorizontalLayoutData(1, 80, new Margins(0, 0, 0, 0)));
+    	row03.add(new FieldLabel(requestNote, "진료요청"), new HorizontalLayoutData(1, 80));
     	
 	    VerticalLayoutContainer layout = new VerticalLayoutContainer(); 
 	    layout.setScrollMode(ScrollSupport.ScrollMode.AUTOY);
 	    
 	    layout.add(row00, new VerticalLayoutData(1, -1, new Margins(16)));
-	    layout.add(row01, new VerticalLayoutData(1, 64, new Margins(16))); 
+	    layout.add(row01, new VerticalLayoutData(1, 70, new Margins(16))); 
 	    layout.add(row02, new VerticalLayoutData(1, -1, new Margins(16)));
-	    layout.add(row03, new VerticalLayoutData(1, 84, new Margins(16)));
+	    layout.add(row03, new VerticalLayoutData(1, 90, new Margins(16)));
 	    
 	    // form setting 
 		FormPanel form = new FormPanel(); 
@@ -108,5 +108,7 @@ public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
 		else {
 			this.requestModel = new RequestModel();
 		}
+		
+		editDriver.edit(requestModel);
 	}
 }

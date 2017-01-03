@@ -21,18 +21,12 @@ import com.tmc.client.ui.builder.GridBuilder;
 import com.tmc.client.ui.builder.InterfaceGridOperate;
 import com.tmc.client.ui.builder.SearchBarBuilder;
 import com.tmc.client.ui.field.LookupTriggerField;
-
-import sun.font.TextLabel;
-
 import com.google.gwt.core.client.GWT;
 import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData;
 import com.sencha.gxt.widget.core.client.event.RowClickEvent;
 import com.sencha.gxt.widget.core.client.event.RowClickEvent.RowClickHandler;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
@@ -47,6 +41,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 	private RequestModelProperties properties = GWT.create(RequestModelProperties.class);
 	private Grid<RequestModel> grid = this.buildGrid();
 	private Grid<RequestModel> gridHistory = this.buildGridHistory();
+	private Page_Treat pageTreat = new Page_Treat();
 	
 	private TextField patientNameField = new TextField();
 	private Lookup_Company lookupCompany = new Lookup_Company(this);
@@ -120,7 +115,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		centerLayoutData.setMargins(new Margins(2,2,0,2));
 		centerLayoutData.setMaxSize(1000);
 		
-		Page_Treat pageTreat = new Page_Treat(); 
+		 
 		this.setCenterWidget(pageTreat, centerLayoutData);
 	}
 	
@@ -203,13 +198,17 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		
 	}
 	
+	private void editRequestModel(RequestModel requestModel){
+		this.pageTreat.retrieve(requestModel);
+	}
 	
 	private void retrieveHistory(RequestModel requestModel){
 		GridRetrieveData<RequestModel> service = new GridRetrieveData<RequestModel>(gridHistory.getStore());
 		service.addCallback(new InterfaceCallback(){
 			@Override
 			public void callback() {
-				Info.display("callback", "retrieve History");
+				gridHistory.getSelectionModel().select(0, false);
+				editRequestModel(gridHistory.getSelectionModel().getSelectedItem()); 
 			}
 		});
 
