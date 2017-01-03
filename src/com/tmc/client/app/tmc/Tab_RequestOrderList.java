@@ -14,6 +14,7 @@ import com.tmc.client.service.GridDeleteData;
 import com.tmc.client.service.GridInsertRow;
 import com.tmc.client.service.GridRetrieveData;
 import com.tmc.client.service.GridUpdateData;
+import com.tmc.client.service.InterfaceCallback;
 import com.tmc.client.ui.InterfaceLookupResult;
 import com.tmc.client.ui.SimpleMessage;
 import com.tmc.client.ui.builder.GridBuilder;
@@ -21,17 +22,12 @@ import com.tmc.client.ui.builder.InterfaceGridOperate;
 import com.tmc.client.ui.builder.SearchBarBuilder;
 import com.tmc.client.ui.field.LookupTriggerField;
 
-import sun.font.TextLabel;
-
 import com.google.gwt.core.client.GWT;
 import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData;
 import com.sencha.gxt.widget.core.client.event.RowClickEvent;
 import com.sencha.gxt.widget.core.client.event.RowClickEvent.RowClickHandler;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
@@ -39,8 +35,9 @@ import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHan
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
+import com.sencha.gxt.widget.core.client.info.Info;
 
-public class Tab_RequestOrderList extends BorderLayoutContainer implements InterfaceGridOperate, InterfaceLookupResult  {
+public abstract class Tab_RequestOrderList extends BorderLayoutContainer implements InterfaceGridOperate, InterfaceLookupResult  {
 	
 	private RequestModelProperties properties = GWT.create(RequestModelProperties.class);
 	private Grid<RequestModel> grid = this.buildGrid();
@@ -48,21 +45,20 @@ public class Tab_RequestOrderList extends BorderLayoutContainer implements Inter
 	
 	private DateField startDate = new DateField();
 	private DateField endDate = new DateField();
-	private TextField procCode = new TextField();
-
+	private TextField patientNameField = new TextField();
+	private Lookup_Company lookupCompany = new Lookup_Company(this);
 	private CompanyModel companyModel = new CompanyModel();
 	private LookupTriggerField lookUpCompanyField = new LookupTriggerField() ;
 	
-	private String procName = "none";
-	private TextField startDateNameField;
-	private TextField endDateNameField; 
+	private String lookUpName = "none"; 
 
 	private void setLookUpName(String name){
-		this.procName = name; 
+		this.lookUpName = name; 
 	}
 
+	@SuppressWarnings("unused")
 	private String getLookUpName(){
-		return this.procName ;  
+		return this.lookUpName ;  
 	}
 
 	
@@ -83,8 +79,9 @@ public class Tab_RequestOrderList extends BorderLayoutContainer implements Inter
 //		this.companyModel = LoginUser.getLoginUser().getCompanyModel(); 
 //		lookUpCompanyField.setText(companyModel.getCompanyName());
 
-		searchBarBuilder.addLabel(startDateNameField, "기간", 150, 46, true); 
-		searchBarBuilder.addLabel(endDateNameField, "~", 150, 46, true); 
+//		searchBarBuilder.addLookupTriggerField(lookUpCompanyField, "기관명", 250, 48);
+//		searchBarBuilder.addLabel(startDate, "환자명", 150, 46, true); 
+//		searchBarBuilder.addLabel(EndDate, "~", 50, 46, true); 
 		searchBarBuilder.addRetrieveButton(); 
 //		searchBarBuilder.addUpdateButton();
 //		searchBarBuilder.addInsertButton();
@@ -209,99 +206,71 @@ public class Tab_RequestOrderList extends BorderLayoutContainer implements Inter
 	
 	private void retrieveHistory(RequestModel requestModel){
 		GridRetrieveData<RequestModel> service = new GridRetrieveData<RequestModel>(gridHistory.getStore());
+		service.addCallback(new InterfaceCallback(){
+			@Override
+			public void callback() {
+				Info.display("callback", "retrieve History");
+			}
+		});
+
 		service.addParam("patientId", requestModel.getPatientId());
 		service.retrieve("tmc.Request.selectByPatientId");
+		
 	}
 	
 	@Override
 	public void retrieve() {
 		
-		if(this.companyModel.getCompanyId() == null){
-			new SimpleMessage("기관명 확인", "조회조건의 기관명은 반드시 입력하세요. ");
-			return ; 
-		} 
+//		if(this.companyModel.getCompanyId() == null){
+//			new SimpleMessage("기관명 확인", "조회조건의 기관명은 반드시 입력하세요. ");
+//			return ; 
+//		} 
 		
 		GridRetrieveData<RequestModel> service = new GridRetrieveData<RequestModel>(grid.getStore());
-		service.addParam("companyId", this.companyModel.getCompanyId());
-		service.retrieve("tmc.Request.selectByCompanyId");
+//		service.addParam("startDate", this.RequsetModel.getStartDate());
+//		service.addParam("endDate", this.RequestModel.getEndDate());
+//		service.addParam("patientName", patientNameField.getText());
+		service.retrieve("tmc.Request.selectBySearchList");
 	}
 	
-	@Override
-	public void update(){
-		GridUpdateData<RequestModel> service = new GridUpdateData<RequestModel>(); 
-		service.update(grid.getStore(), "tmc.Request.update"); 
-	}
-	
-	@Override
-	public void insertRow(){
-		if(this.companyModel.getCompanyId() == null){
-			new SimpleMessage("기관선택", "등록하고자 하는 담당자의 기관을 먼저 선택하여 주세요"); 
-			return ; 
-		}
-		
-		GridInsertRow<RequestModel> service = new GridInsertRow<RequestModel>(); 
-
-		RequestModel requestModel= new RequestModel();
-		// 초기 데이터 설정 
-		requestModel.setRegUserModel(LoginUser.getLoginUser());
-		requestModel.setRegUserId(LoginUser.getLoginUser().getUserId());
-		requestModel.setRegDate(new Date());
-		requestModel.setRequestUserModel(LoginUser.getLoginUser());
-		requestModel.setRequestUserId(LoginUser.getLoginUser().getUserId());
-		
-		requestModel.setRegDate(new Date());
-		
-		service.insertRow(grid, requestModel);
-	}
-	
-	@Override
-	public void deleteRow(){
-		GridDeleteData<RequestModel> service = new GridDeleteData<RequestModel>();
-		List<RequestModel> checkedList = grid.getSelectionModel().getSelectedItems() ; 
-		service.deleteRow(grid.getStore(), checkedList, "tmc.Request.delete");
-	}
-
-	@Override
-	public void setLookupResult(Object result) {
-		
-		if("lookUpCompany".equals(this.getLookUpName())){
-			if(result != null) {
-				this.companyModel = (CompanyModel)result;
-				lookUpCompanyField.setValue(this.companyModel.getCompanyName());
-			}
-		}
-		
-		if("lookUpPatient".equals(this.getLookUpName())){ // 환자 찾ㅈ기
-			if(result != null) {
-				PatientModel patientModel = (PatientModel)result; 
-				RequestModel data = grid.getSelectionModel().getSelectedItem(); 
-				
-				// grid.getStore().getRecord(data).getModel().setPatientId(patientModel.getPatientId());
-				grid.getStore().getRecord(data).addChange(properties.patientId(), patientModel.getPatientId());
-				grid.getStore().getRecord(data).addChange(properties.patientKorName(), patientModel.getKorName());
-				grid.getStore().getRecord(data).addChange(properties.insNo(), patientModel.getInsNo());
-			}
-		}
-		
-		if("lookUpReqUser".equals(this.getLookUpName())){ // 보건의 찾기 
-			if(result != null) {
-				UserModel userModel = (UserModel)result; 
-				RequestModel data = grid.getSelectionModel().getSelectedItem(); 
-				grid.getStore().getRecord(data).addChange(properties.korName(), userModel.getKorName());
-				grid.getStore().getRecord(data).addChange(properties.requestUserId(), userModel.getUserId());
-			}
-		}
-		
-//		if("lookUpTreatUser".equals(this.getLookUpName())){ // 전문의 찾기 
+//	@Override
+//	public void setLookupResult(Object result) {
+//		
+//		if("lookUpCompany".equals(this.getLookUpName())){
+//			if(result != null) {
+//				this.companyModel = (CompanyModel)result;
+//				lookUpCompanyField.setValue(this.companyModel.getCompanyName());
+//			}
+//		}
+//		
+//		if("lookUpPatient".equals(this.getLookUpName())){ // 환자 찾기
+//			if(result != null) {
+//				PatientModel patientModel = (PatientModel)result; 
+//				RequestModel data = grid.getSelectionModel().getSelectedItem(); 
+//				
+//				// grid.getStore().getRecord(data).getModel().setPatientId(patientModel.getPatientId());
+//				grid.getStore().getRecord(data).addChange(properties.patientId(), patientModel.getPatientId());
+//				grid.getStore().getRecord(data).addChange(properties.patientKorName(), patientModel.getKorName());
+//				grid.getStore().getRecord(data).addChange(properties.insNo(), patientModel.getInsNo());
+//			}
+//		}
+//		
+//		if("lookUpReqUser".equals(this.getLookUpName())){ // 보건의 찾기 
 //			if(result != null) {
 //				UserModel userModel = (UserModel)result; 
 //				RequestModel data = grid.getSelectionModel().getSelectedItem(); 
-//				grid.getStore().getRecord(data).addChange(properties.treatKorName(), userModel.getKorName());
-//				grid.getStore().getRecord(data).addChange(properties.treatUserId(), userModel.getUserId());
+//				grid.getStore().getRecord(data).addChange(properties.korName(), userModel.getKorName());
+//				grid.getStore().getRecord(data).addChange(properties.requestUserId(), userModel.getUserId());
 //			}
 //		}
+//	}
 
-		
+	public DateField getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(DateField endDate) {
+		this.endDate = endDate;
 	}
 
 	public DateField getStartDate() {
@@ -312,27 +281,27 @@ public class Tab_RequestOrderList extends BorderLayoutContainer implements Inter
 		this.startDate = startDate;
 	}
 
-	public DateField getEndDate() {
-		return endDate;
+	public TextField getPatientNameField() {
+		return patientNameField;
 	}
 
-	public void setEndDate(DateField endDate) {
-		this.endDate = endDate;
+	public void setPatientNameField(TextField patientNameField) {
+		this.patientNameField = patientNameField;
 	}
 
-	public TextField getProcCode() {
-		return procCode;
+	public Lookup_Company getLookupCompany() {
+		return lookupCompany;
 	}
 
-	public void setProcCode(TextField procCode) {
-		this.procCode = procCode;
+	public void setLookupCompany(Lookup_Company lookupCompany) {
+		this.lookupCompany = lookupCompany;
 	}
 
-	public String getProcName() {
-		return procName;
+	public LookupTriggerField getLookUpCompanyField() {
+		return lookUpCompanyField;
 	}
 
-	public void setProcName(String procName) {
-		this.procName = procName;
+	public void setLookUpCompanyField(LookupTriggerField lookUpCompanyField) {
+		this.lookUpCompanyField = lookUpCompanyField;
 	}
 }
