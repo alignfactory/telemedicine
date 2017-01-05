@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="tmc03_checkup">
+
+<resultMap 	id="mapper" type="com.tmc.client.app.tmc.model.CheckupModel" >
+	<id  	column="tmc03_checkup_id"  		property="checkupId"/>
+	
+	<result column="tmc03_checkup_cd"  		property="checkupCode"/>
+	<result column="tmc03_checkup_nm"  		property="checkupName"/>
+	
+	<result column="tmc03_checkup_result"	property="checkupResult"/>
+	<result column="tmc03_checkup_date"  	property="checkupDate"/>
+	<result column="tmc03_reg_date"  		property="regDate"/>
+	<result column="tmc03_reg_user_id"  	property="regUserId"/>
+	
+	<result column="tmc03_process_cd"  		property="processCode"/>
+	<result column="tmc03_process_nm"  		property="processName"/>
+	
+	<result column="tmc03_checkup_user_id"  property="checkupUserId"/>
+	<result column="tmc03_request_id"  		property="requestId"/>
+
+</resultMap>
+
+<select id="selectById" resultMap="mapper" parameterType="Long" > 
+	select 	tmc03_checkup.*  
+			dbo.f_cdnm('CheckupCode', tmc03_checkup_cd) tmc03_checkup_nm,   
+			dbo.f_cdnm('ProcessCode', tmc03_process_cd) tmc03_process_nm
+	from 	tmc03_checkup
+	where 	tmc03_checkup_id = #{checkUpId} 
+</select>
+
+<select id="selectByRequestId" resultMap="mapper" parameterType="Long" > 
+	select 	tmc03_checkup.*  
+			dbo.f_cdnm('CheckupCode', tmc03_checkup_cd) tmc03_checkup_nm,   
+			dbo.f_cdnm('ProcessCode', tmc03_process_cd) tmc03_process_nm
+	from 	tmc03_checkup
+	where 	tmc03_request_id = #{requestId} 
+</select>
+
+</mapper>

@@ -89,13 +89,23 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		grid.addRowClickHandler(new RowClickHandler(){
 			@Override
 			public void onRowClick(RowClickEvent event) {
+
 				RequestModel requestModel = grid.getSelectionModel().getSelectedItem(); 
-				
 				if(requestModel != null){
 					retrieveHistory(requestModel); 
 				}
 			}
 		}); 
+
+		gridHistory.addRowClickHandler(new RowClickHandler(){
+			@Override
+			public void onRowClick(RowClickEvent event) {
+
+				RequestModel requestModel = gridHistory.getSelectionModel().getSelectedItem(); 
+				editRequestModel(requestModel); 
+			}
+		}); 
+
 		
 		BorderLayoutData northLayoutData = new BorderLayoutData(300);
 		northLayoutData.setMargins(new Margins(2,0,0,0));
