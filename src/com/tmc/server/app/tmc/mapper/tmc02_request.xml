@@ -156,7 +156,7 @@
 	order 	by tmc02_request_date
 </select>
 
-<select id="selectByCompanyId" resultMap="mapper" parameterType="HashMap"> 
+<select id="selectBySearchList" resultMap="mapper" parameterType="HashMap"> 
 	select 	tmc01_patient.*, 
 			tmc02_request.*,
 			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm,   
@@ -187,9 +187,9 @@
 				on tmc02_reg_user_id = reg_user.sys02_user_id
 			left outer join sys02_user treat_user 
 				on tmc02_treat_user_id = treat_user.sys02_user_id
-	where 	tmc01_company_id = #{companyId}
-	and		tmc01_kor_nm like #{patientName}
-	order 	by tmc02_request_date
+	where 	tmc02_request_date between #{startDate} and #{endDate}
+    and    (tmc02_proc_cd is null or tmc02_proc_cd = #{procCode})
+    order 	by tmc02_request_date
 </select>
 
 </mapper>
