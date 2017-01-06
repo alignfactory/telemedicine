@@ -21,7 +21,7 @@ public class Checkup {
 	
 	public void selectByRequestId(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		Long requestId = request.getLong("requestId"); 
-		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByPatientId", requestId);
+		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByRequestId", requestId);
 		result.setRetrieveResult(1, "select ok", list);
 	}
 	

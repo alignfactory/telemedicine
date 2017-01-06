@@ -2,25 +2,25 @@ package com.tmc.client.app.tmc.model;
 
 import java.util.Date;
 
+import com.tmc.client.app.sys.model.UserModel;
 import com.tmc.client.ui.AbstractDataModel;
 
 public class CheckupModel extends AbstractDataModel {
 
 	private Long checkupId;
+	private Long requestId;
 	
-	private String checkupCode;
-	private String checkupName;
-	
-	private String checkupResult;
-	private Date checkupDate;
-	private Date regDate;
-	private Long regUserId;
+	private String checkupTypeCode;
+	private String checkupTypeName;
 	
 	private String processCode;
 	private String processName;
 	
+	private String checkupResult;
+	private Date checkupDate;
 	private Long checkupUserId;
-	private Long requestId;
+	
+	private UserModel userModel = new UserModel(); 
 	
 	@Override
 	public void setKeyId(Long id) {
@@ -40,52 +40,28 @@ public class CheckupModel extends AbstractDataModel {
 		this.checkupId = checkupId;
 	}
 
-	public String getCheckupCode() {
-		return checkupCode;
+	public Long getRequestId() {
+		return requestId;
 	}
 
-	public void setCheckupCode(String checkupCode) {
-		this.checkupCode = checkupCode;
+	public void setRequestId(Long requestId) {
+		this.requestId = requestId;
 	}
 
-	public String getCheckupName() {
-		return checkupName;
+	public String getCheckupTypeCode() {
+		return checkupTypeCode;
 	}
 
-	public void setCheckupName(String checkupName) {
-		this.checkupName = checkupName;
+	public void setCheckupTypeCode(String checkupTypeCode) {
+		this.checkupTypeCode = checkupTypeCode;
 	}
 
-	public String getCheckupResult() {
-		return checkupResult;
+	public String getCheckupTypeName() {
+		return checkupTypeName;
 	}
 
-	public void setCheckupResult(String checkupResult) {
-		this.checkupResult = checkupResult;
-	}
-
-	public Date getCheckupDate() {
-		return checkupDate;
-	}
-
-	public void setCheckupDate(Date checkupDate) {
-		this.checkupDate = checkupDate;
-	}
-
-	public Date getRegDate() {
-		return regDate;
-	}
-
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
-	}
-
-	public Long getRegUserId() {
-		return regUserId;
-	}
-
-	public void setRegUserId(Long regUserId) {
-		this.regUserId = regUserId;
+	public void setCheckupTypeName(String checkupTypeName) {
+		this.checkupTypeName = checkupTypeName;
 	}
 
 	public String getProcessCode() {
@@ -104,6 +80,22 @@ public class CheckupModel extends AbstractDataModel {
 		this.processName = processName;
 	}
 
+	public String getCheckupResult() {
+		return checkupResult;
+	}
+
+	public void setCheckupResult(String checkupResult) {
+		this.checkupResult = checkupResult;
+	}
+
+	public Date getCheckupDate() {
+		return checkupDate;
+	}
+
+	public void setCheckupDate(Date checkupDate) {
+		this.checkupDate = checkupDate;
+	}
+
 	public Long getCheckupUserId() {
 		return checkupUserId;
 	}
@@ -112,13 +104,14 @@ public class CheckupModel extends AbstractDataModel {
 		this.checkupUserId = checkupUserId;
 	}
 
-	public Long getRequestId() {
-		return requestId;
+	public UserModel getUserModel() {
+		return userModel;
 	}
 
-	public void setRequestId(Long requestId) {
-		this.requestId = requestId;
+	public void setUserModel(UserModel userModel) {
+		this.userModel = userModel;
 	}
 
+	
 	
 }

@@ -46,18 +46,24 @@ public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
 	DateField birthday 	= new DateField();
 	
 	@Path("patientModel.note")
-	TextArea patientNote = new TextArea(); // 특기사항
+	TextField patientNote = new TextField(); // 특기사항
 	
 	DateField requestDate = new DateField();
 	@Path("requestUserModel.note")
 	TextField korName 	= new TextField();
 	TextArea requestNote = new TextArea(); // 특기사항
 
+	TextArea treatNote = new TextArea(); // 진료내역
+	
 	public Page_Treat(){
 		editDriver.initialize(this);
 		this.setHeaderVisible(false);
 		this.add(this.getEditor());
-		this.addButton(new TextButton("저장"));
+		this.addButton(new TextButton("검사요청 등록"));
+		this.addButton(new TextButton("검사요청 삭제"));
+		this.addButton(new TextButton("진료내역 저장"));
+		
+		
 		this.setButtonAlign(BoxLayoutPack.CENTER);
 	}
 	
@@ -70,27 +76,38 @@ public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
     	HorizontalLayoutContainer row00 = new HorizontalLayoutContainer();
     	row00.add(new FieldLabel(insNo, "보험번호"), rowLayout);
     	row00.add(new FieldLabel(patientKorName, "환자명"), rowLayout);
-    	row00.add(new FieldLabel(genderName, "  성별"), rowLayout);
+    	row00.add(new FieldLabel(genderName, "성별"), rowLayout);
     	
     	row00.add(new FieldLabel(birthday, "생일"), rowLayout);
     	
     	HorizontalLayoutContainer row01 = new HorizontalLayoutContainer();
-    	row01.add(new FieldLabel(patientNote, "특기사항"), new HorizontalLayoutData(1, 60));
+    	row01.add(new FieldLabel(patientNote, "특기사항"), new HorizontalLayoutData(1, 30));
 
     	HorizontalLayoutContainer row02 = new HorizontalLayoutContainer();
     	row02.add(new FieldLabel(requestDate, "요청일"), rowLayout);
     	row02.add(new FieldLabel(korName, "보건의"), rowLayout);
 
     	HorizontalLayoutContainer row03 = new HorizontalLayoutContainer();
-    	row03.add(new FieldLabel(requestNote, "진료요청"), new HorizontalLayoutData(1, 80));
+    	row03.add(new FieldLabel(requestNote, "요청내역"), new HorizontalLayoutData(1, 68));
+    	
+    	HorizontalLayoutContainer row04 = new HorizontalLayoutContainer();
+    	Page_Checkup pageCheckup = new Page_Checkup(); 
+    	pageCheckup.setBorders(true);
+    	row04.add(new FieldLabel(pageCheckup, "검사오더"), new HorizontalLayoutData(1, 160));
+    	
+    	HorizontalLayoutContainer row05 = new HorizontalLayoutContainer();
+    	row05.add(new FieldLabel(treatNote, "처방내용"), new HorizontalLayoutData(1, 140));
+
     	
 	    VerticalLayoutContainer layout = new VerticalLayoutContainer(); 
 	    layout.setScrollMode(ScrollSupport.ScrollMode.AUTOY);
 	    
-	    layout.add(row00, new VerticalLayoutData(1, -1, new Margins(16)));
-	    layout.add(row01, new VerticalLayoutData(1, 70, new Margins(16))); 
-	    layout.add(row02, new VerticalLayoutData(1, -1, new Margins(16)));
-	    layout.add(row03, new VerticalLayoutData(1, 90, new Margins(16)));
+	    layout.add(row00, new VerticalLayoutData(1, -1, new Margins(18)));
+	    layout.add(row01, new VerticalLayoutData(1, -1, new Margins(18))); 
+	    layout.add(row02, new VerticalLayoutData(1, -1, new Margins(18)));
+	    layout.add(row03, new VerticalLayoutData(1, 74, new Margins(18)));
+	    layout.add(row04, new VerticalLayoutData(1, 168, new Margins(18)));
+	    layout.add(row05, new VerticalLayoutData(1, 1, new Margins(18)));
 	    
 	    // form setting 
 		FormPanel form = new FormPanel(); 
