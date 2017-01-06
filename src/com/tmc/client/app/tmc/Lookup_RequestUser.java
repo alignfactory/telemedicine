@@ -24,10 +24,7 @@ public class Lookup_RequestUser extends AbstractLookupWindow {
 	private TextField userNameField = new TextField();
 	private CompanyModel companyModel = new CompanyModel(); 
 	
-	public Lookup_RequestUser(CompanyModel companyModel){
-		
-		// 사용자 소속회사 설정 
-		this.companyModel = companyModel;
+	public Lookup_RequestUser(){
 		
 		this.setInit("보건의 찾기", 900, 400); 
 		this.addLabel(userNameField, "성명", 150, 50, true) ;
@@ -44,7 +41,11 @@ public class Lookup_RequestUser extends AbstractLookupWindow {
 			}
 		}); 
 	}
-
+	
+	public void setCompanyModel(CompanyModel companyModel){
+		this.companyModel = companyModel; 
+	}
+	
 	private Grid<UserModel> buildGrid(){
 		GridBuilder<UserModel> gridBuilder = new GridBuilder<UserModel>(properties.keyId());
 		gridBuilder.setChecked(SelectionMode.SINGLE);
@@ -56,7 +57,7 @@ public class Lookup_RequestUser extends AbstractLookupWindow {
 		gridBuilder.addDate(properties.startDate(), 120, "근무시작일") ;
 		gridBuilder.addDate(properties.closeDate(), 120, "근무종료일") ;
 		gridBuilder.addText(properties.note(), 200, "비고" );
-	
+
 		return gridBuilder.getGrid(); 
 	}
 	
@@ -88,6 +89,7 @@ public class Lookup_RequestUser extends AbstractLookupWindow {
 
 	@Override
 	public void cancel() {
+		this.hide(); 
 	}
 
 }

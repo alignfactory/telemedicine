@@ -74,9 +74,6 @@ public class ServiceRequest implements IsSerializable {
 	
 	public String getString(String key){
 		if(this.param.get(key) !=  null ){
-			
-			System.out.println("key is " + key);
-			
 			return this.param.get(key).toString();
 		}
 		else {
@@ -86,11 +83,7 @@ public class ServiceRequest implements IsSerializable {
 	
 	public Long getLong(String key){
 		if(param.get(key) != null) {
-			
 			Long data = (Long)this.param.get(key);
-			
-			System.out.println("data is " + data);
-			
 			return data ; 
 		}
 		else {

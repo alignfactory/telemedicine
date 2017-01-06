@@ -38,11 +38,20 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 	private Grid<UserModel> grid = this.buildGrid();
 
 	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 
+	private Lookup_Company lookupCompany = new Lookup_Company();
 	private LookupTriggerField lookupCompanyField = this.getLookupCompanyField() ;
 	private TextField userNameField = new TextField();
 	
 	public Tab_User() {
 		
+		this.lookupCompany.setCallback(new InterfaceLookupResult(){
+			@Override
+			public void setLookupResult(Object result) {
+				companyModel = (CompanyModel)result;// userCompanyModel.getCompanyModel(); 
+				lookupCompanyField.setValue(companyModel.getCompanyName());
+			}
+		});
+			
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48); 
 		searchBarBuilder.addLabel(userNameField, "담당자", 150, 46, true); 
@@ -59,18 +68,10 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 	
 	private LookupTriggerField getLookupCompanyField(){
 		
-		Lookup_Company lookupCompany = new Lookup_Company();
-		lookupCompany.setCallback(new InterfaceLookupResult(){
-			@Override
-			public void setLookupResult(Object result) {
-				companyModel = (CompanyModel)result;// userCompanyModel.getCompanyModel(); 
-				lookupCompanyField.setValue(companyModel.getCompanyName());
-			}
-		});
-		
 		LookupTriggerField lookupCompanyField = new LookupTriggerField(); 
 		lookupCompanyField.setEditable(false);
 		lookupCompanyField.setText(this.companyModel.getCompanyName());
+
 		lookupCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
    	 		@Override
 			public void onTriggerClick(TriggerClickEvent event) {

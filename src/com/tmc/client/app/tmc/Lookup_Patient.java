@@ -10,6 +10,8 @@ import com.google.gwt.core.client.GWT;
 import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
+import com.sencha.gxt.widget.core.client.event.RowDoubleClickEvent;
+import com.sencha.gxt.widget.core.client.event.RowDoubleClickEvent.RowDoubleClickHandler;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
@@ -21,15 +23,21 @@ public class Lookup_Patient extends AbstractLookupWindow {
 	
 	public Lookup_Patient(){
 		
-		this.setInit("환자검색", 600, 350); 
+		this.setInit("환자검색", 700, 400); 
 		this.addLabel(patientName, "환자명", 150, 50, true) ;
 
 		VerticalLayoutContainer vlc = new VerticalLayoutContainer(); 
 		vlc.add(this.getSearchBar(), new VerticalLayoutData(1, 40)); // , new Margins(0, 0, 0, 5)));
 		vlc.add(grid, new VerticalLayoutData(1, 1));
 		this.add(vlc);
-		
-		// this.retrieve();
+
+		this.grid.addRowDoubleClickHandler(new RowDoubleClickHandler(){
+			@Override
+			public void onRowDoubleClick(RowDoubleClickEvent event) {
+				confirm(); 
+			}
+		}); 
+
 	}
 	
 	private Grid<PatientModel> buildGrid(){
@@ -37,11 +45,14 @@ public class Lookup_Patient extends AbstractLookupWindow {
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
 		gridBuilder.addText(properties.insNo(), 100, "보험번호") ;
-		gridBuilder.addText(properties.korName(), 150, "성명") ;
-		gridBuilder.addText(properties.guardianName(), 100, "보호자") ;
-		gridBuilder.addText(properties.genderCode(), 100, "성별");
-		gridBuilder.addText(properties.note(), 200, "비고" );
+		gridBuilder.addText(properties.korName(), 80, "성명") ;
+		gridBuilder.addText(properties.genderName(), 60, "성별");
+		gridBuilder.addDate(properties.birthday(), 100, "생일");
+		gridBuilder.addText(properties.guardianName(), 80, "보호자") ;
+
+		gridBuilder.addText(properties.note(), 250, "비고" );
 	
+		
 		return gridBuilder.getGrid(); 
 	}
 	
@@ -67,7 +78,7 @@ public class Lookup_Patient extends AbstractLookupWindow {
 
 	@Override
 	public void cancel() {
-		// TODO Auto-generated method stub
+		this.hide();
 		
 	}
 	

@@ -33,11 +33,30 @@ public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGri
 	
 	private PatientModelProperties properties = GWT.create(PatientModelProperties.class);
 	private Grid<PatientModel> grid = this.buildGrid();
+	
 	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 
-	private LookupTriggerField lookupCompanyField = getLookupCompanyField(); 
+	private Lookup_Company lookupCompany = new Lookup_Company();
+	private LookupTriggerField lookupCompanyField = new LookupTriggerField(); 
 	private TextField patientNameField = new TextField();
 	
 	public Tab_Patient() {
+
+		this.lookupCompanyField.setEditable(false);
+		this.lookupCompanyField.setText(this.companyModel.getCompanyName());
+		this.lookupCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
+   	 		@Override
+			public void onTriggerClick(TriggerClickEvent event) {
+   	 			lookupCompany.show();
+			}
+   	 	}); 
+
+		this.lookupCompany.setCallback(new InterfaceLookupResult(){
+			@Override
+			public void setLookupResult(Object result) {
+				companyModel = (CompanyModel)result;// userCompanyModel.getCompanyModel(); 
+				lookupCompanyField.setValue(companyModel.getCompanyName());
+			}
+		});
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLookupTriggerField(this.lookupCompanyField, "기관명", 250, 48); 
@@ -49,36 +68,6 @@ public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGri
 
 		this.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 48));
 		this.add(grid, new VerticalLayoutData(1, 1));
-	}
-	
-	private LookupTriggerField getLookupCompanyField(){
-		
-		Lookup_Company lookupCompany = new Lookup_Company();
-		lookupCompany.setCallback(new InterfaceLookupResult(){
-			@Override
-			public void setLookupResult(Object result) {
-				if(result != null) {
-					companyModel = (CompanyModel)result;// userCompanyModel.getCompanyModel(); 
-					lookupCompanyField.setValue(companyModel.getCompanyName());
-				}
-				else {
-					companyModel = new CompanyModel();  
-					lookupCompanyField.setValue(null);
-				}
-			}
-		});
-		
-		LookupTriggerField lookupCompanyField = new LookupTriggerField(); 
-		lookupCompanyField.setEditable(false);
-		lookupCompanyField.setText(this.companyModel.getCompanyName());
-		lookupCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
-   	 		@Override
-			public void onTriggerClick(TriggerClickEvent event) {
-   	 			lookupCompany.show();
-			}
-   	 	}); 
-		
-		return lookupCompanyField; 
 	}
 	
 	public Grid<PatientModel> buildGrid(){

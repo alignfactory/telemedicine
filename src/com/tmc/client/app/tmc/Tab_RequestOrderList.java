@@ -46,7 +46,8 @@ public abstract class Tab_RequestOrderList extends BorderLayoutContainer impleme
 	private DateField startDate = new DateField();
 	private DateField endDate = new DateField();
 	private TextField patientNameField = new TextField();
-	private Lookup_Company lookupCompany = new Lookup_Company(this);
+	// private Lookup_Company lookupCompany = new Lookup_Company(this);
+	
 	private CompanyModel companyModel = new CompanyModel();
 	private LookupTriggerField lookUpCompanyField = new LookupTriggerField() ;
 	
@@ -136,7 +137,7 @@ public abstract class Tab_RequestOrderList extends BorderLayoutContainer impleme
 			@Override
 			public void onTriggerClick(TriggerClickEvent event) {
    	 			setLookUpName("lookUpPatient"); 
-				new Lookup_Patient(getThis()).show();
+				//new Lookup_Patient(getThis()).show();
 			}
 		}); 
 
@@ -147,7 +148,7 @@ public abstract class Tab_RequestOrderList extends BorderLayoutContainer impleme
 			@Override
 			public void onTriggerClick(TriggerClickEvent event) {
    	 			setLookUpName("lookUpReqUser"); 
-				new Lookup_RequestUser(getThis(), companyModel).show(); // 선택된 기관정보를 넘겨준다. 
+				// new Lookup_RequestUser(getThis(), companyModel).show(); // 선택된 기관정보를 넘겨준다. 
 			}
 		}); 
 
@@ -290,11 +291,11 @@ public abstract class Tab_RequestOrderList extends BorderLayoutContainer impleme
 	}
 
 	public Lookup_Company getLookupCompany() {
-		return lookupCompany;
+		return null; //lookupCompany;
 	}
 
 	public void setLookupCompany(Lookup_Company lookupCompany) {
-		this.lookupCompany = lookupCompany;
+		// this.lookupCompany = lookupCompany;
 	}
 
 	public LookupTriggerField getLookUpCompanyField() {

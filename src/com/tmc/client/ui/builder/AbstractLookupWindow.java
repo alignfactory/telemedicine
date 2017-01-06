@@ -16,7 +16,6 @@ import com.tmc.client.ui.InterfaceLookupResult;
 abstract public class AbstractLookupWindow extends Window {
 	
 	private InterfaceLookupResult callback;
-	private Object selectedModel; 
 	
 	abstract public void retrieve();
 	abstract public void cancel();
@@ -85,9 +84,7 @@ abstract public class AbstractLookupWindow extends Window {
 		button.addSelectHandler(new SelectHandler(){
 			@Override
 			public void onSelect(SelectEvent event) {
-				// 확인버튼을 누르면 선택된 객체(행)을 전달한다. 
-				// callback.setLookupResult(selectedModel);
-				getCallback().setLookupResult(selectedModel);
+				confirm(); 
 			}
 		}); 
 		this.addButton(button);

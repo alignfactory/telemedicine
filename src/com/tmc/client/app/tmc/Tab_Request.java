@@ -42,22 +42,34 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 	private Grid<RequestModel> gridHistory = this.buildGridHistory();
 	private Page_Treat pageTreat = new Page_Treat();
 	private TextField patientNameField = new TextField();
-	private CompanyModel companyModel = new CompanyModel();
-	private LookupTriggerField lookUpCompanyField = this.getLookUpCompanyField() ;
+	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 
 	
-
-	public Tab_Request getThis(){
-		return this; 
-	}
-
 	public Tab_Request() {
+
+		final LookupTriggerField lookupCompanyField = new LookupTriggerField(); 
+		final Lookup_Company lookupCompany = new Lookup_Company();
+		
+		lookupCompany.setCallback(new InterfaceLookupResult(){
+			@Override
+			public void setLookupResult(Object result) {
+				companyModel = (CompanyModel)result;
+				lookupCompanyField.setText(companyModel.getCompanyName());
+			}
+		});
+		
+		lookupCompanyField.setEditable(false);
+		lookupCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
+   	 		@Override
+			public void onTriggerClick(TriggerClickEvent event) {
+   	 			lookupCompany.show();
+			}
+   	 	}); 
+
+		this.companyModel = LoginUser.getLoginUser().getCompanyModel(); 
+		lookupCompanyField.setText(companyModel.getCompanyName());
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-
-		searchBarBuilder.addLookupTriggerField(lookUpCompanyField, "기관명", 250, 48);
-		this.companyModel = LoginUser.getLoginUser().getCompanyModel(); 
-		lookUpCompanyField.setText(companyModel.getCompanyName());
-
+		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48);
 		searchBarBuilder.addLabel(patientNameField, "환자명", 150, 46, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
@@ -106,111 +118,67 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		this.setCenterWidget(pageTreat, centerLayoutData);
 	}
 	
-	private LookupTriggerField getLookUpCompanyField(){
+	public Grid<RequestModel> buildGrid(){
 		
-		Lookup_Company lookupCompany = new Lookup_Company();
-		lookupCompany.setCallback(new InterfaceLookupResult(){
-			@Override
-			public void setLookupResult(Object result) {
-				companyModel = (CompanyModel)result;
-				lookUpCompanyField.setText(companyModel.getCompanyName());
-			}
-		});
-
-		lookUpCompanyField.setEditable(false);
-		lookUpCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
-   	 		@Override
-			public void onTriggerClick(TriggerClickEvent event) {
-   	 			lookupCompany.show();
-			}
-   	 	}); 
-		
-		return lookUpCompanyField; 
-	}
-	
-	
-	private LookupTriggerField getLookupPatientField (){ // 환자 찾기 
-		Lookup_Patient lookupPatient = new Lookup_Patient();
+		final Lookup_Patient lookupPatient = new Lookup_Patient();
 		lookupPatient.setCallback(new InterfaceLookupResult(){
 			@Override
 			public void setLookupResult(Object result) {
 				RequestModel data = grid.getSelectionModel().getSelectedItem();
 				PatientModel patientModel = (PatientModel)result;
-				
 				grid.getStore().getRecord(data).addChange(properties.patientId(), patientModel.getPatientId());
 				grid.getStore().getRecord(data).addChange(properties.patientKorName(), patientModel.getKorName());
 				grid.getStore().getRecord(data).addChange(properties.insNo(), patientModel.getInsNo());
 			}
 		});
 		
-		LookupTriggerField lookUpPatientField = new LookupTriggerField(); // 환자 찾기 
-		lookUpPatientField.addTriggerClickHandler(new TriggerClickHandler(){
+		final LookupTriggerField lookupPatientField = new LookupTriggerField(); // 환자 찾기
+		lookupPatientField.addTriggerClickHandler(new TriggerClickHandler(){
 			@Override
 			public void onTriggerClick(TriggerClickEvent event) {
 				lookupPatient.show();
 			}
 		}); 
 		
-		return lookUpPatientField ; 
-	}
-
-	private LookupTriggerField getLookupTriggerField(){ // 담당의사 찾기 
-		Lookup_RequestUser lookupRegisterUser = new Lookup_RequestUser(this.companyModel); // 선택된 기관정보를 넘겨준다.
-		lookupRegisterUser.setCallback(new InterfaceLookupResult(){
+		final Lookup_RequestUser lookupRequestUser= new Lookup_RequestUser(); // 선택된 기관정보를 넘겨준다.
+		lookupRequestUser.setCallback(new InterfaceLookupResult(){
 			@Override
 			public void setLookupResult(Object result) {
 				RequestModel data = grid.getSelectionModel().getSelectedItem();
 				UserModel userModel = (UserModel)result; 
-
 				grid.getStore().getRecord(data).addChange(properties.requestUserId(), userModel.getUserId());
 				grid.getStore().getRecord(data).addChange(properties.korName(), userModel.getKorName());
 			}
-			
 		});
-
-		LookupTriggerField lookUpReqUserField = new LookupTriggerField(); 
-		lookUpReqUserField.addTriggerClickHandler(new TriggerClickHandler(){
+		
+		final LookupTriggerField lookupRequestUserField = new LookupTriggerField();
+		lookupRequestUserField.addTriggerClickHandler(new TriggerClickHandler(){
 			@Override
 			public void onTriggerClick(TriggerClickEvent event) {
 				if(companyModel == null){
 					new SimpleMessage("선택된 기관명이 없습니다."); 
 					return ; 
 				}
-				lookupRegisterUser.show(); 
+				lookupRequestUser.show(); 
 			}
 		}); 
-
-		return lookUpReqUserField ; 
-	}
-	
-	public Grid<RequestModel> buildGrid(){
 		
 		GridBuilder<RequestModel> gridBuilder = new GridBuilder<RequestModel>(properties.keyId());  
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 
 		gridBuilder.addDate(properties.requestDate(), 100, "진료예정일", new DateField());
 		gridBuilder.addText(properties.insNo(), 100, "보험번호"); //, new TextField()) ;
-		gridBuilder.addText(properties.patientKorName(), 80, "환자명", this.getLookupPatientField()) ;
+		gridBuilder.addText(properties.patientKorName(), 80, "환자명", lookupPatientField) ;
 		
-		gridBuilder.addText(properties.korName(), 100, "보건의", this.getLookupTriggerField());
-		//gridBuilder.addLong(properties.requestUserId(), 100, "담당의사ID", new LongField()) ;
-
-		//gridBuilder.addText(properties.requestTypeCode(), 80, "요청구분", new TextField()) ;
-
+		gridBuilder.addText(properties.korName(), 100, "보건의", lookupRequestUserField);
 		gridBuilder.addText(properties.requestNote(), 200, "진료요청내용", new TextField()) ;
-		
-
 		gridBuilder.addDate(properties.treatDate(), 100, "진료일"); //, new DateField());
 		gridBuilder.addText(properties.treatKorName(), 80, "진료의"); //, lookUpTreatUserField) ;
 		gridBuilder.addText(properties.treatNote(), 200, "처방내역"); //, new TextField()) ;
 		gridBuilder.addText(properties.note(), 400, "비고", new TextField()) ;		
-
 		gridBuilder.addText(properties.regKorName(), 80, "등록자"); //, new TextField()) ;
 		gridBuilder.addDate(properties.regDate(), 100, "등록일"); //, new DateField()) ;
-
-		
 		return gridBuilder.getGrid(); 
-		
 	}
 
 	public Grid<RequestModel> buildGridHistory(){
@@ -242,7 +210,6 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 
 		service.addParam("patientId", requestModel.getPatientId());
 		service.retrieve("tmc.Request.selectByPatientId");
-		
 	}
 	
 	@Override
@@ -293,22 +260,4 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		List<RequestModel> checkedList = grid.getSelectionModel().getSelectedItems() ; 
 		service.deleteRow(grid.getStore(), checkedList, "tmc.Request.delete");
 	}
-
-//	@Override
-//	public void setLookupResult(Object result) {
-//		
-//		if("lookUpPatient".equals(this.getLookUpName())){ // 환자 찾ㅈ기
-//			if(result != null) {
-//			}
-//		}
-//		
-//		if("lookUpReqUser".equals(this.getLookUpName())){ // 보건의 찾기 
-//			if(result != null) {
-//				UserModel userModel = (UserModel)result; 
-//				RequestModel data = grid.getSelectionModel().getSelectedItem(); 
-//				grid.getStore().getRecord(data).addChange(properties.korName(), userModel.getKorName());
-//				grid.getStore().getRecord(data).addChange(properties.requestUserId(), userModel.getUserId());
-//			}
-//		}
-//	}
 }

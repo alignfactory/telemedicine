@@ -78,7 +78,8 @@ public class Tab_CompanyAccount extends VerticalLayoutContainer implements Inter
 	}
 	
 	private LookupTriggerField getLookupCompanyField(){
-		Lookup_Company lookupCompany = new Lookup_Company();
+		
+		final Lookup_Company lookupCompany = new Lookup_Company();
 		lookupCompany.setCallback(new InterfaceLookupResult(){
 			@Override
 			public void setLookupResult(Object result) {
