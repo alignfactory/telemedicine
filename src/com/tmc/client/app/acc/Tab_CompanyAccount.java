@@ -5,7 +5,7 @@ import java.util.List;
 import com.tmc.client.app.acc.model.AccountModelProperties;
 import com.tmc.client.app.sys.Lookup_Company;
 import com.tmc.client.app.sys.model.CompanyModel;
-import com.tmc.client.app.sys.model.UserCompanyModel;
+import com.tmc.client.main.LoginUser;
 import com.tmc.client.app.acc.model.AccountModel;
 import com.tmc.client.service.GridDeleteData;
 import com.tmc.client.service.GridInsertRow;
@@ -32,36 +32,22 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
-import com.sencha.gxt.widget.core.client.info.Info;
 
-public class Tab_CompanyAccount extends VerticalLayoutContainer implements InterfaceGridOperate, InterfaceLookupResult {
+public class Tab_CompanyAccount extends VerticalLayoutContainer implements InterfaceGridOperate {
 	
 	private AccountModelProperties properties = GWT.create(AccountModelProperties.class);
 	private Grid<AccountModel> grid = this.buildGrid();
-	private Lookup_Company lookupCompany = new Lookup_Company(this); 
-	private LookupTriggerField lookupCompanyName = new LookupTriggerField() ; 
-	private CompanyModel companyModel;
 	
-	ComboBoxField eduOfficeName = new ComboBoxField("EduOfficeCode");
+	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel();
+	private LookupTriggerField lookupCompanyField = this.getLookupCompanyField() ; 
+	private ComboBoxField eduOfficeName = new ComboBoxField("EduOfficeCode");
 	
 	public Tab_CompanyAccount() {
 		
 		this.setBorders(false); 
 
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-
-		
-		searchBarBuilder.addLookupTriggerField(lookupCompanyName, "유치원", 250, 50); 
-
-		// companyName.setAllowBlank(false);
-		lookupCompanyName.addTriggerClickHandler(new TriggerClickHandler(){
-   	 		@Override
-			public void onTriggerClick(TriggerClickEvent event) {
-   	 			Info.display("lookup", "Company");
-   	 			lookupCompany.show();
-			}
-   	 	}); 
-		
+		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "유치원", 250, 50); 
 		searchBarBuilder.addComboBox(eduOfficeName, "회계구분", 250, 60);
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
@@ -87,26 +73,30 @@ public class Tab_CompanyAccount extends VerticalLayoutContainer implements Inter
 				new PDF_AccountPrint(2015020).show();  
 			}
 		}); 
-		
-		
-		
 		this.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 40));
 		this.add(grid, new VerticalLayoutData(1, 1));
-		
 	}
 	
-	@Override
-	public void setLookupResult(Object result) {
+	private LookupTriggerField getLookupCompanyField(){
+		Lookup_Company lookupCompany = new Lookup_Company();
+		lookupCompany.setCallback(new InterfaceLookupResult(){
+			@Override
+			public void setLookupResult(Object result) {
+				companyModel = (CompanyModel)result;// userCompanyModel.getCompanyModel(); 
+				lookupCompanyField.setValue(companyModel.getCompanyName());
+			}
+		});
 		
-		if(result != null) {
-			UserCompanyModel userCompanyModel = (UserCompanyModel)result; 
-			this.companyModel = userCompanyModel.getCompanyModel(); 
-			lookupCompanyName.setValue(this.companyModel.getCompanyName());
-		}
-		else {
-			this.companyModel = null;  
-			lookupCompanyName.setValue(null);
-		}
+		LookupTriggerField lookupCompanyField = new LookupTriggerField(); 
+		lookupCompanyField.setEditable(false);
+		lookupCompanyField.setText(this.companyModel.getCompanyName());
+		lookupCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
+   	 		@Override
+			public void onTriggerClick(TriggerClickEvent event) {
+   	 			lookupCompany.show();
+			}
+   	 	}); 
+		return lookupCompanyField; 
 	}
 	
 	@Override
@@ -128,7 +118,6 @@ public class Tab_CompanyAccount extends VerticalLayoutContainer implements Inter
 		GridRetrieveData<AccountModel> service = new GridRetrieveData<AccountModel>(grid.getStore());
 		service.addParam("eduOfficeCode", eduOfficeCode);
 		service.addParam("companyId", companyId);
-		
 		service.retrieve("acc.Account.selectByCompanyId");
 	}
 	
@@ -200,7 +189,6 @@ public class Tab_CompanyAccount extends VerticalLayoutContainer implements Inter
 		gridBuilder.addBoolean(properties.sumYnFlag(), 50, "합계"); 
 		gridBuilder.addBoolean(properties.transYnFlag(), 50, "거래"); 
 		
-		
 		final ComboBoxField inExpComboBox = new ComboBoxField("InExpCode");  
 		inExpComboBox.addCollapseHandler(new CollapseHandler(){
 			@Override
@@ -235,7 +223,4 @@ public class Tab_CompanyAccount extends VerticalLayoutContainer implements Inter
 		
 		return gridBuilder.getGrid();  
 	}
-
-
-
 }

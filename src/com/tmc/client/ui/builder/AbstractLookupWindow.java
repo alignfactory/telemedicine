@@ -7,17 +7,20 @@ import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.button.ButtonBar;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
-//import com.sencha.gxt.widget.core.client.container.MarginData;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
+import com.tmc.client.ui.InterfaceLookupResult;
 
 abstract public class AbstractLookupWindow extends Window {
 	
+	private InterfaceLookupResult callback;
+	private Object selectedModel; 
+	
 	abstract public void retrieve();
-	abstract public void confirm();
 	abstract public void cancel();
+	abstract public void confirm();
 	
 	ButtonBar searchBar = new ButtonBar(); 
 	
@@ -82,7 +85,9 @@ abstract public class AbstractLookupWindow extends Window {
 		button.addSelectHandler(new SelectHandler(){
 			@Override
 			public void onSelect(SelectEvent event) {
-				confirm();
+				// 확인버튼을 누르면 선택된 객체(행)을 전달한다. 
+				// callback.setLookupResult(selectedModel);
+				getCallback().setLookupResult(selectedModel);
 			}
 		}); 
 		this.addButton(button);
@@ -101,5 +106,13 @@ abstract public class AbstractLookupWindow extends Window {
 		this.addButton(button);
 	}
 
+	public void setCallback(InterfaceLookupResult callback){
+		this.callback = callback; 
+	}
+	
+	public InterfaceLookupResult getCallback(){
+		return this.callback ; 
+	}
+	
 	
 }

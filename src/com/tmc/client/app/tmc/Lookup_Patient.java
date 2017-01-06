@@ -3,7 +3,6 @@ package com.tmc.client.app.tmc;
 import com.tmc.client.app.tmc.model.PatientModel;
 import com.tmc.client.app.tmc.model.PatientModelProperties;
 import com.tmc.client.service.GridRetrieveData;
-import com.tmc.client.ui.InterfaceLookupResult;
 import com.tmc.client.ui.SimpleMessage;
 import com.tmc.client.ui.builder.AbstractLookupWindow;
 import com.tmc.client.ui.builder.GridBuilder;
@@ -18,12 +17,10 @@ public class Lookup_Patient extends AbstractLookupWindow {
 	
 	private PatientModelProperties properties = GWT.create(PatientModelProperties.class);	
 	private Grid<PatientModel> grid = this.buildGrid(); 
-	private InterfaceLookupResult lookupParent; 
 	private TextField patientName = new TextField();
 	
-	public Lookup_Patient(InterfaceLookupResult lookupParent){
+	public Lookup_Patient(){
 		
-		this.lookupParent = lookupParent; 
 		this.setInit("환자검색", 600, 350); 
 		this.addLabel(patientName, "환자명", 150, 50, true) ;
 
@@ -60,9 +57,8 @@ public class Lookup_Patient extends AbstractLookupWindow {
 	public void confirm() {
 		PatientModel patientModel = grid.getSelectionModel().getSelectedItem(); 
 		if(patientModel != null){
-			// 선택한 반 정보를 돌려준다. interfaceLookupResult를 상속받은 클래스여야 한다. 
-			lookupParent.setLookupResult(patientModel);
-			this.hide(); 
+			this.getCallback().setLookupResult(patientModel);
+			this.hide();
 		}
 		else {
 			new SimpleMessage("선택된 반이 없습니다.");

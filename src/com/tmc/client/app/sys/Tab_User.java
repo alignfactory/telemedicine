@@ -5,6 +5,7 @@ import java.util.List;
 import com.tmc.client.app.sys.model.CompanyModel;
 import com.tmc.client.app.sys.model.UserModel;
 import com.tmc.client.app.sys.model.UserModelProperties;
+import com.tmc.client.main.LoginUser;
 import com.tmc.client.service.GridDeleteData;
 import com.tmc.client.service.GridInsertRow;
 import com.tmc.client.service.GridRetrieveData;
@@ -30,32 +31,20 @@ import com.sencha.gxt.widget.core.client.form.PasswordField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.Grid;
-import com.sencha.gxt.widget.core.client.info.Info;
 
-public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOperate, InterfaceLookupResult  {
+public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOperate {
 	
 	private UserModelProperties properties = GWT.create(UserModelProperties.class);
 	private Grid<UserModel> grid = this.buildGrid();
+
+	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 
+	private LookupTriggerField lookupCompanyField = this.getLookupCompanyField() ;
 	private TextField userNameField = new TextField();
-	private Lookup_Company lookupCompany = new Lookup_Company(this);
-	private CompanyModel companyModel = new CompanyModel();
-	
-	private LookupTriggerField lookupCompanyName = new LookupTriggerField() ;
 	
 	public Tab_User() {
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		
-		lookupCompanyName.setEditable(false);
-		lookupCompanyName.addTriggerClickHandler(new TriggerClickHandler(){
-   	 		@Override
-			public void onTriggerClick(TriggerClickEvent event) {
-   	 			Info.display("lookup", "Company");
-   	 			lookupCompany.show();
-			}
-   	 	}); 
-
-		searchBarBuilder.addLookupTriggerField(lookupCompanyName, "기관명", 250, 48); 
+		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48); 
 		searchBarBuilder.addLabel(userNameField, "담당자", 150, 46, true); 
 
 		searchBarBuilder.addRetrieveButton(); 
@@ -67,6 +56,30 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 		this.add(grid, new VerticalLayoutData(1, 1));
 	}
 	
+	
+	private LookupTriggerField getLookupCompanyField(){
+		
+		Lookup_Company lookupCompany = new Lookup_Company();
+		lookupCompany.setCallback(new InterfaceLookupResult(){
+			@Override
+			public void setLookupResult(Object result) {
+				companyModel = (CompanyModel)result;// userCompanyModel.getCompanyModel(); 
+				lookupCompanyField.setValue(companyModel.getCompanyName());
+			}
+		});
+		
+		LookupTriggerField lookupCompanyField = new LookupTriggerField(); 
+		lookupCompanyField.setEditable(false);
+		lookupCompanyField.setText(this.companyModel.getCompanyName());
+		lookupCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
+   	 		@Override
+			public void onTriggerClick(TriggerClickEvent event) {
+   	 			lookupCompany.show();
+			}
+   	 	}); 
+		return lookupCompanyField; 
+	}
+
 	public Grid<UserModel> buildGrid(){
 		
 		GridBuilder<UserModel> gridBuilder = new GridBuilder<UserModel>(properties.keyId());  
@@ -92,21 +105,20 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 		gridBuilder.addText(properties.telNo01(), 120, "전화번호(1)", new TextField()) ;
 		gridBuilder.addText(properties.telNo02(), 120, "전화번호(2)", new TextField()) ;
 		gridBuilder.addText(properties.loginId(), 100, "로그인아이디", new TextField()) ;
-		ColumnConfig<UserModel, String> password = gridBuilder.addText(properties.passwd(), 100, "패스워드", new PasswordField());
 
+		ColumnConfig<UserModel, String> password = gridBuilder.addText(properties.passwd(), 100, "패스워드", new PasswordField());
 		password.setCell(new AbstractCell<String>() {
 			@Override
 			public void render(com.google.gwt.cell.client.Cell.Context arg0, String arg1, SafeHtmlBuilder arg2) {
 				arg2.appendHtmlConstant("********");   
 			}
 		});
-
+		
 		gridBuilder.addText(properties.zipCode(), 80, "우편번호", new TextField()) ;
 		gridBuilder.addText(properties.zipAddress(), 250, "주소", new TextField()) ;
 		gridBuilder.addText(properties.note(), 400, "비고", new TextField());
 
 		return gridBuilder.getGrid(); 
-		
 	}
 
 	@Override
@@ -116,7 +128,6 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 			new SimpleMessage("기관명 확인", "조회조건의 기관명은 반드시 입력하세요. ");
 			return ; 
 		} 
-		
 		GridRetrieveData<UserModel> service = new GridRetrieveData<UserModel>(grid.getStore());
 		service.addParam("companyId", this.companyModel.getCompanyId());
 		service.addParam("userName", userNameField.getValue());
@@ -135,7 +146,6 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 			new SimpleMessage("기관선택", "등록하고자 하는 담당자의 기관을 먼저 선택하여 주세요"); 
 			return ; 
 		}
-		
 		GridInsertRow<UserModel> service = new GridInsertRow<UserModel>(); 
 		UserModel userModel = new UserModel();
 		userModel.setCompanyId(this.companyModel.getCompanyId());
@@ -147,20 +157,5 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 		GridDeleteData<UserModel> service = new GridDeleteData<UserModel>();
 		List<UserModel> checkedList = grid.getSelectionModel().getSelectedItems() ; 
 		service.deleteRow(grid.getStore(), checkedList, "sys.User.delete");
-	}
-
-	@Override
-	public void setLookupResult(Object result) {
-		if(result != null) {
-//			CompanyModel companyModel =  
-			this.companyModel = (CompanyModel)result;// userCompanyModel.getCompanyModel(); 
-			lookupCompanyName.setValue(this.companyModel.getCompanyName());
-		}
-		else {
-			this.companyModel = new CompanyModel();  
-			lookupCompanyName.setValue(null);
-		}
-
-		
 	}
 }

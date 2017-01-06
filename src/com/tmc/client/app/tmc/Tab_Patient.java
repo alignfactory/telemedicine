@@ -29,35 +29,19 @@ import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
-public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGridOperate, InterfaceLookupResult  {
+public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGridOperate {
 	
 	private PatientModelProperties properties = GWT.create(PatientModelProperties.class);
 	private Grid<PatientModel> grid = this.buildGrid();
+	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 
+	private LookupTriggerField lookupCompanyField = getLookupCompanyField(); 
 	private TextField patientNameField = new TextField();
-	private Lookup_Company lookupCompany = new Lookup_Company(this);
-	private CompanyModel companyModel = new CompanyModel();
-	
-	private LookupTriggerField lookupCompanyField= new LookupTriggerField() ;
 	
 	public Tab_Patient() {
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		
-		lookupCompanyField.setEditable(false);
-		lookupCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
-   	 		@Override
-			public void onTriggerClick(TriggerClickEvent event) {
-   	 			//Info.display("lookup", "Company");
-   	 			lookupCompany.show();
-			}
-   	 	}); 
-
-		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48); 
-		this.companyModel = LoginUser.getLoginUser().getCompanyModel(); 
-		lookupCompanyField.setText(companyModel.getCompanyName());
-		
+		searchBarBuilder.addLookupTriggerField(this.lookupCompanyField, "기관명", 250, 48); 
 		searchBarBuilder.addLabel(patientNameField, "환자", 150, 46, true); 
-
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();
@@ -65,6 +49,36 @@ public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGri
 
 		this.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 48));
 		this.add(grid, new VerticalLayoutData(1, 1));
+	}
+	
+	private LookupTriggerField getLookupCompanyField(){
+		
+		Lookup_Company lookupCompany = new Lookup_Company();
+		lookupCompany.setCallback(new InterfaceLookupResult(){
+			@Override
+			public void setLookupResult(Object result) {
+				if(result != null) {
+					companyModel = (CompanyModel)result;// userCompanyModel.getCompanyModel(); 
+					lookupCompanyField.setValue(companyModel.getCompanyName());
+				}
+				else {
+					companyModel = new CompanyModel();  
+					lookupCompanyField.setValue(null);
+				}
+			}
+		});
+		
+		LookupTriggerField lookupCompanyField = new LookupTriggerField(); 
+		lookupCompanyField.setEditable(false);
+		lookupCompanyField.setText(this.companyModel.getCompanyName());
+		lookupCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
+   	 		@Override
+			public void onTriggerClick(TriggerClickEvent event) {
+   	 			lookupCompany.show();
+			}
+   	 	}); 
+		
+		return lookupCompanyField; 
 	}
 	
 	public Grid<PatientModel> buildGrid(){
@@ -93,12 +107,8 @@ public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGri
 		gridBuilder.addText(properties.guardianRelationName(), 100, "보호자관계", new TextField()) ;
 		gridBuilder.addText(properties.guardianTel1(), 90, "보호자전화1", new TextField()) ;
 		gridBuilder.addText(properties.guardianTel2(), 90, "보호자번호2", new TextField()) ;
-
-//		gridBuilder.addText(properties.companyId(), 80, "관할기관", new TextField()) ;
 		gridBuilder.addText(properties.note(), 400, "비고", new TextField()) ;
-
 		return gridBuilder.getGrid(); 
-		
 	}
 
 	@Override
@@ -139,20 +149,5 @@ public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGri
 		GridDeleteData<PatientModel> service = new GridDeleteData<PatientModel>();
 		List<PatientModel> checkedList = grid.getSelectionModel().getSelectedItems() ; 
 		service.deleteRow(grid.getStore(), checkedList, "tmc.Patient.delete");
-	}
-
-	@Override
-	public void setLookupResult(Object result) {
-		if(result != null) {
-//			CompanyModel companyModel =  
-			this.companyModel = (CompanyModel)result;// userCompanyModel.getCompanyModel(); 
-			lookupCompanyField.setValue(this.companyModel.getCompanyName());
-		}
-		else {
-			this.companyModel = new CompanyModel();  
-			lookupCompanyField.setValue(null);
-		}
-
-		
 	}
 }

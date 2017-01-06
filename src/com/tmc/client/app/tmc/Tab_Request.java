@@ -34,43 +34,25 @@ import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHan
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
-import com.sencha.gxt.widget.core.client.info.Info;
 
-public class Tab_Request extends BorderLayoutContainer implements InterfaceGridOperate, InterfaceLookupResult  {
+public class Tab_Request extends BorderLayoutContainer implements InterfaceGridOperate {
 	
 	private RequestModelProperties properties = GWT.create(RequestModelProperties.class);
 	private Grid<RequestModel> grid = this.buildGrid();
 	private Grid<RequestModel> gridHistory = this.buildGridHistory();
 	private Page_Treat pageTreat = new Page_Treat();
-	
 	private TextField patientNameField = new TextField();
-	private Lookup_Company lookupCompany = new Lookup_Company(this);
 	private CompanyModel companyModel = new CompanyModel();
-	private LookupTriggerField lookUpCompanyField = new LookupTriggerField() ;
+	private LookupTriggerField lookUpCompanyField = this.getLookUpCompanyField() ;
 	
-	private String lookUpName = "none"; 
 
-	private void setLookUpName(String name){
-		this.lookUpName = name; 
+	public Tab_Request getThis(){
+		return this; 
 	}
 
-	private String getLookUpName(){
-		return this.lookUpName ;  
-	}
-
-	
 	public Tab_Request() {
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		
-		lookUpCompanyField.setEditable(false);
-		lookUpCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
-   	 		@Override
-			public void onTriggerClick(TriggerClickEvent event) {
-   	 			setLookUpName("lookUpCompany"); 
-   	 			lookupCompany.show();
-			}
-   	 	}); 
 
 		searchBarBuilder.addLookupTriggerField(lookUpCompanyField, "기관명", 250, 48);
 		this.companyModel = LoginUser.getLoginUser().getCompanyModel(); 
@@ -105,76 +87,112 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 				editRequestModel(requestModel); 
 			}
 		}); 
-
 		
 		BorderLayoutData northLayoutData = new BorderLayoutData(300);
 		northLayoutData.setMargins(new Margins(2,0,0,0));
 		northLayoutData.setSplit(true);
 		northLayoutData.setMaxSize(1000);
-		
 		this.setNorthWidget(vlc, northLayoutData); 
 
 		BorderLayoutData westLayoutData = new BorderLayoutData(400);
 		westLayoutData.setMargins(new Margins(2,0,0,0));
 		westLayoutData.setSplit(true);
 		westLayoutData.setMaxSize(1000);
-		
 		this.setWestWidget(this.gridHistory, westLayoutData);
 
 		BorderLayoutData centerLayoutData = new BorderLayoutData();
 		centerLayoutData.setMargins(new Margins(2,2,0,2));
 		centerLayoutData.setMaxSize(1000);
-		
-		 
 		this.setCenterWidget(pageTreat, centerLayoutData);
 	}
 	
-	public Tab_Request getThis(){
-		return this; 
+	private LookupTriggerField getLookUpCompanyField(){
+		
+		Lookup_Company lookupCompany = new Lookup_Company();
+		lookupCompany.setCallback(new InterfaceLookupResult(){
+			@Override
+			public void setLookupResult(Object result) {
+				companyModel = (CompanyModel)result;
+				lookUpCompanyField.setText(companyModel.getCompanyName());
+			}
+		});
+
+		lookUpCompanyField.setEditable(false);
+		lookUpCompanyField.addTriggerClickHandler(new TriggerClickHandler(){
+   	 		@Override
+			public void onTriggerClick(TriggerClickEvent event) {
+   	 			lookupCompany.show();
+			}
+   	 	}); 
+		
+		return lookUpCompanyField; 
 	}
 	
-	public Grid<RequestModel> buildGrid(){
-
-		// 환자 찾기 
-		LookupTriggerField lookUpPatientField = new LookupTriggerField(); 
+	
+	private LookupTriggerField getLookupPatientField (){ // 환자 찾기 
+		Lookup_Patient lookupPatient = new Lookup_Patient();
+		lookupPatient.setCallback(new InterfaceLookupResult(){
+			@Override
+			public void setLookupResult(Object result) {
+				RequestModel data = grid.getSelectionModel().getSelectedItem();
+				PatientModel patientModel = (PatientModel)result;
+				
+				grid.getStore().getRecord(data).addChange(properties.patientId(), patientModel.getPatientId());
+				grid.getStore().getRecord(data).addChange(properties.patientKorName(), patientModel.getKorName());
+				grid.getStore().getRecord(data).addChange(properties.insNo(), patientModel.getInsNo());
+			}
+		});
+		
+		LookupTriggerField lookUpPatientField = new LookupTriggerField(); // 환자 찾기 
 		lookUpPatientField.addTriggerClickHandler(new TriggerClickHandler(){
 			@Override
 			public void onTriggerClick(TriggerClickEvent event) {
-   	 			setLookUpName("lookUpPatient"); 
-				new Lookup_Patient(getThis()).show();
+				lookupPatient.show();
 			}
 		}); 
-
 		
-		// 담당의사 찾기 
+		return lookUpPatientField ; 
+	}
+
+	private LookupTriggerField getLookupTriggerField(){ // 담당의사 찾기 
+		Lookup_RequestUser lookupRegisterUser = new Lookup_RequestUser(this.companyModel); // 선택된 기관정보를 넘겨준다.
+		lookupRegisterUser.setCallback(new InterfaceLookupResult(){
+			@Override
+			public void setLookupResult(Object result) {
+				RequestModel data = grid.getSelectionModel().getSelectedItem();
+				UserModel userModel = (UserModel)result; 
+
+				grid.getStore().getRecord(data).addChange(properties.requestUserId(), userModel.getUserId());
+				grid.getStore().getRecord(data).addChange(properties.korName(), userModel.getKorName());
+			}
+			
+		});
+
 		LookupTriggerField lookUpReqUserField = new LookupTriggerField(); 
 		lookUpReqUserField.addTriggerClickHandler(new TriggerClickHandler(){
 			@Override
 			public void onTriggerClick(TriggerClickEvent event) {
-   	 			setLookUpName("lookUpReqUser"); 
-				new Lookup_RequestUser(getThis(), companyModel).show(); // 선택된 기관정보를 넘겨준다. 
+				if(companyModel == null){
+					new SimpleMessage("선택된 기관명이 없습니다."); 
+					return ; 
+				}
+				lookupRegisterUser.show(); 
 			}
 		}); 
 
-		// 진료의사 찾기 
-//		LookupTriggerField lookUpTreatUserField = new LookupTriggerField(); 
-//		lookUpTreatUserField.addTriggerClickHandler(new TriggerClickHandler(){
-//			@Override
-//			public void onTriggerClick(TriggerClickEvent event) {
-//   	 			setLookUpName("lookUpTreatUser"); 
-//				new Lookup_User(getThis()).show();
-//			}
-//		}); 
-
+		return lookUpReqUserField ; 
+	}
+	
+	public Grid<RequestModel> buildGrid(){
 		
 		GridBuilder<RequestModel> gridBuilder = new GridBuilder<RequestModel>(properties.keyId());  
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 
 		gridBuilder.addDate(properties.requestDate(), 100, "진료예정일", new DateField());
 		gridBuilder.addText(properties.insNo(), 100, "보험번호"); //, new TextField()) ;
-		gridBuilder.addText(properties.patientKorName(), 80, "환자명", lookUpPatientField) ;
+		gridBuilder.addText(properties.patientKorName(), 80, "환자명", this.getLookupPatientField()) ;
 		
-		gridBuilder.addText(properties.korName(), 100, "보건의", lookUpReqUserField);
+		gridBuilder.addText(properties.korName(), 100, "보건의", this.getLookupTriggerField());
 		//gridBuilder.addLong(properties.requestUserId(), 100, "담당의사ID", new LongField()) ;
 
 		//gridBuilder.addText(properties.requestTypeCode(), 80, "요청구분", new TextField()) ;
@@ -276,35 +294,21 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		service.deleteRow(grid.getStore(), checkedList, "tmc.Request.delete");
 	}
 
-	@Override
-	public void setLookupResult(Object result) {
-		
-		if("lookUpCompany".equals(this.getLookUpName())){
-			if(result != null) {
-				this.companyModel = (CompanyModel)result;
-				lookUpCompanyField.setValue(this.companyModel.getCompanyName());
-			}
-		}
-		
-		if("lookUpPatient".equals(this.getLookUpName())){ // 환자 찾ㅈ기
-			if(result != null) {
-				PatientModel patientModel = (PatientModel)result; 
-				RequestModel data = grid.getSelectionModel().getSelectedItem(); 
-				
-				// grid.getStore().getRecord(data).getModel().setPatientId(patientModel.getPatientId());
-				grid.getStore().getRecord(data).addChange(properties.patientId(), patientModel.getPatientId());
-				grid.getStore().getRecord(data).addChange(properties.patientKorName(), patientModel.getKorName());
-				grid.getStore().getRecord(data).addChange(properties.insNo(), patientModel.getInsNo());
-			}
-		}
-		
-		if("lookUpReqUser".equals(this.getLookUpName())){ // 보건의 찾기 
-			if(result != null) {
-				UserModel userModel = (UserModel)result; 
-				RequestModel data = grid.getSelectionModel().getSelectedItem(); 
-				grid.getStore().getRecord(data).addChange(properties.korName(), userModel.getKorName());
-				grid.getStore().getRecord(data).addChange(properties.requestUserId(), userModel.getUserId());
-			}
-		}
-	}
+//	@Override
+//	public void setLookupResult(Object result) {
+//		
+//		if("lookUpPatient".equals(this.getLookUpName())){ // 환자 찾ㅈ기
+//			if(result != null) {
+//			}
+//		}
+//		
+//		if("lookUpReqUser".equals(this.getLookUpName())){ // 보건의 찾기 
+//			if(result != null) {
+//				UserModel userModel = (UserModel)result; 
+//				RequestModel data = grid.getSelectionModel().getSelectedItem(); 
+//				grid.getStore().getRecord(data).addChange(properties.korName(), userModel.getKorName());
+//				grid.getStore().getRecord(data).addChange(properties.requestUserId(), userModel.getUserId());
+//			}
+//		}
+//	}
 }

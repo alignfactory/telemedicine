@@ -4,7 +4,6 @@ import com.tmc.client.app.sys.model.CompanyModel;
 import com.tmc.client.app.sys.model.UserModel;
 import com.tmc.client.app.sys.model.UserModelProperties;
 import com.tmc.client.service.GridRetrieveData;
-import com.tmc.client.ui.InterfaceLookupResult;
 import com.tmc.client.ui.SimpleMessage;
 import com.tmc.client.ui.builder.AbstractLookupWindow;
 import com.tmc.client.ui.builder.GridBuilder;
@@ -22,13 +21,14 @@ public class Lookup_RequestUser extends AbstractLookupWindow {
 
 	private UserModelProperties properties = GWT.create(UserModelProperties.class);
 	private Grid<UserModel> grid = this.buildGrid();
-	private InterfaceLookupResult lookupParent ;
 	private TextField userNameField = new TextField();
 	private CompanyModel companyModel = new CompanyModel(); 
 	
-	public Lookup_RequestUser(InterfaceLookupResult lookupParent, Object param){
-
-		this.lookupParent = lookupParent; 
+	public Lookup_RequestUser(CompanyModel companyModel){
+		
+		// 사용자 소속회사 설정 
+		this.companyModel = companyModel;
+		
 		this.setInit("보건의 찾기", 900, 400); 
 		this.addLabel(userNameField, "성명", 150, 50, true) ;
 
@@ -36,11 +36,8 @@ public class Lookup_RequestUser extends AbstractLookupWindow {
 		vlc.add(this.getSearchBar(), new VerticalLayoutData(1, 40)); // , new Margins(0, 0, 0, 5)));
 		vlc.add(grid, new VerticalLayoutData(1, 1));
 		this.add(vlc);
-		//this.retrieve();
-		this.setCompanyModel((CompanyModel)param); 
 		
 		this.grid.addRowDoubleClickHandler(new RowDoubleClickHandler(){
-
 			@Override
 			public void onRowDoubleClick(RowDoubleClickEvent event) {
 				confirm(); 
@@ -65,9 +62,9 @@ public class Lookup_RequestUser extends AbstractLookupWindow {
 	
 	@Override
 	public void retrieve(){
-		if(this.getCompanyModel() != null){
+		if(this.companyModel != null){
 			GridRetrieveData<UserModel> service = new GridRetrieveData<UserModel>(grid.getStore());
-			service.addParam("companyId", this.getCompanyModel().getCompanyId());
+			service.addParam("companyId", this.companyModel.getCompanyId());
 			service.addParam("userName", userNameField.getText());
 			service.retrieve("sys.User.selectByName");
 		} 
@@ -81,7 +78,7 @@ public class Lookup_RequestUser extends AbstractLookupWindow {
 	public void confirm() {
 		UserModel userModel = grid.getSelectionModel().getSelectedItem(); 
 		if(userModel != null){
-			lookupParent.setLookupResult(userModel);
+			this.getCallback().setLookupResult(userModel);
 			hide(); 
 		}
 		else {
@@ -93,11 +90,4 @@ public class Lookup_RequestUser extends AbstractLookupWindow {
 	public void cancel() {
 	}
 
-	public CompanyModel getCompanyModel() {
-		return companyModel;
-	}
-
-	public void setCompanyModel(CompanyModel companyModel) {
-		this.companyModel = companyModel;
-	}
 }
