@@ -44,11 +44,10 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 	
 	private RequestModelProperties properties = GWT.create(RequestModelProperties.class);
 	private Grid<RequestModel> grid = this.buildGrid();
-	
 	private Grid<RequestModel> gridHistory = this.buildGridHistory();
 	private Page_Treat pageTreat = new Page_Treat();
 	private TextField patientNameField = new TextField();
-	
+	private DateField dateField = new DateField(); 
 	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 
 	
 	public Tab_Request() {
@@ -76,6 +75,9 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48);
+		searchBarBuilder.addDateField(dateField, "진료요청일", 180, 70, true);
+		dateField.setValue(new Date());
+		
 		searchBarBuilder.addTextField(patientNameField, "환자명", 170, 48, true); 
 		
 		searchBarBuilder.addRetrieveButton(); 
@@ -254,6 +256,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		// 초기 데이터 설정 
 		requestModel.setRegUserModel(LoginUser.getLoginUser());
 		requestModel.setRegUserId(LoginUser.getLoginUser().getUserId());
+		requestModel.setRequestDate(dateField.getValue());
 		requestModel.setRegDate(new Date());
 		requestModel.setRequestUserModel(LoginUser.getLoginUser());
 		requestModel.setRequestUserId(LoginUser.getLoginUser().getUserId());
