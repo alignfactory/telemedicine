@@ -22,6 +22,7 @@
  	<result column="tmc01_guardian_relation_nm"  property="guardianRelationName"/>
  	<result column="tmc01_view_point"		property="viewPoint"/>
  	<result column="tmc01_note"				property="note"/>
+ 	<result column="tmc01_first_date"		property="firstDate"/>
 	
 	<association property="companyModel" 
 		javaType="com.tmc.client.app.sys.model.CompanyModel" 

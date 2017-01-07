@@ -76,7 +76,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48);
-		searchBarBuilder.addTextField(patientNameField, "환자명", 150, 46, true); 
+		searchBarBuilder.addTextField(patientNameField, "환자명", 170, 48, true); 
 		
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
@@ -176,18 +176,18 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		GridBuilder<RequestModel> gridBuilder = new GridBuilder<RequestModel>(properties.keyId());  
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 
-		gridBuilder.addDate(properties.requestDate(), 100, "진료예정일", new DateField());
-		gridBuilder.addText(properties.insNo(), 100, "보험번호"); //, new TextField()) ;
+		gridBuilder.addDate(properties.requestDate(), 90, "진료예정일", new DateField());
+		gridBuilder.addText(properties.insNo(), 80, "보험번호"); //, new TextField()) ;
 		gridBuilder.addText(properties.patientKorName(), 80, "환자명", lookupPatientField) ;
 		
-		gridBuilder.addText(properties.korName(), 100, "보건의", lookupRequestUserField);
+		gridBuilder.addText(properties.korName(), 80, "보건의", lookupRequestUserField);
 		gridBuilder.addText(properties.requestNote(), 200, "진료요청내용", new TextField()) ;
-		gridBuilder.addDate(properties.treatDate(), 100, "진료일"); //, new DateField());
+		gridBuilder.addDate(properties.treatDate(), 85, "진료일"); //, new DateField());
 		gridBuilder.addText(properties.treatKorName(), 80, "진료의"); //, lookUpTreatUserField) ;
 		gridBuilder.addText(properties.treatNote(), 200, "처방내역"); //, new TextField()) ;
 		gridBuilder.addText(properties.note(), 400, "특기사항", new TextField()) ;		
 		gridBuilder.addText(properties.regKorName(), 80, "등록자"); //, new TextField()) ;
-		gridBuilder.addDate(properties.regDate(), 100, "등록일"); //, new DateField()) ;
+		gridBuilder.addDate(properties.regDate(), 85, "등록일"); //, new DateField()) ;
 		return gridBuilder.getGrid(); 
 	}
 
@@ -195,9 +195,9 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 
 		GridBuilder<RequestModel> gridBuilder = new GridBuilder<RequestModel>(properties.keyId());  
 		// gridBuilder.setChecked(null);
-		gridBuilder.addDate(properties.treatDate(), 	100, "진료일"); //, new DateField());
+		gridBuilder.addDate(properties.treatDate(), 	85, "진료일"); //, new DateField());
 		gridBuilder.addText(properties.treatKorName(), 	80, "진료의"); //, lookUpTreatUserField) ;
-		gridBuilder.addDate(properties.requestDate(), 	100, "진료예정일");
+		gridBuilder.addDate(properties.requestDate(), 	90, "진료예정일");
 		gridBuilder.addText(properties.korName(), 		80, "보건의");
 		
 		return gridBuilder.getGrid(); 

@@ -24,6 +24,7 @@ public class PatientModel extends AbstractDataModel {
 	private String insNo;
 	private Long 	companyId;
 	private String note;
+	private Date 	firstDate;
 	
 	private CompanyModel companyModel = new CompanyModel(); 
 
@@ -179,6 +180,14 @@ public class PatientModel extends AbstractDataModel {
 
 	public void setGenderName(String genderName) {
 		this.genderName = genderName;
+	}
+
+	public Date getFirstDate() {
+		return firstDate;
+	}
+
+	public void setFirstDate(Date firstDate) {
+		this.firstDate = firstDate;
 	}
 
 }

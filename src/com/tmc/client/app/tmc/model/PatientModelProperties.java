@@ -28,5 +28,6 @@ public interface PatientModelProperties  extends PropertyAccess<PatientModel> {
 	ValueProvider<PatientModel, Long> 	companyId();
 	ValueProvider<PatientModel, String> note();
 	ValueProvider<PatientModel, String> genderName();
+	ValueProvider<PatientModel, Date> 	firstDate();
 
 }
