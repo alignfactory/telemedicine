@@ -44,9 +44,11 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 	
 	private RequestModelProperties properties = GWT.create(RequestModelProperties.class);
 	private Grid<RequestModel> grid = this.buildGrid();
+	
 	private Grid<RequestModel> gridHistory = this.buildGridHistory();
 	private Page_Treat pageTreat = new Page_Treat();
 	private TextField patientNameField = new TextField();
+	
 	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 
 	
 	public Tab_Request() {
@@ -70,12 +72,12 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 			}
    	 	}); 
 
-		this.companyModel = LoginUser.getLoginUser().getCompanyModel(); 
 		lookupCompanyField.setText(companyModel.getCompanyName());
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48);
 		searchBarBuilder.addLabel(patientNameField, "환자명", 150, 46, true); 
+		
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();
@@ -111,12 +113,12 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		northLayoutData.setMaxSize(1000);
 		this.setNorthWidget(vlc, northLayoutData); 
 
-		BorderLayoutData westLayoutData = new BorderLayoutData(400);
+		BorderLayoutData westLayoutData = new BorderLayoutData(1);
 		westLayoutData.setMargins(new Margins(2,0,0,0));
 		westLayoutData.setSplit(true);
 		westLayoutData.setMaxSize(1000);
 		this.setWestWidget(this.gridHistory, westLayoutData);
-
+				
 		BorderLayoutData centerLayoutData = new BorderLayoutData();
 		centerLayoutData.setMargins(new Margins(2,2,0,2));
 		centerLayoutData.setMaxSize(1000);
