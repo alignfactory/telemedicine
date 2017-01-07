@@ -28,13 +28,16 @@ import com.sencha.gxt.widget.core.client.tree.Tree;
 public class MainWindow extends ContentPanel {
 	
 	private PlainTabPanel tabPanel = new PlainTabPanel();	
-
+ 
 	public MainWindow() {
 		
 		this.setHeaderVisible(true);	
 		this.getHeader().setIcon(ResourceIcon.INSTANCE.gearIcon());
 		
-		String header = "반갑습니다. " + LoginUser.getLoginUser().getLoginId() + "님!" ; 
+		String header = "반갑습니다. " + LoginUser.getLoginUser().getCompanyModel().getCompanyName()
+				+ " " + LoginUser.getLoginUser().getKorName()+ "님!" ; ; 
+				
+				// .getLoginUser().getLoginId() + "님!" ; 
 		SafeHtmlBuilder htmlBuilder=new SafeHtmlBuilder();
 		htmlBuilder.appendHtmlConstant("<div style='color:lightgrey;'>&nbsp;" + header + "</div>"); 
 		this.setHeading(htmlBuilder.toSafeHtml());
