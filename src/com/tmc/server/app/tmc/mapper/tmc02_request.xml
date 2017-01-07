@@ -163,7 +163,7 @@
 	
 	order 	by tmc02_request_date
 </select>
-
+ 
 <select id="selectByPatientId" resultMap="mapper" parameterType="Long" > 
 	select 	tmc01_patient.*, 
 			tmc02_request.*,

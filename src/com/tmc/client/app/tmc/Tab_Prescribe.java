@@ -106,7 +106,7 @@ public class Tab_Prescribe extends BorderLayoutContainer implements InterfaceGri
 			}
 		}); 
 		
-		BorderLayoutData northLayoutData = new BorderLayoutData(300);
+		BorderLayoutData northLayoutData = new BorderLayoutData(250);
 		northLayoutData.setMargins(new Margins(2,0,0,0));
 		northLayoutData.setSplit(true);
 		northLayoutData.setMaxSize(1000);
