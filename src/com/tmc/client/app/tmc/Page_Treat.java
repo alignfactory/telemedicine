@@ -165,12 +165,12 @@ public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
 	    VerticalLayoutContainer layout = new VerticalLayoutContainer(); 
 	    layout.setScrollMode(ScrollSupport.ScrollMode.AUTOY);
 	    
-	    layout.add(row00, new VerticalLayoutData(1, -1, new Margins(18)));
-	    layout.add(row01, new VerticalLayoutData(1, -1, new Margins(18))); 
-	    layout.add(row02, new VerticalLayoutData(1, -1, new Margins(18)));
-	    layout.add(row03, new VerticalLayoutData(1, 76, new Margins(18)));
-	    layout.add(row04, new VerticalLayoutData(1, 170, new Margins(18)));
-	    layout.add(row05, new VerticalLayoutData(1, 1, new Margins(18)));
+	    layout.add(row00, new VerticalLayoutData(1, -1, new Margins(15)));
+	    layout.add(row01, new VerticalLayoutData(1, -1, new Margins(15))); 
+	    layout.add(row02, new VerticalLayoutData(1, -1, new Margins(15)));
+	    layout.add(row03, new VerticalLayoutData(1, 76, new Margins(15)));
+	    layout.add(row04, new VerticalLayoutData(1, 170, new Margins(15)));
+	    layout.add(row05, new VerticalLayoutData(1, 1, new Margins(15)));
 	    
 	    // form setting 
 		FormPanel form = new FormPanel(); 

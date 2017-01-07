@@ -1,19 +1,12 @@
 package com.tmc.client.app.tmc;
 
 import java.util.Date;
-import java.util.List;
-
 import com.tmc.client.app.sys.Lookup_Company;
 import com.tmc.client.app.sys.model.CompanyModel;
-import com.tmc.client.app.sys.model.UserModel;
-import com.tmc.client.app.tmc.model.PatientModel;
 import com.tmc.client.app.tmc.model.RequestModel;
 import com.tmc.client.app.tmc.model.RequestModelProperties;
 import com.tmc.client.main.LoginUser;
-import com.tmc.client.service.GridDeleteData;
-import com.tmc.client.service.GridInsertRow;
 import com.tmc.client.service.GridRetrieveData;
-import com.tmc.client.service.GridUpdateData;
 import com.tmc.client.service.InterfaceCallback;
 import com.tmc.client.ui.InterfaceLookupResult;
 import com.tmc.client.ui.SimpleMessage;
@@ -24,10 +17,6 @@ import com.tmc.client.ui.field.LookupTriggerField;
 import com.google.gwt.core.client.GWT;
 import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.core.client.util.Margins;
-import com.sencha.gxt.data.shared.event.StoreRecordChangeEvent;
-import com.sencha.gxt.data.shared.event.StoreRecordChangeEvent.StoreRecordChangeHandler;
-import com.sencha.gxt.data.shared.event.StoreUpdateEvent;
-import com.sencha.gxt.data.shared.event.StoreUpdateEvent.StoreUpdateHandler;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
@@ -38,7 +27,6 @@ import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHan
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
-import com.sencha.gxt.widget.core.client.info.Info;
 
 public class Tab_Prescribe extends BorderLayoutContainer implements InterfaceGridOperate {
 	
@@ -173,7 +161,6 @@ public class Tab_Prescribe extends BorderLayoutContainer implements InterfaceGri
 				}
 			}
 		});
-
 		service.addParam("patientId", requestModel.getPatientId());
 		service.retrieve("tmc.Request.selectByPatientId");
 	}
@@ -185,7 +172,6 @@ public class Tab_Prescribe extends BorderLayoutContainer implements InterfaceGri
 			new SimpleMessage("기관명 확인", "조회조건의 기관명은 반드시 입력하세요. ");
 			return ; 
 		} 
-
 		gridHistory.getStore().clear(); 
 		this.pageTreat.reset();
 		
