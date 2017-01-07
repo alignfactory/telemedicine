@@ -15,6 +15,8 @@ public interface CheckupModelProperties  extends PropertyAccess<CheckupModel> {
 	 ValueProvider<CheckupModel, Long > requestId();	 
 	 ValueProvider<CheckupModel, String > checkupCode();
 	 ValueProvider<CheckupModel, String > checkupName();
+	 ValueProvider<CheckupModel, String > checkupOrder();
+	 
 	 ValueProvider<CheckupModel, String > processCode();
 	 ValueProvider<CheckupModel, String > processName();
 	 ValueProvider<CheckupModel, String> checkupResult();
