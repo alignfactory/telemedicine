@@ -46,7 +46,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 	private Grid<RequestModel> grid = this.buildGrid();
 	
 	private Grid<RequestModel> gridHistory = this.buildGridHistory();
-	private Page_Treat pageTreat = new Page_Treat();
+	private Page_Treat pageTreat = new Page_Treat(grid);
 	private TextField patientNameField = new TextField();
 	
 	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 

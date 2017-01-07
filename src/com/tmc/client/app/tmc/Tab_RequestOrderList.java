@@ -48,7 +48,6 @@ public abstract class Tab_RequestOrderList extends BorderLayoutContainer impleme
 	private TextField patientNameField = new TextField();
 	// private Lookup_Company lookupCompany = new Lookup_Company(this);
 	
-	private CompanyModel companyModel = new CompanyModel();
 	private LookupTriggerField lookUpCompanyField = new LookupTriggerField() ;
 	
 	private String lookUpName = "none"; 
@@ -121,7 +120,7 @@ public abstract class Tab_RequestOrderList extends BorderLayoutContainer impleme
 		centerLayoutData.setMargins(new Margins(2,2,0,2));
 		centerLayoutData.setMaxSize(1000);
 		
-		Page_Treat pageTreat = new Page_Treat(); 
+		Page_Treat pageTreat = new Page_Treat(grid); 
 		this.setCenterWidget(pageTreat, centerLayoutData);
 	}
 	
