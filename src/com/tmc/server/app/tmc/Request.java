@@ -31,12 +31,14 @@ public class Request {
 	public void selectByCompanyId(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		Long companyId = request.getLong("companyId"); 
 		String patientName = request.getString("patientName");
-		
 		patientName = "%" + patientName + "%";
-		
+		Date requestDate = request.getDate("requestDate");
+
 		Map<String, Object> param = new HashMap<String, Object>(); 
 		param.put("companyId", companyId);
 		param.put("patientName", patientName); 
+		param.put("requestDate", requestDate); 
+		
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByCompanyId", param);
 		result.setRetrieveResult(1, "select ok", list);
 	}

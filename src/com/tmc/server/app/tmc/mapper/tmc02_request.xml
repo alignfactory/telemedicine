@@ -158,7 +158,9 @@
 			left join sys02_user treat_user 
 				on tmc02_treat_user_id = treat_user.sys02_user_id
 	where 	tmc01_company_id = #{companyId}
+	and		tmc02_request_date = convert(date, #{requestDate})
 	and		tmc01_kor_nm like #{patientName}
+	
 	order 	by tmc02_request_date
 </select>
 
@@ -195,7 +197,7 @@
 			left join sys02_user treat_user 
 				on tmc02_treat_user_id = treat_user.sys02_user_id
 	where 	tmc02_patient_id = #{patientId}
-	order 	by tmc02_request_date
+	order 	by tmc02_request_date desc 
 </select>
 
 <select id="selectBySearchList" resultMap="mapper" parameterType="HashMap"> 

@@ -6,12 +6,14 @@
 <resultMap 	id="mapper" type="com.tmc.client.app.tmc.model.CheckupModel" >
 	<id  	column="tmc03_checkup_id"  		property="checkupId"/>
 	
-	<result column="tmc03_checkup_cd"  		property="checkupTypeCode"/>
-	<result column="tmc03_checkup_nm"  		property="checkupTypeName"/>
+	<result column="tmc03_checkup_cd"  		property="checkupCode"/>
+	<result column="tmc03_checkup_nm"  		property="checkupName"/>
 	
 	<result column="tmc03_checkup_result"	property="checkupResult"/>
 	<result column="tmc03_checkup_date"  	property="checkupDate"/>
 	
+	<result column="tmc03_checkup_order"  	property="checkupOrder"/>
+		
 	<result column="tmc03_process_cd"  		property="processCode"/>
 	<result column="tmc03_process_nm"  		property="processName"/>
 	
@@ -33,18 +35,18 @@
 	from 	tmc03_checkup
 			left outer join sys02_user
 			on tmc03_checkup_user_id = sys02_user_id
-	and		tmc03_checkup_id = #{checkupId}
+	where	tmc03_checkup_id = #{checkupId}
 </select>
 
 <select id="selectByRequestId" resultMap="mapper" parameterType="Long" > 
 	select 	tmc03_checkup.*,
 			sys02_user.*,    
-			dbo.f_cdnm('CheckupCode', tmc03_checkup_cd) tmc03_checkup_nm,   
+			dbo.f_cdnm('CheckupTypeCode', tmc03_checkup_cd) tmc03_checkup_nm,   
 			dbo.f_cdnm('CheckupProcessCode', tmc03_process_cd) tmc03_process_nm
 	from 	tmc03_checkup
 			left outer join sys02_user
 			on tmc03_checkup_user_id = sys02_user_id
-	and		tmc03_request_id = #{requestId}
+	where	tmc03_request_id = #{requestId}
 </select>
 
 </mapper>

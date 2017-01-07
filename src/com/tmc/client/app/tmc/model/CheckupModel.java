@@ -10,8 +10,10 @@ public class CheckupModel extends AbstractDataModel {
 	private Long checkupId;
 	private Long requestId;
 	
-	private String checkupTypeCode;
-	private String checkupTypeName;
+	private String checkupCode;
+	private String checkupName;
+	
+	private String checkupOrder;
 	
 	private String processCode;
 	private String processName;
@@ -48,20 +50,20 @@ public class CheckupModel extends AbstractDataModel {
 		this.requestId = requestId;
 	}
 
-	public String getCheckupTypeCode() {
-		return checkupTypeCode;
+	public String getCheckupCode() {
+		return checkupCode;
 	}
 
-	public void setCheckupTypeCode(String checkupTypeCode) {
-		this.checkupTypeCode = checkupTypeCode;
+	public void setCheckupCode(String checkupCode) {
+		this.checkupCode = checkupCode;
 	}
 
-	public String getCheckupTypeName() {
-		return checkupTypeName;
+	public String getCheckupName() {
+		return checkupName;
 	}
 
-	public void setCheckupTypeName(String checkupTypeName) {
-		this.checkupTypeName = checkupTypeName;
+	public void setCheckupName(String checkupName) {
+		this.checkupName = checkupName;
 	}
 
 	public String getProcessCode() {
@@ -110,6 +112,14 @@ public class CheckupModel extends AbstractDataModel {
 
 	public void setUserModel(UserModel userModel) {
 		this.userModel = userModel;
+	}
+
+	public String getCheckupOrder() {
+		return checkupOrder;
+	}
+
+	public void setCheckupOrder(String checkupOrder) {
+		this.checkupOrder = checkupOrder;
 	}
 
 	

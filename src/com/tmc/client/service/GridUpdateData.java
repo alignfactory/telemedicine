@@ -17,6 +17,7 @@ import com.sencha.gxt.widget.core.client.info.Info;
 public class GridUpdateData<T> implements InterfaceServiceCall{
 	
 	ListStore<T> listStore ; 
+	InterfaceCallback callBack; 
 	
 	public GridUpdateData(){
 	} 
@@ -55,6 +56,9 @@ public class GridUpdateData<T> implements InterfaceServiceCall{
 		service.execute(request, this);
 	}
 	
+	public void addCallback(InterfaceCallback callBack){
+		this.callBack = callBack;
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
