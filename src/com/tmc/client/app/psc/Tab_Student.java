@@ -37,7 +37,7 @@ public class Tab_Student extends BorderLayoutContainer implements InterfaceGridO
 	public Tab_Student() {
 
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(korName, "원생명", 150, 50, true); 
+		searchBarBuilder.addTextField(korName, "원생명", 150, 50, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addDeleteButton();
 		

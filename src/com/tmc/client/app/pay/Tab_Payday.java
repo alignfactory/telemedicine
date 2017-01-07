@@ -51,7 +51,7 @@ public class Tab_Payday extends BorderLayoutContainer implements InterfaceGridOp
 		this.setBorders(false); 
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(payYear, "지급년도", 150, 60, true); 
+		searchBarBuilder.addTextField(payYear, "지급년도", 150, 60, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();

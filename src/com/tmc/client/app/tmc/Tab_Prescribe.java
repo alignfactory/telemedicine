@@ -42,6 +42,7 @@ public class Tab_Prescribe extends BorderLayoutContainer implements InterfaceGri
 	private Grid<RequestModel> gridHistory = this.buildGridHistory();
 	private Page_Treat pageTreat = new Page_Treat();
 	private TextField patientNameField = new TextField();
+	private DateField dateField = new DateField(); 
 	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 
 	
 	public Tab_Prescribe() {
@@ -69,8 +70,13 @@ public class Tab_Prescribe extends BorderLayoutContainer implements InterfaceGri
 		lookupCompanyField.setText(companyModel.getCompanyName());
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48);
-		searchBarBuilder.addLabel(patientNameField, "환자명", 150, 46, true); 
+		
+		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "진료기관", 250, 58);
+		searchBarBuilder.addDateField(dateField, "진료예정일", 180, 70, true);
+		dateField.setValue(new Date());
+		
+		searchBarBuilder.addTextField(patientNameField, "환자명", 150, 46, true); 
+
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();
@@ -170,6 +176,7 @@ public class Tab_Prescribe extends BorderLayoutContainer implements InterfaceGri
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 
 		gridBuilder.addDate(properties.requestDate(), 100, "진료예정일", new DateField());
+		gridBuilder.addText(properties.treatStateName(), 80, "상태구분"); 
 		gridBuilder.addText(properties.insNo(), 100, "보험번호"); //, new TextField()) ;
 		gridBuilder.addText(properties.patientKorName(), 80, "환자명", lookupPatientField) ;
 		
@@ -188,9 +195,10 @@ public class Tab_Prescribe extends BorderLayoutContainer implements InterfaceGri
 
 		GridBuilder<RequestModel> gridBuilder = new GridBuilder<RequestModel>(properties.keyId());  
 		// gridBuilder.setChecked(null);
-		gridBuilder.addDate(properties.treatDate(), 	100, "진료일"); //, new DateField());
-		gridBuilder.addText(properties.treatKorName(), 	80, "진료의"); //, lookUpTreatUserField) ;
+		gridBuilder.addText(properties.treatStateName(), 80, "상태구분"); 
 		gridBuilder.addDate(properties.requestDate(), 	100, "진료예정일");
+		//gridBuilder.addDate(properties.treatDate(), 	100, "진료일"); //, new DateField());
+		gridBuilder.addText(properties.treatKorName(), 	80, "진료의"); //, lookUpTreatUserField) ;
 		gridBuilder.addText(properties.korName(), 		80, "보건의");
 		
 		return gridBuilder.getGrid(); 

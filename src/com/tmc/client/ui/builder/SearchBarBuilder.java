@@ -10,6 +10,7 @@ import com.sencha.gxt.widget.core.client.button.ButtonBar;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
@@ -23,7 +24,9 @@ public class SearchBarBuilder {
 	}
 	
 	public ButtonBar getSearchBar(){
+		this.searchBar.setHorizontalSpacing(8);
 		this.searchBar.setPadding(new Padding(0, 0, 0, 10));
+		
 		return this.searchBar; 
 	}
 	public void addLookupTriggerField(LookupTriggerField field, String labelName, int width, int labelWidth){
@@ -41,7 +44,6 @@ public class SearchBarBuilder {
 	public void addText(String text){
 		Label label = new Label(text); 
 		label.setLayoutData(new Margins(0, 10, 0, 0));
-		
 		searchBar.add(new Label(text));
 	}
 	
@@ -51,20 +53,18 @@ public class SearchBarBuilder {
 		fieldLabel.setWidth(width);
 		fieldLabel.setLabelWidth(labelWidth);
 		fieldLabel.setLayoutData(new Margins(0, 10, 0, 0));
-		
 		searchBar.add(fieldLabel);
+		
 		return fieldLabel; 
 	}
 	
 	
-	public FieldLabel addLabel(TextField field, String labelName, int width, int labelWidth, boolean useEnterKey){
+	public FieldLabel addTextField(TextField field, String labelName, int width, int labelWidth, boolean useEnterKey){
 		
 		FieldLabel fieldLabel = new FieldLabel(field, labelName); 
 		fieldLabel.setHeight(26); // 고정높이 버튼과 높이를 맞춘다. 
 		fieldLabel.setWidth(width);
 		fieldLabel.setLabelWidth(labelWidth);
-		fieldLabel.setLayoutData(new Margins(0, 10, 0, 0));
-		fieldLabel.setLabelPad(0);
 		
 		if(useEnterKey){
 			field.addKeyDownHandler(new KeyDownHandler(){
@@ -77,13 +77,40 @@ public class SearchBarBuilder {
 			}); 
 		}
 		searchBar.add(fieldLabel);
+		
 		return fieldLabel; 
 	}
 
-	public FieldLabel addLabel(TextField textField, String labelName, int width, int labelWidth){
-		return this.addLabel(textField, labelName, width, labelWidth, false);
+	public FieldLabel addTextField(TextField textField, String labelName, int width, int labelWidth){
+		return this.addTextField(textField, labelName, width, labelWidth, false);
 	}
 	
+	
+	public FieldLabel addDateField(DateField field, String labelName, int width, int labelWidth, boolean useEnterKey){
+		
+		FieldLabel fieldLabel = new FieldLabel(field, labelName); 
+		fieldLabel.setHeight(26); // 고정높이 버튼과 높이를 맞춘다. 
+		fieldLabel.setWidth(width);
+		fieldLabel.setLabelWidth(labelWidth);
+		
+		if(useEnterKey){
+			field.addKeyDownHandler(new KeyDownHandler(){
+				@Override
+				public void onKeyDown(KeyDownEvent arg0) {
+					if(arg0.getNativeKeyCode() == 13){ // enter key down 
+						target.retrieve(); 
+					}
+				}
+			}); 
+		}
+		searchBar.add(fieldLabel);
+		
+		return fieldLabel; 
+	}
+
+	public FieldLabel addDateField(DateField field, String labelName, int width, int labelWidth){
+		return this.addDateField(field, labelName, width, labelWidth, false);
+	}
 	
 	public TextButton addRetrieveButton(){
 		TextButton button = new TextButton("조회");

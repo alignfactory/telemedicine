@@ -60,7 +60,7 @@ public class Tab_Patient extends VerticalLayoutContainer implements InterfaceGri
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLookupTriggerField(this.lookupCompanyField, "기관명", 250, 48); 
-		searchBarBuilder.addLabel(patientNameField, "환자", 150, 46, true); 
+		searchBarBuilder.addTextField(patientNameField, "환자", 150, 46, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();

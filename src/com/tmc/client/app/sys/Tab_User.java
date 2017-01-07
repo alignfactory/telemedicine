@@ -54,7 +54,7 @@ public class Tab_User extends VerticalLayoutContainer implements InterfaceGridOp
 			
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48); 
-		searchBarBuilder.addLabel(userNameField, "담당자", 150, 46, true); 
+		searchBarBuilder.addTextField(userNameField, "담당자", 150, 46, true); 
 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();

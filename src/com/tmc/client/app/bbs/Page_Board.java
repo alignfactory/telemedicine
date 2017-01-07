@@ -45,7 +45,7 @@ public class Page_Board extends FramedPanel implements InterfaceGridOperate {
 		
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(searchText, "제목찾기", 200, 60, true) ; 
+		searchBarBuilder.addTextField(searchText, "제목찾기", 200, 60, true) ; 
 		searchBarBuilder.addRetrieveButton(); 
 		
 		this.getButtonBar().add(searchBarBuilder.getSearchBar());

@@ -32,7 +32,7 @@ public class Tab_CodeKind extends BorderLayoutContainer implements InterfaceGrid
 	public Tab_CodeKind() {
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(codeKindName, "코드구분명", 180, 70, true); 
+		searchBarBuilder.addTextField(codeKindName, "코드구분명", 180, 70, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();

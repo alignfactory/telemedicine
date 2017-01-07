@@ -76,7 +76,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48);
-		searchBarBuilder.addLabel(patientNameField, "환자명", 150, 46, true); 
+		searchBarBuilder.addTextField(patientNameField, "환자명", 150, 46, true); 
 		
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();

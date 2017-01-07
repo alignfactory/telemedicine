@@ -27,7 +27,7 @@ public class Tab_LicenseCode extends VerticalLayoutContainer implements Interfac
 	public Tab_LicenseCode() {
 
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(licenseName, "자격면허명", 180, 70, true); 
+		searchBarBuilder.addTextField(licenseName, "자격면허명", 180, 70, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();

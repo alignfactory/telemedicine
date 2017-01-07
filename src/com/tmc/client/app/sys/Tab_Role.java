@@ -32,7 +32,7 @@ public class Tab_Role extends BorderLayoutContainer implements InterfaceGridOper
 	public Tab_Role() {
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(roleName, "권한명", 150, 50, true); 
+		searchBarBuilder.addTextField(roleName, "권한명", 150, 50, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();

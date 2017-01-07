@@ -23,6 +23,8 @@ public interface RequestModelProperties  extends PropertyAccess<RequestModel> {
 	ValueProvider<RequestModel, Date> treatDate();
 	ValueProvider<RequestModel, Long> 	treatUserId();
 	ValueProvider<RequestModel, String> treatNote();
+	ValueProvider<RequestModel, String> treatStateCode();
+	ValueProvider<RequestModel, String> treatStateName();
 	
 	ValueProvider<RequestModel, Long> regUserId();
 	ValueProvider<RequestModel, Date> regDate();

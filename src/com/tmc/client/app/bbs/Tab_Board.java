@@ -28,7 +28,7 @@ public class Tab_Board extends BorderLayoutContainer implements InterfaceGridOpe
 		this.setBorders(false); 
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(searchText, "제목으로 찾기", 250, 100, true); 
+		searchBarBuilder.addTextField(searchText, "제목으로 찾기", 250, 100, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		
 		BorderLayoutData northLayoutData = new BorderLayoutData(40); 

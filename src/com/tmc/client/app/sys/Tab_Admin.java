@@ -48,7 +48,7 @@ public class Tab_Admin extends BorderLayoutContainer implements InterfaceGridOpe
 	public Tab_Admin() {
 
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(userNameField, "관리자명", 180, 56, true); 
+		searchBarBuilder.addTextField(userNameField, "관리자명", 180, 56, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();

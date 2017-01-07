@@ -33,7 +33,7 @@ public class Tab_Season extends VerticalLayoutContainer implements InterfaceGrid
 		this.setBorders(false); 
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(className, "회기명", 150, 50, true); 
+		searchBarBuilder.addTextField(className, "회기명", 150, 50, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();

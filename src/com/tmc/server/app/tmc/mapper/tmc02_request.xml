@@ -17,6 +17,9 @@
 	<result column="tmc02_treat_user_id"  	property="treatUserId"/>
 	<result column="tmc02_treat_note"  		property="treatNote"/>
 
+	<result column="tmc02_treat_state_cd"  	property="treatStateCode"/>
+	<result column="tmc02_treat_state_nm"  	property="treatStateName"/>
+
 	<result column="tmc02_reg_user_id"  	property="regUserId"/>
 	<result column="tmc02_reg_date"  		property="regDate"/>
 	<result column="tmc02_note"  			property="note"/>
@@ -90,6 +93,7 @@
 <select id="selectById" resultMap="mapper" parameterType="Long" > 
 	select 	tmc01_patient.*, 
 			tmc02_request.*,
+			dbo.f_cdnm('TreatStateCode', tmc02_treat_state_cd) tmc02_treat_state_nm,
 			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm,   
 <!-- 
 			request_user.sys02_company_id req_sys02_company_id, 
@@ -124,6 +128,7 @@
 <select id="selectByCompanyId" resultMap="mapper" parameterType="HashMap" > 
 	select 	tmc01_patient.*, 
 			tmc02_request.*,
+			dbo.f_cdnm('TreatStateCode', tmc02_treat_state_cd) tmc02_treat_state_nm,
 			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm,   
 <!-- 
 			request_user.sys02_company_id req_sys02_company_id, 
@@ -160,6 +165,7 @@
 <select id="selectByPatientId" resultMap="mapper" parameterType="Long" > 
 	select 	tmc01_patient.*, 
 			tmc02_request.*,
+			dbo.f_cdnm('TreatStateCode', tmc02_treat_state_cd) tmc02_treat_state_nm,			
 			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm,   
 <!-- 
 			request_user.sys02_company_id req_sys02_company_id, 
@@ -195,6 +201,7 @@
 <select id="selectBySearchList" resultMap="mapper" parameterType="HashMap"> 
 	select 	tmc01_patient.*, 
 			tmc02_request.*,
+			dbo.f_cdnm('TreatStateCode', tmc02_treat_state_cd) tmc02_treat_state_nm,			
 			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm,   
 <!-- 
 			request_user.sys02_company_id req_sys02_company_id, 

@@ -25,7 +25,7 @@ public class Tab_LicenseList extends VerticalLayoutContainer implements Interfac
 		this.setBorders(false); 
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(licenseName, "자격면허명", 200, 80, true); 
+		searchBarBuilder.addTextField(licenseName, "자격면허명", 200, 80, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		
 		this.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 40));

@@ -37,7 +37,7 @@ public class Tab_Company extends VerticalLayoutContainer implements InterfaceGri
 		companyTypeName.add("전체");
 		companyTypeName.setText("전체");
 		
-		searchBarBuilder.addLabel(companyName, "기관명", 150, 50, true); 
+		searchBarBuilder.addTextField(companyName, "기관명", 150, 50, true); 
 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();

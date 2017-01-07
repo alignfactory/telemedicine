@@ -34,7 +34,7 @@ public class Tab_Client extends VerticalLayoutContainer implements InterfaceGrid
 		this.setBorders(false); 
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(clientName, "거래처명", 200, 60, true); 
+		searchBarBuilder.addTextField(clientName, "거래처명", 200, 60, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();

@@ -29,7 +29,7 @@ public class Tab_Teacher extends BorderLayoutContainer implements InterfaceGridO
 	public Tab_Teacher() {
 
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(studyClassName, "반 이름", 150, 50, true) ; 
+		searchBarBuilder.addTextField(studyClassName, "반 이름", 150, 50, true) ; 
 		searchBarBuilder.addRetrieveButton(); 
 		
 		VerticalLayoutContainer vlc = new VerticalLayoutContainer();

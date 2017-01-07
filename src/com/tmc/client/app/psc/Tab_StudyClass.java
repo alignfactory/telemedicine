@@ -32,7 +32,7 @@ public class Tab_StudyClass extends VerticalLayoutContainer implements Interface
 		this.setBorders(false); 
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(className, "반 이름", 150, 50, true); 
+		searchBarBuilder.addTextField(className, "반 이름", 150, 50, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		searchBarBuilder.addUpdateButton();
 		searchBarBuilder.addInsertButton();

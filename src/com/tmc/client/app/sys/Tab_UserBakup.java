@@ -39,7 +39,7 @@ public class Tab_UserBakup extends BorderLayoutContainer implements InterfaceGri
 	public Tab_UserBakup() {
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
-		searchBarBuilder.addLabel(userNameField, "교원명", 150, 46, true); 
+		searchBarBuilder.addTextField(userNameField, "교원명", 150, 46, true); 
 		searchBarBuilder.addRetrieveButton(); 
 		
 		this.setBorders(false);

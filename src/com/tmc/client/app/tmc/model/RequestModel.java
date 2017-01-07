@@ -14,12 +14,13 @@ public class RequestModel extends AbstractDataModel {
 	private String 	requestTypeCode;
 	private Date 	requestDate;
 	private String 	requestNote;
-	
-	
+
 	private Date 	treatDate;
 	private Long 	treatUserId;
 	private String 	treatNote;
-
+	private String 	treatStateCode; 
+	private String 	treatStateName; 
+	
 	private Long 	regUserId;
 	private Date 	regDate;
 	private String	note; 
@@ -166,6 +167,22 @@ public class RequestModel extends AbstractDataModel {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public String getTreatStateCode() {
+		return treatStateCode;
+	}
+
+	public void setTreatStateCode(String treatStateCode) {
+		this.treatStateCode = treatStateCode;
+	}
+
+	public String getTreatStateName() {
+		return treatStateName;
+	}
+
+	public void setTreatStateName(String treatStateName) {
+		this.treatStateName = treatStateName;
 	}
 	
 }
