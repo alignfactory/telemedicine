@@ -38,16 +38,14 @@
 	, 	sys10_reg_date
 	, 	sys10_server_path
 	, 	sys10_size
-	, 	sys10_del_date
 	, 	sys10_note ) 
 	values 
 	(	#{fileId}
 	,	#{parentId}
 	, 	#{fileName}
-	, 	#{regDate}
+	, 	getdate()
 	, 	#{serverPath}
 	, 	#{size}
-	, 	#{delDate}
 	, 	#{note} )  	
 </insert>
 

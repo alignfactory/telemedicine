@@ -169,20 +169,23 @@ public class Tab_Checkup extends BorderLayoutContainer implements InterfaceGridO
 		ActionCell<String> fileUploadCell = new ActionCell<String>("첨부파일", new ActionCell.Delegate<String>(){
 			@Override
 			public void execute(String arg0) {
-				Lookup_File lookupFile = new Lookup_File(); 
-				lookupFile.open(Long.parseLong("0"));
-				lookupFile.show(); 
-				
+				fileUploadOpen(); 
 			}
 		});
 		gridBuilder.addCell(checkupModelProperties.fileUpload(), 80, "첨부파일", fileUploadCell) ;
-		
-		
 		gridBuilder.addDate(checkupModelProperties.checkupDate(), 100, "검사일"); // , new DateField()) ;
 		gridBuilder.addText(checkupModelProperties.userKorName(), 80, "검사담당") ;
 		return gridBuilder.getGrid(); 
 	}
-	
+
+	private void fileUploadOpen(){
+		CheckupModel checkupModel = gridCheckup.getSelectionModel().getSelectedItem(); 
+		if(checkupModel != null){
+			Lookup_File lookupFile = new Lookup_File();
+			lookupFile.open(checkupModel.getCheckupId());
+			lookupFile.show();
+		}
+	}
 	
 	private void retrieveCheckup(RequestModel requestModel){
 		GridRetrieveData<CheckupModel> service = new GridRetrieveData<CheckupModel>(gridCheckup.getStore());

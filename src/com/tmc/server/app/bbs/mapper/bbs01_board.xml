@@ -38,7 +38,6 @@
 	from 	bbs01_board a, 
 			sys02_user b
 	where	bbs01_write_user_id = sys02_user_id
-	and		bbs01_company_id = #{companyId}
 	and		bbs01_title like #{title} 
 	order 	by bbs01_write_date
 </select>
@@ -50,7 +49,6 @@
 	from 	bbs01_board a, 
 			sys02_user b
 	where	bbs01_write_user = sys02_user_id
-	and		bbs01_company_id = #{companyId}
 	and		bbs01_type_cd like #{boardTypeCode} 
 	and		bbs01_title like #{title} 
 	order 	by bbs01_write_date
