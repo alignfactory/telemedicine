@@ -41,7 +41,7 @@ public class Login implements InterfaceServiceCall {
 		loginDialog.setResizable(false);
 		loginDialog.setHeading("Telemedicine login");
 		loginDialog.setHeaderVisible(true);
-		loginDialog.setWidth(380);
+		loginDialog.setWidth(550);
 		loginDialog.setHeight(400);
 		
 		loginDialog.getButton(PredefinedButton.OK).setWidth(60);
@@ -60,8 +60,8 @@ public class Login implements InterfaceServiceCall {
 		
 		VerticalLayoutData vld = new VerticalLayoutData(); 
 		
-		vlc.add(new HTML("<div align='center'><br><img src='img/Telemedicine.jpg' width='345' height='100'></div>"));
-		panel.setLayoutData(new Margins(10, 0, 0, 30));
+		vlc.add(new HTML("<div><br><img src='img/Telemedicine.jpg' width='500' height='140'></div>"));
+		panel.setLayoutData(new Margins(0, 0, 30, 30));
 		loginDialog.add(panel); 
 		loginDialog.show();
 
