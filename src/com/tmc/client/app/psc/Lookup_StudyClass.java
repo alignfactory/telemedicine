@@ -53,7 +53,7 @@ public class Lookup_StudyClass extends AbstractLookupWindow {
 	public void retrieve() {
 		GridRetrieveData<StudyClassModel> service = new GridRetrieveData<StudyClassModel>(grid.getStore());
 		service.addParam("studyClassName", studyClassName.getValue());
-		service.addParam("companyId", LoginUser.getLoginCompany());
+		service.addParam("companyId", LoginUser.getLoginUser().getCompanyId());
 		service.retrieve("psc.StudyClass.selectByName");
 	}
 

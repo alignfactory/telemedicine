@@ -194,7 +194,7 @@ public class Edit_Board extends ContentPanel implements Editor<BoardModel>, Inte
 	public void insertRow() {
 
 		this.boardModel = new BoardModel();
-		this.boardModel.setCompanyId(LoginUser.getLoginCompany());
+		this.boardModel.setCompanyId(LoginUser.getLoginUser().getCompanyId());
 		this.boardModel.setWriteUserId(LoginUser.getLoginUser().getUserId());
 		this.boardModel.setUserModel(LoginUser.getLoginUser());
 		this.boardModel.setWriteDate(new Date());

@@ -88,7 +88,7 @@ public class Popup_CopyPay extends Window {
 
 	public void retrieve(){
 		GridRetrieveData<PaydayModel> service = new GridRetrieveData<PaydayModel>(grid.getStore());
-		service.addParam("companyId", LoginUser.getLoginCompany());
+		service.addParam("companyId", LoginUser.getLoginUser().getCompanyId());
 		service.addParam("paydayId", this.getPaydayModel().getPaydayId());
 		service.retrieve("pay.Payday.selectByCompanyId");
 	}

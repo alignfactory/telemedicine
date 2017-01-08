@@ -13,6 +13,7 @@ import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
+import com.sencha.gxt.widget.core.client.info.Info;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 
@@ -56,7 +57,10 @@ public class Tab_Board extends BorderLayoutContainer implements InterfaceGridOpe
 	@Override
 	public void retrieve(){
 		GridRetrieveData<BoardModel> service = new GridRetrieveData<BoardModel>(grid.getStore());
-		service.addParam("companyId", LoginUser.getLoginCompany());
+		service.addParam("companyId", LoginUser.getLoginUser().getCompanyId());
+		
+		Info.display("companyid", LoginUser.getLoginUser().getCompanyId() + ""); 
+		
 		service.addParam("title", searchText.getValue());
 		
 		service.retrieve("bbs.Board.selectByCompanyId");

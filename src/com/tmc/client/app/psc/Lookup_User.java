@@ -53,7 +53,7 @@ public class Lookup_User extends AbstractLookupWindow {
 	@Override
 	public void retrieve(){
 		GridRetrieveData<HireModel> service = new GridRetrieveData<HireModel>(grid.getStore());
-		service.addParam("companyId", LoginUser.getLoginCompany());
+		service.addParam("companyId", LoginUser.getLoginUser().getCompanyId());
 		service.addParam("korName", userNameField.getText());
 		service.retrieve("emp.Hire.selectByKorName");
 	}

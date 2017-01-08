@@ -264,7 +264,7 @@ public class TabPage_User extends ContentPanel implements InterfaceTabPage, Edit
 	public void insertRow() {
 		GridInsertRow<UserModel> service = new GridInsertRow<UserModel>(); 
 		UserModel userModel = new UserModel(); 
-		userModel.setCompanyId(LoginUser.getLoginCompany()); 
+		userModel.setCompanyId(LoginUser.getLoginUser().getCompanyId()); 
 		service.insertRow(grid, userModel);
 	}
 	

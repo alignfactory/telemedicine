@@ -47,7 +47,7 @@ public class Tab_Client extends VerticalLayoutContainer implements InterfaceGrid
 	@Override
 	public void retrieve(){
 		GridRetrieveData<ClientModel> service = new GridRetrieveData<ClientModel>(grid.getStore());
-		service.addParam("companyId", LoginUser.getLoginCompany());
+		service.addParam("companyId", LoginUser.getLoginUser().getCompanyId());
 		service.addParam("clientName", clientName.getValue());
 		service.retrieve("acc.Client.selectByCompanyId");
 	}
@@ -62,7 +62,7 @@ public class Tab_Client extends VerticalLayoutContainer implements InterfaceGrid
 	public void insertRow(){
 		GridInsertRow<ClientModel> service = new GridInsertRow<ClientModel>(); 
 		ClientModel seasonModel = new ClientModel();
-		seasonModel.setCompanyId(LoginUser.getLoginCompany());
+		seasonModel.setCompanyId(LoginUser.getLoginUser().getCompanyId());
 		service.insertRow(grid, seasonModel);
 	}
 	

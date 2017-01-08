@@ -56,7 +56,7 @@ public class Tab_LicenseList extends VerticalLayoutContainer implements Interfac
 	@Override
 	public void retrieve() {
 		GridRetrieveData<LicenseModel> service = new GridRetrieveData<LicenseModel>(grid.getStore());
-		service.addParam("companyId", LoginUser.getLoginCompany());
+		service.addParam("companyId", LoginUser.getLoginUser().getCompanyId());
 		service.retrieve("emp.License.selectByToday");
 	}
 	@Override

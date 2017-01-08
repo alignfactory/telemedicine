@@ -124,7 +124,7 @@ public class Tab_UserBakup extends BorderLayoutContainer implements InterfaceGri
 	public void retrieve() {
 		GridRetrieveData<UserModel> service = new GridRetrieveData<UserModel>(grid.getStore());
 		service.addParam("userName", userNameField.getValue());
-		service.addParam("companyId", LoginUser.getLoginCompany());
+		service.addParam("companyId", LoginUser.getLoginUser().getCompanyId());
 		service.retrieve("sys.User.selectByName");
 	}
 	

@@ -45,7 +45,7 @@ public class Tab_StudyClass extends VerticalLayoutContainer implements Interface
 	@Override
 	public void retrieve(){
 		GridRetrieveData<StudyClassModel> service = new GridRetrieveData<StudyClassModel>(grid.getStore());
-		service.addParam("companyId", LoginUser.getLoginCompany());
+		service.addParam("companyId", LoginUser.getLoginUser().getCompanyId());
 		service.retrieve("psc.StudyClass.selectByCompanyId");
 	}
 	
@@ -59,7 +59,7 @@ public class Tab_StudyClass extends VerticalLayoutContainer implements Interface
 	public void insertRow(){
 		GridInsertRow<StudyClassModel> service = new GridInsertRow<StudyClassModel>(); 
 		StudyClassModel studyClassModel = new StudyClassModel();
-		studyClassModel.setCompanyId(LoginUser.getLoginCompany());
+		studyClassModel.setCompanyId(LoginUser.getLoginUser().getCompanyId());
 		service.insertRow(grid, studyClassModel);
 	}
 	

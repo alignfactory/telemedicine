@@ -58,7 +58,7 @@ public class Tab_Teacher extends BorderLayoutContainer implements InterfaceGridO
 	@Override
 	public void retrieve() {
 		GridRetrieveData<StudyClassModel> service = new GridRetrieveData<StudyClassModel>(grid.getStore());
-		service.addParam("companyId", LoginUser.getLoginCompany());
+		service.addParam("companyId", LoginUser.getLoginUser().getCompanyId());
 		service.retrieve("psc.StudyClass.selectByCompanyId");
 	}
 	

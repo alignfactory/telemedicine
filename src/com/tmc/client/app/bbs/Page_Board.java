@@ -87,7 +87,7 @@ public class Page_Board extends FramedPanel implements InterfaceGridOperate {
 	@Override
 	public void retrieve() {
 		GridRetrieveData<BoardModel> service = new GridRetrieveData<BoardModel>(grid.getStore());
-		service.addParam("companyId", LoginUser.getLoginCompany());
+		service.addParam("companyId", LoginUser.getLoginUser().getCompanyId());
 		service.addParam("title", searchText.getValue());
 		service.retrieve("bbs.Board.selectByCompanyId");
 	}

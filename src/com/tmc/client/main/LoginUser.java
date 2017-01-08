@@ -8,7 +8,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 public class LoginUser {
 
 	private static UserModel loginUser;
-	private static Long loginCompany; 
+// 	private static Long loginCompany; 
 	
 	public static UserModel getLoginUser() {
 		return loginUser;
@@ -18,13 +18,13 @@ public class LoginUser {
 		LoginUser.loginUser = loginUser;
 	}
 	
-	public static void setLoginCompany(Long companyId){
-		loginCompany = companyId; 
-	}
-	
-	public static Long getLoginCompany(){
-		return loginCompany; 
-	}
+//	public static void setLoginCompany(Long companyId){
+//		loginCompany = companyId; 
+//	}
+//	
+//	public static Long getLoginCompany(){
+//		return loginCompany; 
+//	}
 	
 	public static Boolean isAdmin(){
 		

@@ -56,7 +56,7 @@ public class Select_Company extends AbstractLookupWindow {
 		UserCompanyModel userCompanyModel = this.grid.getSelectionModel().getSelectedItem();
 
 		if(userCompanyModel != null){
-			LoginUser.setLoginCompany(userCompanyModel.getCompanyId());	
+			// LoginUser.setLoginCompany(userCompanyModel.getCompanyId());	
 			new MainWindow(); // login OK, Main Frame Open
 			this.hide();
 		}

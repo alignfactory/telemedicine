@@ -72,7 +72,7 @@ public class Lookup_PayEmployee extends AbstractLookupWindow  {
 	@Override
 	public void retrieve(){
 		GridRetrieveData<HireModel> service = new GridRetrieveData<HireModel>(grid.getStore());
-		service.addParam("companyId", LoginUser.getLoginCompany());
+		service.addParam("companyId", LoginUser.getLoginUser().getCompanyId());
 		service.addParam("korName", userNameField.getText());
 		service.addParam("onDate", this.paydayModel.getOnDate()); // 급여시작일 
 		service.addParam("offDate", this.paydayModel.getOffDate()); // 급여종료일 

@@ -513,7 +513,7 @@ public class TabPage_Student extends ContentPanel implements Editor<StudentModel
 	public void insertRow() {
 		GridInsertRow<StudentModel> service = new GridInsertRow<StudentModel>(); 
 		StudentModel student = new StudentModel(); 
-		student.setCompanyId(LoginUser.getLoginCompany()); 
+		student.setCompanyId(LoginUser.getLoginUser().getCompanyId()); 
 		service.insertRow(grid, student);
 	}
 

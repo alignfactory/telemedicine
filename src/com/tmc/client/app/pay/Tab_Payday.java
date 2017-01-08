@@ -158,7 +158,7 @@ public class Tab_Payday extends BorderLayoutContainer implements InterfaceGridOp
 		String payYear = this.payYear.getValue();
 		
 		GridRetrieveData<PaydayModel> service = new GridRetrieveData<PaydayModel>(this.grid.getStore());
-		service.addParam("companyId", LoginUser.getLoginCompany());
+		service.addParam("companyId", LoginUser.getLoginUser().getCompanyId());
 		service.addParam("payYear", payYear);
 		service.retrieve("pay.Payday.selectByPayYear");
 	}
@@ -173,7 +173,7 @@ public class Tab_Payday extends BorderLayoutContainer implements InterfaceGridOp
 	public void insertRow(){
 		GridInsertRow<PaydayModel> service = new GridInsertRow<PaydayModel>(); 
 		PaydayModel PaydayModel = new PaydayModel();
-		PaydayModel.setCompanyId(LoginUser.getLoginCompany());
+		PaydayModel.setCompanyId(LoginUser.getLoginUser().getCompanyId());
 		service.insertRow(this.grid, PaydayModel);
 	}
 	@Override
