@@ -44,14 +44,14 @@ public class Request {
 	}
 	
 	public void selectBySearchList(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
+		Long companyId = request.getLong("companyId"); 
 		Date startDate = request.getDate("startDate"); 
 		Date endDate = request.getDate("endDate"); 
-		String procCode = request.getString("procCode");
 		
 		Map<String, Object> param = new HashMap<String, Object>(); 
+		param.put("companyId", companyId);
 		param.put("startDate", startDate);
 		param.put("endDate", endDate);
-		param.put("procCode", procCode); 
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectBySearchList", param);
 		result.setRetrieveResult(1, "select ok", list);
 	}
