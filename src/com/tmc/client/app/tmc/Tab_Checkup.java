@@ -1,31 +1,18 @@
 package com.tmc.client.app.tmc;
 
 import java.util.Date;
-import java.util.List;
-
-import com.tmc.client.app.pay.Popup_CopyPay;
-import com.tmc.client.app.pay.model.PaydayModel;
-import com.tmc.client.app.sys.Lookup_Company;
-import com.tmc.client.app.sys.model.CompanyModel;
-import com.tmc.client.app.sys.model.UserModel;
-import com.tmc.client.app.tmc.model.PatientModel;
 import com.tmc.client.app.tmc.model.RequestModel;
 import com.tmc.client.app.tmc.model.RequestModelProperties;
 import com.tmc.client.app.tmc.model.CheckupModel;
 import com.tmc.client.app.tmc.model.CheckupModelProperties;
 import com.tmc.client.main.LoginUser;
-import com.tmc.client.service.GridDeleteData;
-import com.tmc.client.service.GridInsertRow;
 import com.tmc.client.service.GridRetrieveData;
 import com.tmc.client.service.GridUpdateData;
-import com.tmc.client.service.InterfaceCallback;
-import com.tmc.client.ui.InterfaceLookupResult;
 import com.tmc.client.ui.SimpleMessage;
 import com.tmc.client.ui.builder.ComboBoxField;
 import com.tmc.client.ui.builder.GridBuilder;
 import com.tmc.client.ui.builder.InterfaceGridOperate;
 import com.tmc.client.ui.builder.SearchBarBuilder;
-import com.tmc.client.ui.field.LookupTriggerField;
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.core.client.GWT;
 import com.sencha.gxt.core.client.Style.SelectionMode;
@@ -42,13 +29,10 @@ import com.sencha.gxt.widget.core.client.event.RowClickEvent;
 import com.sencha.gxt.widget.core.client.event.RowClickEvent.RowClickHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
-import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.CollapseEvent.CollapseHandler;
-import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
-import com.sencha.gxt.widget.core.client.info.Info;
 
 /*
  * 검사오더에 따른 검사내용 등록 

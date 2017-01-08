@@ -11,7 +11,6 @@ import com.tmc.client.ui.SimpleMessage;
 import com.tmc.client.ui.builder.ComboBoxField;
 import com.tmc.client.ui.builder.GridBuilder;
 
-import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;

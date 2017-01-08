@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.tmc.client.app.sys.Lookup_Company;
 import com.tmc.client.app.sys.model.CompanyModel;
-import com.tmc.client.app.sys.model.UserModel;
-import com.tmc.client.app.tmc.model.PatientModel;
 import com.tmc.client.app.tmc.model.RequestModel;
 import com.tmc.client.app.tmc.model.RequestModelProperties;
 import com.tmc.client.main.LoginUser;
@@ -27,8 +25,6 @@ import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
-import com.sencha.gxt.widget.core.client.event.RowClickEvent;
-import com.sencha.gxt.widget.core.client.event.RowClickEvent.RowClickHandler;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.DateField;

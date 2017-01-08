@@ -24,10 +24,6 @@ import com.tmc.client.ui.field.LookupTriggerField;
 import com.google.gwt.core.client.GWT;
 import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.core.client.util.Margins;
-import com.sencha.gxt.data.shared.event.StoreRecordChangeEvent;
-import com.sencha.gxt.data.shared.event.StoreRecordChangeEvent.StoreRecordChangeHandler;
-import com.sencha.gxt.data.shared.event.StoreUpdateEvent;
-import com.sencha.gxt.data.shared.event.StoreUpdateEvent.StoreUpdateHandler;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
@@ -38,7 +34,6 @@ import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHan
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
-import com.sencha.gxt.widget.core.client.info.Info;
 
 public class Tab_Prescribe2 extends BorderLayoutContainer implements InterfaceGridOperate {
 	
