@@ -134,7 +134,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 			@Override
 			public void onTriggerClick(TriggerClickEvent event) {
 
-				Lookup_Patient lookupPatient = new Lookup_Patient();
+				Lookup_Patient lookupPatient = new Lookup_Patient(companyModel);
 				lookupPatient.setCallback(new InterfaceLookupResult(){
 					@Override
 					public void setLookupResult(Object result) {

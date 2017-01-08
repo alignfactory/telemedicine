@@ -3,6 +3,8 @@ package com.tmc.client.app.tmc;
 import java.util.Date;
 import java.util.List;
 
+import com.tmc.client.app.pay.Popup_CopyPay;
+import com.tmc.client.app.pay.model.PaydayModel;
 import com.tmc.client.app.sys.Lookup_Company;
 import com.tmc.client.app.sys.model.CompanyModel;
 import com.tmc.client.app.sys.model.UserModel;
@@ -24,6 +26,7 @@ import com.tmc.client.ui.builder.GridBuilder;
 import com.tmc.client.ui.builder.InterfaceGridOperate;
 import com.tmc.client.ui.builder.SearchBarBuilder;
 import com.tmc.client.ui.field.LookupTriggerField;
+import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.core.client.GWT;
 import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.core.client.util.Margins;
@@ -160,8 +163,21 @@ public class Tab_Checkup extends BorderLayoutContainer implements InterfaceGridO
 				gridCheckup.getStore().getRecord(data).addChange(checkupModelProperties.processCode(), checkupProcessComboBox.getCode());
 			}
 		}); 
-		gridBuilder.addText(checkupModelProperties.processName(), 100, "상태구분", checkupProcessComboBox) ;
+		gridBuilder.addText(checkupModelProperties.processName(), 80, "상태구분", checkupProcessComboBox) ;
 		gridBuilder.addText(checkupModelProperties.checkupResult(), 400, "검사결과", new TextField()) ;
+		
+		ActionCell<String> fileUploadCell = new ActionCell<String>("첨부파일", new ActionCell.Delegate<String>(){
+			@Override
+			public void execute(String arg0) {
+				Lookup_File lookupFile = new Lookup_File(); 
+				lookupFile.open(Long.parseLong("0"));
+				lookupFile.show(); 
+				
+			}
+		});
+		gridBuilder.addCell(checkupModelProperties.fileUpload(), 80, "첨부파일", fileUploadCell) ;
+		
+		
 		gridBuilder.addDate(checkupModelProperties.checkupDate(), 100, "검사일"); // , new DateField()) ;
 		gridBuilder.addText(checkupModelProperties.userKorName(), 80, "검사담당") ;
 		return gridBuilder.getGrid(); 
@@ -201,8 +217,5 @@ public class Tab_Checkup extends BorderLayoutContainer implements InterfaceGridO
 	
 	@Override
 	public void deleteRow(){
-//		GridDeleteData<CheckupModel> service = new GridDeleteData<CheckupModel>();
-//		List<CheckupModel> checkedList = grid.getSelectionModel().getSelectedItems() ; 
-//		service.deleteRow(grid.getStore(), checkedList, "tmc.Request.delete");
 	}
 }

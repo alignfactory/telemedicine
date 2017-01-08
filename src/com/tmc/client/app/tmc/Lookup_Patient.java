@@ -1,5 +1,6 @@
 package com.tmc.client.app.tmc;
 
+import com.tmc.client.app.sys.model.CompanyModel;
 import com.tmc.client.app.tmc.model.PatientModel;
 import com.tmc.client.app.tmc.model.PatientModelProperties;
 import com.tmc.client.service.GridRetrieveData;
@@ -20,8 +21,11 @@ public class Lookup_Patient extends AbstractLookupWindow {
 	private PatientModelProperties properties = GWT.create(PatientModelProperties.class);	
 	private Grid<PatientModel> grid = this.buildGrid(); 
 	private TextField patientName = new TextField();
+	private CompanyModel companyModel = new CompanyModel(); 
 	
-	public Lookup_Patient(){
+	public Lookup_Patient(CompanyModel companyModel){
+		
+		this.companyModel = companyModel; 
 		
 		this.setInit("환자검색", 700, 400); 
 		this.addLabel(patientName, "환자명", 150, 50, true) ;
@@ -60,7 +64,7 @@ public class Lookup_Patient extends AbstractLookupWindow {
 	public void retrieve() {
 		GridRetrieveData<PatientModel> service = new GridRetrieveData<PatientModel>(grid.getStore());
 		service.addParam("patientName", patientName.getValue());
-		service.addParam("companyId", Long.parseLong("2000940")) ;
+		service.addParam("companyId", companyModel.getCompanyId()) ;
 		service.retrieve("tmc.Patient.selectByName");
 	}
 

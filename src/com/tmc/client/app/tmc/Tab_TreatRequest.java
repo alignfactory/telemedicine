@@ -129,7 +129,7 @@ public class Tab_TreatRequest extends BorderLayoutContainer implements Interface
 			@Override
 			public void onTriggerClick(TriggerClickEvent event) {
 
-				Lookup_Patient lookupPatient = new Lookup_Patient();
+				Lookup_Patient lookupPatient = new Lookup_Patient(companyModel);
 				lookupPatient.setCallback(new InterfaceLookupResult(){
 					@Override
 					public void setLookupResult(Object result) {

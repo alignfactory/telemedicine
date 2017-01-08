@@ -23,7 +23,9 @@ public interface CheckupModelProperties  extends PropertyAccess<CheckupModel> {
 	 ValueProvider<CheckupModel, Date > checkupDate();
 	 
 	 ValueProvider<CheckupModel, Long > checkupUserId();
-
+	 
+	 ValueProvider<CheckupModel, String > fileUpload();
+	 
 	 @Path("userModel.korName")
 	ValueProvider<CheckupModel, String> userKorName();
 }
