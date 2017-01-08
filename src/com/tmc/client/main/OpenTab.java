@@ -14,10 +14,10 @@ public class OpenTab {
 			return (Widget) GWT.create(com.tmc.client.app.sys.Tab_Company.class) ;
 		}
 
-		if("Test_Tab_Company".equals(className)) {
-			return (Widget) GWT.create(com.tmc.client.app.test.Tab_CompanyTest.class) ;
+		// 검사결과 등록 
+		if("Tab_Checkup".equals(className)) {
+			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_Checkup.class) ;
 		}
-
 		
 		if("GridAdminUser".equals(className)) {
 			return (Widget) GWT.create(com.tmc.client.app.sys.Tab_Admin.class) ;

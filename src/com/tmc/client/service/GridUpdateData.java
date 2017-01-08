@@ -1,7 +1,9 @@
 package com.tmc.client.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.tmc.client.ui.AbstractDataModel;
 import com.sencha.gxt.data.shared.ListStore;
@@ -16,8 +18,9 @@ import com.sencha.gxt.widget.core.client.info.Info;
  */
 public class GridUpdateData<T> implements InterfaceServiceCall{
 	
-	ListStore<T> listStore ; 
-	InterfaceCallback callBack; 
+	private ListStore<T> listStore ;
+	private Map<String, Object> param = new HashMap<String, Object>();
+	private InterfaceCallback callBack; 
 	
 	public GridUpdateData(){
 	} 
@@ -38,10 +41,16 @@ public class GridUpdateData<T> implements InterfaceServiceCall{
 				updateList.add((AbstractDataModel)updateModel); // 형을 상위로 변경해도 되는가? 
 			}
 			ServiceRequest request = new ServiceRequest(serviceName);
+			request.setParam(this.param);
+
 			request.setList(updateList);
 			ServiceCall service = new ServiceCall();
 			service.execute(request, this);
 		} 
+	}
+	
+	public void addParam(String key, Object data){
+		param.put(key, data); 
 	}
 	
 	public void update(ListStore<T> listStore, T updateModel, String serviceName){
@@ -50,14 +59,19 @@ public class GridUpdateData<T> implements InterfaceServiceCall{
 			
 		List<AbstractDataModel> updateList = new ArrayList<AbstractDataModel>();
 		updateList.add((AbstractDataModel)updateModel);  
+		
 		ServiceRequest request = new ServiceRequest(serviceName);
+		
+		request.setParam(this.param);
 		request.setList(updateList);
+		
 		ServiceCall service = new ServiceCall();
+		
 		service.execute(request, this);
 	}
 	
 	public void addCallback(InterfaceCallback callBack){
-		this.callBack = callBack;
+		this.setCallBack(callBack);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -70,6 +84,14 @@ public class GridUpdateData<T> implements InterfaceServiceCall{
 		for (AbstractDataModel model: result.getResult()) {
 			listStore.update((T) model); 
 		}
+	}
+
+	public InterfaceCallback getCallBack() {
+		return callBack;
+	}
+
+	public void setCallBack(InterfaceCallback callBack) {
+		this.callBack = callBack;
 	}
 	
 }

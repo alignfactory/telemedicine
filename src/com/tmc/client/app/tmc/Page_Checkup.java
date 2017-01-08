@@ -86,7 +86,7 @@ public class Page_Checkup extends ContentPanel  {
 		CheckupModel checkupModel = new CheckupModel();
 		
 		// 초기 데이터 설정 
-		checkupModel.setCheckupDate(new Date());
+		// checkupModel.setCheckupDate(new Date());
 		checkupModel.setProcessCode("10");
 		checkupModel.setRequestId(this.requestModel.getRequestId());
 		service.insertRow(grid, checkupModel);
