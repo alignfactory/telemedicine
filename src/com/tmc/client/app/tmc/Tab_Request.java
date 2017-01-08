@@ -230,9 +230,19 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 			new SimpleMessage("기관명 확인", "조회조건의 기관명은 반드시 입력하세요. ");
 			return ; 
 		} 
-		
+		gridHistory.getStore().clear(); 
+		this.pageTreat.reset();
+
 		GridRetrieveData<RequestModel> service = new GridRetrieveData<RequestModel>(grid.getStore());
+		service.addCallback(new InterfaceCallback(){
+			@Override
+			public void callback() {
+				
+			}
+		});
+		
 		service.addParam("companyId", this.companyModel.getCompanyId());
+		service.addParam("requestDate", dateField.getValue());
 		service.addParam("patientName", patientNameField.getText());
 		service.retrieve("tmc.Request.selectByCompanyId");
 	}
