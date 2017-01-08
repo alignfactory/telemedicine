@@ -236,6 +236,7 @@
 				on tmc02_treat_user_id = treat_user.sys02_user_id
 	where 	tmc01_company_id = #{companyId}
 	and		tmc02_request_date between #{startDate} and #{endDate}
+	and		tmc01_kor_nm like #{patientName}
     order 	by tmc02_request_date
 </select>
 

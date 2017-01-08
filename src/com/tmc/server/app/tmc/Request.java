@@ -47,11 +47,14 @@ public class Request {
 		Long companyId = request.getLong("companyId"); 
 		Date startDate = request.getDate("startDate"); 
 		Date endDate = request.getDate("endDate"); 
+		String patientName = request.getString("patientName");
+		patientName = "%" + patientName + "%";
 		
 		Map<String, Object> param = new HashMap<String, Object>(); 
 		param.put("companyId", companyId);
 		param.put("startDate", startDate);
 		param.put("endDate", endDate);
+		param.put("patientName", patientName); 
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectBySearchList", param);
 		result.setRetrieveResult(1, "select ok", list);
 	}

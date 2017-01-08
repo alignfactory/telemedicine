@@ -46,7 +46,7 @@ public class Tab_RequestList extends BorderLayoutContainer implements InterfaceG
 	private Grid<RequestModel> grid = this.buildGrid();
 //	private Grid<RequestModel> gridHistory = this.buildGridHistory();
 //	private Page_Treat pageTreat = new Page_Treat(grid);
-//	private TextField patientNameField = new TextField();
+	private TextField patientNameField = new TextField();
 	private DateField startDateField = new DateField(); 
 	private DateField endDateField = new DateField(); 
 	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 
@@ -77,11 +77,12 @@ public class Tab_RequestList extends BorderLayoutContainer implements InterfaceG
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48);
 		searchBarBuilder.addDateField(startDateField, "조회기간", 180, 70, true);
-		searchBarBuilder.addDateField(endDateField, "~", 110, 5, true);
+		searchBarBuilder.addDateField(endDateField, "~", 110, 10, true).setLabelSeparator("");;
+	
 		startDateField.setValue(new Date());
 		endDateField.setValue(new Date());
 		
-//		searchBarBuilder.addTextField(patientNameField, "환자명", 170, 48, true); 
+		searchBarBuilder.addTextField(patientNameField, "환자명", 170, 48, true); 
 		
 		searchBarBuilder.addRetrieveButton(); 
 //		searchBarBuilder.addUpdateButton();
@@ -203,7 +204,7 @@ public class Tab_RequestList extends BorderLayoutContainer implements InterfaceG
 		service.addParam("companyId", this.companyModel.getCompanyId());
 		service.addParam("startDate", startDateField.getValue());
 		service.addParam("endDate", endDateField.getValue());
-//		service.addParam("patientName", patientNameField.getText());
+		service.addParam("patientName", patientNameField.getText());
 		service.retrieve("tmc.Request.selectBySearchList");
 	}
 	
