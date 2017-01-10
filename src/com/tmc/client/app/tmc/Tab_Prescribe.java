@@ -70,19 +70,19 @@ public class Tab_Prescribe extends BorderLayoutContainer implements InterfaceGri
 		}); 
 		
 		BorderLayoutData northLayoutData = new BorderLayoutData(250);
-		northLayoutData.setMargins(new Margins(2,0,0,0));
+		northLayoutData.setMargins(new Margins(0,0,2,0));
 		northLayoutData.setSplit(true);
 		northLayoutData.setMaxSize(1000);
 		this.setNorthWidget(vlc, northLayoutData); 
 
 		BorderLayoutData westLayoutData = new BorderLayoutData(500);
-		westLayoutData.setMargins(new Margins(2,0,0,0));
+		westLayoutData.setMargins(new Margins(0,0,0,0));
 		westLayoutData.setSplit(true);
 		westLayoutData.setMaxSize(1000);
 		this.setWestWidget(this.gridHistory, westLayoutData);
 
 		BorderLayoutData centerLayoutData = new BorderLayoutData();
-		centerLayoutData.setMargins(new Margins(2,2,0,2));
+		centerLayoutData.setMargins(new Margins(0,0,0,2));
 		centerLayoutData.setMaxSize(1000);
 		this.setCenterWidget(pageTreat, centerLayoutData);
 	}

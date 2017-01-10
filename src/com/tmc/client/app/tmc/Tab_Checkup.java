@@ -81,7 +81,6 @@ public class Tab_Checkup extends BorderLayoutContainer implements InterfaceGridO
 		northLayoutData.setMaxSize(1000);
 		this.setNorthWidget(vlc, northLayoutData); 
 		
-		
 		ContentPanel cp = new ContentPanel(); 
 		cp.setHeaderVisible(false);
 		cp.add(gridCheckup);
@@ -98,11 +97,46 @@ public class Tab_Checkup extends BorderLayoutContainer implements InterfaceGridO
 		
 		TextButton buttonConfirm = new TextButton("검사완료");
 		buttonConfirm.setWidth(100);
+		buttonConfirm.addSelectHandler(new SelectHandler(){
+			@Override
+			public void onSelect(SelectEvent event) {
+				confirmCheckup(); 
+			}
+		}); 
+		
+		
 		cp.addButton(buttonConfirm);
 		
 		cp.setButtonAlign(BoxLayoutPack.CENTER);
 		cp.getButtonBar().setPadding(new Padding(0, 0, 15, 0)); 
 		this.setCenterWidget(cp); 
+	}
+	
+	private void confirmCheckup(){
+		
+		RequestModel requestModel = gridRequest.getSelectionModel().getSelectedItem();  
+		
+		if("50".equals(requestModel.getTreatStateCode())){
+			new SimpleMessage("이미 처방완료가 된 상태이므로 검사완료 처리를 활 수 없습니다."); 
+			return; 
+		}
+		
+		if(gridCheckup.getStore().getModifiedRecords().size() > 0 ){
+			new SimpleMessage("검사내역을 먼저 저장한 후 검사완료 처리가 가능합니다.");
+			return; 
+		}
+		
+		for(CheckupModel checkupModel : gridCheckup.getStore().getAll()){
+			if("010".equals(checkupModel.getProcessCode()) || "020".equals(checkupModel.getProcessCode())) {
+				new SimpleMessage("검사요청 혹은 검사진행이 있는 경우에는 검사완료를 할 수 없습니다.");
+				return ; 
+			}
+		}
+		// 검사완료(40) Setting 
+		gridRequest.getStore().getRecord(requestModel).addChange(requestModelProperties.treatStateCode(), "40");
+
+		GridUpdateData<RequestModel> service = new GridUpdateData<RequestModel>();
+		service.update(gridRequest.getStore(), "tmc.Request.update"); 
 	}
 	
 	public Grid<RequestModel> buildGridRequest(){
@@ -147,7 +181,7 @@ public class Tab_Checkup extends BorderLayoutContainer implements InterfaceGridO
 				gridCheckup.getStore().getRecord(data).addChange(checkupModelProperties.processCode(), checkupProcessComboBox.getCode());
 			}
 		}); 
-		gridBuilder.addText(checkupModelProperties.processName(), 80, "상태구분", checkupProcessComboBox) ;
+		gridBuilder.addText(checkupModelProperties.processName(), 100, "상태구분", checkupProcessComboBox) ;
 		gridBuilder.addText(checkupModelProperties.checkupResult(), 400, "검사결과", new TextField()) ;
 		
 		ActionCell<String> fileUploadCell = new ActionCell<String>("첨부파일", new ActionCell.Delegate<String>(){
@@ -193,6 +227,14 @@ public class Tab_Checkup extends BorderLayoutContainer implements InterfaceGridO
 	
 	@Override
 	public void update(){
+
+		RequestModel requestModel = gridRequest.getSelectionModel().getSelectedItem();  
+		
+		if("50".equals(requestModel.getTreatStateCode())){
+			new SimpleMessage("이미 처방완료가 된 상태이므로 임시저장이나 검사완료 처리를 활 수 없습니다."); 
+			return; 
+		}
+
 		GridUpdateData<CheckupModel> service = new GridUpdateData<CheckupModel>();
 		service.addParam("userId", LoginUser.getLoginUser().getUserId()); // 검사의사 등록. 
 		service.update(gridCheckup.getStore(), "tmc.Checkup.update"); 
