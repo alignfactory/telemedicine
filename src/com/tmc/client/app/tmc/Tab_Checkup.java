@@ -121,6 +121,11 @@ public class Tab_Checkup extends BorderLayoutContainer implements InterfaceGridO
 			return; 
 		}
 		
+		if("40".equals(requestModel.getTreatStateCode())){
+			new SimpleMessage("이미 검사완료 처리가 된 상태입니다."); 
+			return; 
+		}
+
 		if(gridCheckup.getStore().getModifiedRecords().size() > 0 ){
 			new SimpleMessage("검사내역을 먼저 저장한 후 검사완료 처리가 가능합니다.");
 			return; 
