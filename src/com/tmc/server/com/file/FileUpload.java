@@ -23,9 +23,8 @@ import com.tmc.server.com.data.IsNewData;
 
 public class FileUpload implements javax.servlet.Servlet {
 	
-	private String getUploadPath(String fileId){
-		return "D:\\WebFiles\\" + (Long.parseLong(fileId)/100) ;	
-	}
+	private FilePath filePath = new FilePath(); 
+	
 	
 	public void upload(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -57,7 +56,7 @@ public class FileUpload implements javax.servlet.Servlet {
 					fileModel.setParentId(Long.parseLong(request.getParameter("parentId"))); 
 					fileModel.setFileName(fileName); 
 					fileModel.setRegDate(new Date()); // 데이터베이스 시간으로 변경해야 한다.  
-					fileModel.setServerPath(this.getUploadPath(fileId)); //100개씩 잘라 보관한다.
+					fileModel.setServerPath(filePath.getFilePath(fileId)); //100개씩 잘라 보관한다.
 					
 					Double size = Double.parseDouble((fileItem.getSize()/1024) + ""); 
 					fileModel.setSize(size); 
@@ -69,12 +68,12 @@ public class FileUpload implements javax.servlet.Servlet {
 				}
 			}  // 이미지의 경우 테이블에 저장하지 않는다. 
 			 
-			File subDir  = new File(this.getUploadPath(fileId));
+			File subDir  = new File(this.filePath.getFilePath(fileId));
 	        if(!subDir.exists()) {
 	        	subDir.mkdir(); 
 	        }
 
-	        File file = new File(this.getUploadPath(fileId), fileId);
+	        File file = new File(this.filePath.getFilePath(fileId), fileId);
     	    file.deleteOnExit(); // 있으면 먼저 지워라.
             fileItem.write(file);
             
@@ -135,6 +134,4 @@ public class FileUpload implements javax.servlet.Servlet {
 	@Override
 	public void init(ServletConfig arg0) throws ServletException {
 	}
-
-
 }
