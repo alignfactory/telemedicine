@@ -179,9 +179,19 @@ public class Tab_CheckupList extends BorderLayoutContainer implements InterfaceG
 	}
 	
 	private void retrieveCheckup(RequestModel requestModel){
+		if(this.lookupCompanyField.getCompanyModel() == null){
+			new SimpleMessage("기관명 확인", "조회조건의 기관명은 반드시 입력하세요. ");
+			return ; 
+		} 
+		
 		GridRetrieveData<CheckupModel> service = new GridRetrieveData<CheckupModel>(gridCheckup.getStore());
 		service.addParam("requestId", requestModel.getRequestId());
-		service.retrieve("tmc.Checkup.selectByRequestId");
+//		service.retrieve("tmc.Checkup.selectByRequestId");
+		service.addParam("companyId", this.lookupCompanyField.getCompanyModel().getCompanyId());
+		service.addParam("startDate", startDateField.getValue());
+		service.addParam("endtDate", endDateField.getValue());
+		service.addParam("patientName", patientNameField.getText());
+		service.retrieve("tmc.Checkup.selectByCheckupId");
 	}
 	
 	@Override
@@ -201,9 +211,9 @@ public class Tab_CheckupList extends BorderLayoutContainer implements InterfaceG
 	
 	@Override
 	public void update(){
-		GridUpdateData<CheckupModel> service = new GridUpdateData<CheckupModel>();
-		service.addParam("userId", LoginUser.getLoginUser().getUserId()); // 검사의사 등록. 
-		service.update(gridCheckup.getStore(), "tmc.Checkup.update"); 
+//		GridUpdateData<CheckupModel> service = new GridUpdateData<CheckupModel>();
+//		service.addParam("userId", LoginUser.getLoginUser().getUserId()); // 검사의사 등록. 
+//		service.update(gridCheckup.getStore(), "tmc.Checkup.update"); 
 	}
 	
 	@Override
