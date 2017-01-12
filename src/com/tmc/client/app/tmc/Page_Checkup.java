@@ -13,6 +13,7 @@ import com.tmc.client.ui.builder.GridBuilder;
 
 import java.util.List;
 
+import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.core.client.GWT;
 import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.widget.core.client.ContentPanel;
@@ -61,12 +62,31 @@ public class Page_Checkup extends ContentPanel  {
 		gridBuilder.addText(properties.processName(), 80, "상태구분"); // , checkupProcessComboBox) ;
 
 		gridBuilder.addText(properties.checkupResult(), 250, "검사결과"); //, new DateField()) ;
+
+		ActionCell<String> fileUploadCell = new ActionCell<String>("첨부파일", new ActionCell.Delegate<String>(){
+			@Override
+			public void execute(String arg0) {
+				fileUploadOpen(); 
+			}
+		});
+		gridBuilder.addCell(properties.fileUpload(), 80, "첨부파일", fileUploadCell) ;
+
 		gridBuilder.addDate(properties.checkupDate(), 100, "검사일"); // , new DateField()) ;
 		gridBuilder.addText(properties.userKorName(), 80, "검사담당") ;
 		
 		return gridBuilder.getGrid(); 
 	}
 
+	private void fileUploadOpen(){
+		CheckupModel checkupModel = grid.getSelectionModel().getSelectedItem(); 
+		if(checkupModel != null){
+			Lookup_File lookupFile = new Lookup_File();
+			lookupFile.open(checkupModel.getCheckupId());
+			lookupFile.show();
+		}
+	}
+
+	
 	public void retrieve(RequestModel requestModel){
 		this.grid.getStore().clear(); 
 		this.requestModel = requestModel;
@@ -86,7 +106,9 @@ public class Page_Checkup extends ContentPanel  {
 		
 		// 초기 데이터 설정 
 		// checkupModel.setCheckupDate(new Date());
-		checkupModel.setProcessCode("10");
+		checkupModel.setProcessCode("010");
+		checkupModel.setProcessName("검사요청");
+		
 		checkupModel.setRequestId(this.requestModel.getRequestId());
 		service.insertRow(grid, checkupModel);
 	}

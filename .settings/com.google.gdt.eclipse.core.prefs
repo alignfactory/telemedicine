@@ -1,3 +1,4 @@
 eclipse.preferences.version=1
+jarsExcludedFromWebInfLib=D\:/TMC/workspace/TeleMedicine/war/WEB-INF/lib/gwt-servlet.jar
 warSrcDir=war
 warSrcDirIsOutput=true
