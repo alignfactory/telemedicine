@@ -6,6 +6,7 @@ import java.util.List;
 import com.tmc.client.app.sys.Lookup_Company;
 import com.tmc.client.app.sys.model.CompanyModel;
 import com.tmc.client.app.sys.model.UserModel;
+import com.tmc.client.app.tmc.model.CheckupModel;
 import com.tmc.client.app.tmc.model.PatientModel;
 import com.tmc.client.app.tmc.model.RequestModel;
 import com.tmc.client.app.tmc.model.RequestModelProperties;
@@ -17,6 +18,7 @@ import com.tmc.client.service.GridUpdateData;
 import com.tmc.client.service.InterfaceCallback;
 import com.tmc.client.ui.InterfaceLookupResult;
 import com.tmc.client.ui.SimpleMessage;
+import com.tmc.client.ui.builder.ComboBoxField;
 import com.tmc.client.ui.builder.GridBuilder;
 import com.tmc.client.ui.builder.InterfaceGridOperate;
 import com.tmc.client.ui.builder.SearchBarBuilder;
@@ -27,9 +29,11 @@ import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.event.CollapseEvent;
 import com.sencha.gxt.widget.core.client.event.RowClickEvent;
 import com.sencha.gxt.widget.core.client.event.RowClickEvent.RowClickHandler;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
+import com.sencha.gxt.widget.core.client.event.CollapseEvent.CollapseHandler;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.TextField;
@@ -48,15 +52,23 @@ public class Tab_TreatResult extends BorderLayoutContainer implements InterfaceG
 	private LookupCompanyField lookupCompanyField = new LookupCompanyField();
 	private Page_Result pageResult = new Page_Result(this.grid); 
 	
+	private ComboBoxField treatStateComboBox = new ComboBoxField("TreatStateCode");  
+	
 	public Tab_TreatResult() {
+
+		treatStateComboBox.addCollapseHandler(new CollapseHandler(){
+			@Override
+			public void onCollapse(CollapseEvent event) {
+			}
+		}); 
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48);
+		searchBarBuilder.addComboBox(treatStateComboBox, "상태구분", 180, 60); 
 		searchBarBuilder.addTextField(patientNameField, "환자명", 150, 46, true); 
+
+		
 		searchBarBuilder.addRetrieveButton(); 
-		searchBarBuilder.addUpdateButton();
-		searchBarBuilder.addInsertButton();
-		searchBarBuilder.addDeleteButton();
 
 		VerticalLayoutContainer vlc = new VerticalLayoutContainer(); 
 		vlc.add(searchBarBuilder.getSearchBar(), new VerticalLayoutData(1, 48));
@@ -116,6 +128,7 @@ public class Tab_TreatResult extends BorderLayoutContainer implements InterfaceG
 		
 		GridRetrieveData<RequestModel> service = new GridRetrieveData<RequestModel>(grid.getStore());
 		service.addParam("companyId", this.lookupCompanyField.getCompanyModel().getCompanyId());
+		service.addParam("treatStateCode", this.treatStateComboBox.getCode()); 
 		service.addParam("patientName", patientNameField.getText());
 		service.retrieve("tmc.Request.selectByCompanyId");
 	}

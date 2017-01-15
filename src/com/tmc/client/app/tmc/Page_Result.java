@@ -23,6 +23,7 @@ import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.FormPanel;
 import com.sencha.gxt.widget.core.client.form.FormPanel.LabelAlign;
 import com.sencha.gxt.widget.core.client.form.TextArea;
+import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
 // 보건의가 최종 처방결과를 등록하는 에디터 페이지. 
@@ -36,6 +37,7 @@ public class Page_Result extends ContentPanel implements Editor<RequestModel> {
 	
 	TextArea treatNote = new TextArea(); // 진료내역
 	TextArea resultNote = new TextArea(); // 조치내역
+	TextField treatStateCode = new TextField(); 
 	
 	public Page_Result(Grid<RequestModel> grid){
 
@@ -95,6 +97,8 @@ public class Page_Result extends ContentPanel implements Editor<RequestModel> {
 	}
 	
 	public void update(){
+		
+		treatStateCode.setValue("60"); // 조치완료  
 		grid.getStore().update(editDriver.flush());
 		
 		GridUpdateData<RequestModel> service = new GridUpdateData<RequestModel>();
