@@ -15,7 +15,7 @@
  	<result column="p60_cnt"  			property="p60Count"/>
 </resultMap>
 
-<select id="selectByRetrieve" resultMap="mapper" parameterType="String" > 
+<select id="selectByRetrieve" resultMap="mapper" parameterType="HashMap" > 
 	select 	sys01_company_id, 
 			sys01_company_nm, 
 	(	select	count(*) 
@@ -26,36 +26,42 @@
 		join	tmc01_patient 
 			on tmc01_patient_id = tmc02_patient_id
 		where	tmc01_company_id = sys01_company_id
-		and		tmc02_treat_state_cd = '10' ) p10_cnt , 
+		and		tmc02_request_date between #{fromDate} and #{toDate}
+		) p10_cnt , 
 	(	select	count(*) 
 		from	tmc02_request 
 		join	tmc01_patient 
 			on tmc01_patient_id = tmc02_patient_id
 		where	tmc01_company_id = sys01_company_id
+		and		tmc02_request_date between #{fromDate} and #{toDate}
 		and		tmc02_treat_state_cd = '20' ) p20_cnt , 
 	(	select	count(*) 
 		from	tmc02_request 
 		join	tmc01_patient 
 			on tmc01_patient_id = tmc02_patient_id
 		where	tmc01_company_id = sys01_company_id
+		and		tmc02_request_date between #{fromDate} and #{toDate}
 		and		tmc02_treat_state_cd = '30' ) p30_cnt , 
 	(	select	count(*) 
 		from	tmc02_request 
 		join	tmc01_patient 
 			on tmc01_patient_id = tmc02_patient_id
 		where	tmc01_company_id = sys01_company_id
+		and		tmc02_request_date between #{fromDate} and #{toDate}
 		and		tmc02_treat_state_cd = '40' ) p40_cnt , 
 	(	select	count(*) 
 		from	tmc02_request 
 		join	tmc01_patient 
 			on tmc01_patient_id = tmc02_patient_id
 		where	tmc01_company_id = sys01_company_id
+		and		tmc02_request_date between #{fromDate} and #{toDate}
 		and		tmc02_treat_state_cd = '50' ) p50_cnt , 
 	(	select	count(*) 
 		from	tmc02_request 
 		join	tmc01_patient 
 			on tmc01_patient_id = tmc02_patient_id
 		where	tmc01_company_id = sys01_company_id
+		and		tmc02_request_date between #{fromDate} and #{toDate}
 		and		tmc02_treat_state_cd = '60' ) p60_cnt 
 	from sys01_company
 	where sys01_company_type_cd = '10'
