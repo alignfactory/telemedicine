@@ -45,6 +45,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 	private RequestModelProperties properties = GWT.create(RequestModelProperties.class);
 	private Grid<RequestModel> grid = this.buildGrid();
 	private Grid<RequestModel> gridHistory = this.buildGridHistory();
+	//private Page_Treat pageTreat = new Page_Treat(grid);
 	private TextField patientNameField = new TextField();
 	private DateField dateField = new DateField(); 
 	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 

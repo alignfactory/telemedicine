@@ -85,14 +85,6 @@ public class OpenTab {
 			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_RequestList.class) ;
 		}
 
-		if("Tab_CheckupList".equals(className)) {
-			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_CheckupList.class) ;
-		}
-
-//		if("Tab_PrescribeList".equals(className)) {
-//			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_PrescribeList.class) ;
-//		}
-
 		if("Tab_TreatRequest".equals(className)) {
 			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_TreatRequest.class) ;
 		}
