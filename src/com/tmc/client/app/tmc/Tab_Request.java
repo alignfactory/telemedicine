@@ -36,7 +36,7 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
 /*
- * 전문의 처방 등록
+ * 전문의 처방 등록 
  * 검사오더와 처방내역만 등록이 가능하다.  
  */
 
@@ -45,7 +45,6 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 	private RequestModelProperties properties = GWT.create(RequestModelProperties.class);
 	private Grid<RequestModel> grid = this.buildGrid();
 	private Grid<RequestModel> gridHistory = this.buildGridHistory();
-	//private Page_Treat pageTreat = new Page_Treat(grid);
 	private TextField patientNameField = new TextField();
 	private DateField dateField = new DateField(); 
 	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 

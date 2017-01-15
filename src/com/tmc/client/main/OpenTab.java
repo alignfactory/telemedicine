@@ -101,7 +101,9 @@ public class OpenTab {
 			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_Prescribe.class) ;
 		}
 
-		
+		if("Tab_TreatResult".equals(className)) {
+			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_TreatResult.class) ;
+		}
 		
 		return null; 
 	}
