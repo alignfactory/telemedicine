@@ -12,5 +12,9 @@
 	<classpathentry kind="lib" path="D:/TMC/workspace/TeleMedicine/war/WEB-INF/lib/gwt-servlet.jar"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/TMC/workspace/TeleMedicine/war/WEB-INF/lib/gxt.jar"/>
+	<classpathentry kind="lib" path="D:/TMC/workspace/TeleMedicine/war/WEB-INF/lib/gxt-chart.jar"/>
+	<classpathentry kind="lib" path="D:/TMC/workspace/TeleMedicine/war/WEB-INF/lib/gxt-theme-neptune.jar"/>
+	<classpathentry kind="lib" path="D:/TMC/workspace/TeleMedicine/war/WEB-INF/lib/gxt-theme-triton.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

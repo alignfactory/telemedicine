@@ -36,7 +36,7 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
 /*
- * 전문의 처방 등록 
+ * 전문의 처방 등록
  * 검사오더와 처방내역만 등록이 가능하다.  
  */
 
@@ -45,7 +45,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 	private RequestModelProperties properties = GWT.create(RequestModelProperties.class);
 	private Grid<RequestModel> grid = this.buildGrid();
 	private Grid<RequestModel> gridHistory = this.buildGridHistory();
-	//private Page_Treat pageTreat = new Page_Treat(grid);
+	private Page_Treat pageTreat = new Page_Treat(grid);
 	private TextField patientNameField = new TextField();
 	private DateField dateField = new DateField(); 
 	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 
@@ -124,7 +124,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		BorderLayoutData centerLayoutData = new BorderLayoutData();
 		centerLayoutData.setMargins(new Margins(2,2,0,2));
 		centerLayoutData.setMaxSize(1000);
-		//this.setCenterWidget(pageTreat, centerLayoutData);
+		this.setCenterWidget(pageTreat, centerLayoutData);
 	}
 	
 	public Grid<RequestModel> buildGrid(){
@@ -179,15 +179,15 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 
 		gridBuilder.addDate(properties.requestDate(), 90, "진료예정일", new DateField());
-		gridBuilder.addText(properties.treatStateName(), 80, "상태구분");
 		gridBuilder.addText(properties.insNo(), 80, "보험번호"); //, new TextField()) ;
-		gridBuilder.addText(properties.patientKorName(), 100, "환자명", lookupPatientField) ;
+		gridBuilder.addText(properties.patientKorName(), 80, "환자명", lookupPatientField) ;
+		
 		gridBuilder.addText(properties.korName(), 80, "보건의", lookupRequestUserField);
 		gridBuilder.addText(properties.requestNote(), 200, "진료요청내용", new TextField()) ;
-		gridBuilder.addText(properties.note(), 400, "특기사항", new TextField()) ;
 		gridBuilder.addDate(properties.treatDate(), 85, "진료일"); //, new DateField());
 		gridBuilder.addText(properties.treatKorName(), 80, "진료의"); //, lookUpTreatUserField) ;
 		gridBuilder.addText(properties.treatNote(), 200, "처방내역"); //, new TextField()) ;
+		gridBuilder.addText(properties.note(), 400, "특기사항", new TextField()) ;		
 		gridBuilder.addText(properties.regKorName(), 80, "등록자"); //, new TextField()) ;
 		gridBuilder.addDate(properties.regDate(), 85, "등록일"); //, new DateField()) ;
 		return gridBuilder.getGrid(); 
@@ -206,7 +206,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 	}
 	
 	private void editRequestModel(RequestModel requestModel){
-		//this.pageTreat.retrieve(requestModel);
+		this.pageTreat.retrieve(requestModel);
 	}
 	
 	private void retrieveHistory(RequestModel requestModel){
@@ -231,7 +231,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 			return ; 
 		} 
 		gridHistory.getStore().clear(); 
-//		this.pageTreat.reset();
+		this.pageTreat.reset();
 
 		GridRetrieveData<RequestModel> service = new GridRetrieveData<RequestModel>(grid.getStore());
 		service.addCallback(new InterfaceCallback(){
@@ -267,9 +267,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		requestModel.setRegUserModel(LoginUser.getLoginUser());
 		requestModel.setRegUserId(LoginUser.getLoginUser().getUserId());
 		requestModel.setRequestDate(dateField.getValue());
-		//requestModel.setRegDate(new Date());
-		
-		requestModel.setTreatStateCode("10"); // 진료요청
+		requestModel.setRegDate(new Date());
 		requestModel.setRequestUserModel(LoginUser.getLoginUser());
 		requestModel.setRequestUserId(LoginUser.getLoginUser().getUserId());
 		
