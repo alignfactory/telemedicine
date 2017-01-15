@@ -31,7 +31,6 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.info.Info;
 
-// re bind 
 public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
 
 	interface EditDriver extends SimpleBeanEditorDriver<RequestModel, Page_Treat> {}

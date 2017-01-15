@@ -79,15 +79,15 @@ public class Tab_TreatResult extends BorderLayoutContainer implements InterfaceG
 		northLayoutData.setMaxSize(1000);
 		this.setNorthWidget(vlc, northLayoutData); 
 
-		BorderLayoutData westLayoutData = new BorderLayoutData(400);
-		westLayoutData.setMargins(new Margins(2,0,0,0));
-		westLayoutData.setSplit(true);
-		westLayoutData.setMaxSize(1000);
-		this.setWestWidget(this.gridHistory, westLayoutData);
-
-		BorderLayoutData centerLayoutData = new BorderLayoutData();
-		centerLayoutData.setMargins(new Margins(2,2,0,2));
-		centerLayoutData.setMaxSize(1000);
+//		BorderLayoutData westLayoutData = new BorderLayoutData(400);
+//		westLayoutData.setMargins(new Margins(2,0,0,0));
+//		westLayoutData.setSplit(true);
+//		westLayoutData.setMaxSize(1000);
+//		this.setWestWidget(this.gridHistory, westLayoutData);
+//
+//		BorderLayoutData centerLayoutData = new BorderLayoutData();
+//		centerLayoutData.setMargins(new Margins(2,2,0,2));
+//		centerLayoutData.setMaxSize(1000);
 //		this.setCenterWidget(pageTreat, centerLayoutData);
 	}
 	
@@ -101,6 +101,7 @@ public class Tab_TreatResult extends BorderLayoutContainer implements InterfaceG
 		gridBuilder.addText(properties.patientKorName(), 80, "환자명"); 
 		gridBuilder.addText(properties.korName(), 100, "보건의") ; 
 		gridBuilder.addText(properties.requestNote(), 200, "진료요청내용"); 
+		gridBuilder.addText(properties.treatStateName(), 80, "상태구분");
 		gridBuilder.addDate(properties.treatDate(), 100, "진료일"); 
 		gridBuilder.addText(properties.treatKorName(), 80, "진료의"); 
 		gridBuilder.addText(properties.treatNote(), 200, "처방내역"); 
@@ -114,13 +115,13 @@ public class Tab_TreatResult extends BorderLayoutContainer implements InterfaceG
 	@Override
 	public void retrieve() {
 		
-		if(this.companyModel.getCompanyId() == null){
+		if(this.lookupCompanyField.getCompanyModel().getCompanyId() == null){
 			new SimpleMessage("기관명 확인", "조회조건의 기관명은 반드시 입력하세요. ");
 			return ; 
 		} 
 		
 		GridRetrieveData<RequestModel> service = new GridRetrieveData<RequestModel>(grid.getStore());
-		service.addParam("companyId", this.companyModel.getCompanyId());
+		service.addParam("companyId", this.lookupCompanyField.getCompanyModel().getCompanyId());
 		service.addParam("patientName", patientNameField.getText());
 		service.retrieve("tmc.Request.selectByCompanyId");
 	}
@@ -133,7 +134,7 @@ public class Tab_TreatResult extends BorderLayoutContainer implements InterfaceG
 	
 	@Override
 	public void insertRow(){
-		if(this.companyModel.getCompanyId() == null){
+		if(this.lookupCompanyField.getCompanyModel().getCompanyId() == null){
 			new SimpleMessage("기관선택", "등록하고자 하는 담당자의 기관을 먼저 선택하여 주세요"); 
 			return ; 
 		}
