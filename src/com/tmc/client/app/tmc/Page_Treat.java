@@ -29,6 +29,7 @@ import com.sencha.gxt.widget.core.client.form.LongField;
 import com.sencha.gxt.widget.core.client.form.TextArea;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.Grid;
+import com.sencha.gxt.widget.core.client.info.Info;
 
 public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
 
@@ -51,8 +52,8 @@ public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
 	@Path("patientModel.birthday")
 	DateField birthday 	= new DateField();
 	
-	@Path("patientModel.note")
-	TextField patientNote = new TextField(); // 특기사항
+	//@Path("patientModel.note")
+	TextField note = new TextField(); 
 	
 	TextField treatStateName = new TextField(); // 상태구분
 	TextField treatStateCode = new TextField(); // 상태코드 
@@ -60,17 +61,22 @@ public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
 	DateField requestDate = new DateField();
 	DateField treatDate = new DateField(); // 진료일
 	
-	@Path("requestUserModel.note")
-	TextField korName 	= new TextField();
+	//@Path("requestUserModel.note")
 	TextArea requestNote = new TextArea(); // 특기사항
-
+	
+	@Path("requestUserModel.korName")
+	TextField korName 	= new TextField(); // 보건의명
+	
 	@Path("treatUserModel.korName")
 	TextField treatKorName 	= new TextField();
 	LongField treatUserId= new LongField();
 	TextArea treatNote = new TextArea(); // 진료내역
 	
-	public Page_Treat(Grid<RequestModel> grid){
-		this.grid = grid; 
+	private Tab_Prescribe tabPrescribe ; 
+	
+	public Page_Treat(Tab_Prescribe tabPrescribe){
+		this.tabPrescribe = tabPrescribe; 
+		this.grid = this.tabPrescribe.getGridHistory(); 
 		
 		editDriver.initialize(this);
 		this.setHeaderVisible(false);
@@ -131,8 +137,8 @@ public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
     	birthday.setHideTrigger(true);
     	
     	HorizontalLayoutContainer row01 = new HorizontalLayoutContainer();
-    	row01.add(new FieldLabel(patientNote, "특기사항"), new HorizontalLayoutData(1, 30));
-    	patientNote.setReadOnly(true);
+    	row01.add(new FieldLabel(note, "특기사항"), new HorizontalLayoutData(1, 30));
+    	note.setReadOnly(true);
     	
     	HorizontalLayoutContainer row02 = new HorizontalLayoutContainer();
     	row02.add(new FieldLabel(requestDate, "진료예정일"), rowLayout);
@@ -212,12 +218,17 @@ public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
 		}
 		
 		grid.getStore().update(editDriver.flush());
+		
 		GridUpdateData<RequestModel> service = new GridUpdateData<RequestModel>();
 		service.addCallback(new InterfaceCallback(){
 			@Override
 			public void callback() {
 				requestModel = grid.getSelectionModel().getSelectedItem(); 
 				editDriver.edit(requestModel);
+				
+				Info.display("call back ", "treat"); 
+				
+				tabPrescribe.update(requestModel);
 			}
 		});
 

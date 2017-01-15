@@ -40,7 +40,7 @@ public class Tab_Prescribe2 extends BorderLayoutContainer implements InterfaceGr
 	private RequestModelProperties properties = GWT.create(RequestModelProperties.class);
 	private Grid<RequestModel> grid = this.buildGrid();
 	private Grid<RequestModel> gridHistory = this.buildGridHistory();
-	private Page_Treat pageTreat = new Page_Treat(gridHistory); 
+	//private Page_Treat pageTreat = new Page_Treat(gridHistory); 
 	
 	private TextField patientNameField = new TextField();
 	private DateField dateField = new DateField(); 
@@ -120,7 +120,7 @@ public class Tab_Prescribe2 extends BorderLayoutContainer implements InterfaceGr
 		BorderLayoutData centerLayoutData = new BorderLayoutData();
 		centerLayoutData.setMargins(new Margins(2,2,0,2));
 		centerLayoutData.setMaxSize(1000);
-		this.setCenterWidget(pageTreat, centerLayoutData);
+		//this.setCenterWidget(pageTreat, centerLayoutData);
 	}
 	
 	public Grid<RequestModel> buildGrid(){
@@ -204,7 +204,7 @@ public class Tab_Prescribe2 extends BorderLayoutContainer implements InterfaceGr
 	}
 	
 	private void editRequestModel(RequestModel requestModel){
-		this.pageTreat.retrieve(requestModel);
+		//this.pageTreat.retrieve(requestModel);
 	}
 	
 	private void retrieveHistory(RequestModel requestModel){
