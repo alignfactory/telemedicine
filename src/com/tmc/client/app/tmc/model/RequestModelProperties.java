@@ -30,7 +30,8 @@ public interface RequestModelProperties  extends PropertyAccess<RequestModel> {
 	ValueProvider<RequestModel, Date> regDate();
 
 	ValueProvider<RequestModel, String> note();
-
+	ValueProvider<RequestModel, String> resultNote();
+	
 // 환자 모델 
 	@Path("patientModel.korName")
 	ValueProvider<RequestModel, String> patientKorName();

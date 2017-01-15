@@ -45,8 +45,8 @@ public class Tab_TreatResult extends BorderLayoutContainer implements InterfaceG
 	private RequestModelProperties properties = GWT.create(RequestModelProperties.class);
 	private Grid<RequestModel> grid = this.buildGrid();
 	private TextField patientNameField = new TextField();
-	
 	private LookupCompanyField lookupCompanyField = new LookupCompanyField();
+	private Page_Result pageResult = new Page_Result(this.grid); 
 	
 	public Tab_TreatResult() {
 		
@@ -68,27 +68,21 @@ public class Tab_TreatResult extends BorderLayoutContainer implements InterfaceG
 
 				RequestModel requestModel = grid.getSelectionModel().getSelectedItem(); 
 				if(requestModel != null){
-					// retrieveHistory(requestModel); 
+					pageResult.retrieve(requestModel);
 				}
 			}
 		}); 
 		
-		BorderLayoutData northLayoutData = new BorderLayoutData(300);
-		northLayoutData.setMargins(new Margins(2,0,0,0));
+		BorderLayoutData northLayoutData = new BorderLayoutData(600);
+		northLayoutData.setMargins(new Margins(0,0,0,0));
 		northLayoutData.setSplit(true);
 		northLayoutData.setMaxSize(1000);
 		this.setNorthWidget(vlc, northLayoutData); 
 
-//		BorderLayoutData westLayoutData = new BorderLayoutData(400);
-//		westLayoutData.setMargins(new Margins(2,0,0,0));
-//		westLayoutData.setSplit(true);
-//		westLayoutData.setMaxSize(1000);
-//		this.setWestWidget(this.gridHistory, westLayoutData);
-//
-//		BorderLayoutData centerLayoutData = new BorderLayoutData();
-//		centerLayoutData.setMargins(new Margins(2,2,0,2));
-//		centerLayoutData.setMaxSize(1000);
-//		this.setCenterWidget(pageTreat, centerLayoutData);
+		BorderLayoutData centerLayoutData = new BorderLayoutData();
+		centerLayoutData.setMargins(new Margins(2,0,0,0));
+		centerLayoutData.setMaxSize(1000);
+		this.setCenterWidget(this.pageResult, centerLayoutData);
 	}
 	
 	public Grid<RequestModel> buildGrid(){
@@ -128,36 +122,13 @@ public class Tab_TreatResult extends BorderLayoutContainer implements InterfaceG
 	
 	@Override
 	public void update(){
-		GridUpdateData<RequestModel> service = new GridUpdateData<RequestModel>(); 
-		service.update(grid.getStore(), "tmc.Request.update"); 
 	}
 	
 	@Override
 	public void insertRow(){
-		if(this.lookupCompanyField.getCompanyModel().getCompanyId() == null){
-			new SimpleMessage("기관선택", "등록하고자 하는 담당자의 기관을 먼저 선택하여 주세요"); 
-			return ; 
-		}
-		
-		GridInsertRow<RequestModel> service = new GridInsertRow<RequestModel>(); 
-
-		RequestModel requestModel= new RequestModel();
-		// 초기 데이터 설정 
-		requestModel.setRegUserModel(LoginUser.getLoginUser());
-		requestModel.setRegUserId(LoginUser.getLoginUser().getUserId());
-		requestModel.setRegDate(new Date());
-		requestModel.setRequestUserModel(LoginUser.getLoginUser());
-		requestModel.setRequestUserId(LoginUser.getLoginUser().getUserId());
-		
-		requestModel.setRegDate(new Date());
-		
-		service.insertRow(grid, requestModel);
 	}
 	
 	@Override
 	public void deleteRow(){
-		GridDeleteData<RequestModel> service = new GridDeleteData<RequestModel>();
-		List<RequestModel> checkedList = grid.getSelectionModel().getSelectedItems() ; 
-		service.deleteRow(grid.getStore(), checkedList, "tmc.Request.delete");
 	}
 }

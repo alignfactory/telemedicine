@@ -24,6 +24,8 @@
 	<result column="tmc02_reg_date"  		property="regDate"/>
 	<result column="tmc02_note"  			property="note"/>
 	
+	<result column="tmc02_result_note"  	property="resultNote"/>
+	
 	<!--  request user  
 	<result column="req_sys02_user_id" 		property="request_user_userId"/>
 	<result column="req_sys02_company_id"	property="request_user_companyId"/>

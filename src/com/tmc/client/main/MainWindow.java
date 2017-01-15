@@ -95,7 +95,7 @@ public class MainWindow extends ContentPanel {
 		ContentPanel tabContent = new ContentPanel(); 
 		tabContent.setHeaderVisible(false);
 		VerticalLayoutContainer vlc = new VerticalLayoutContainer(); 
-		vlc.add(tabPanel, new VerticalLayoutData(1, 1, new Margins(2, 0, 0, 2)));
+		vlc.add(tabPanel, new VerticalLayoutData(1, 1, new Margins(2))); //, 2, 2, 2)));
 		tabContent.add(vlc);
 		
 		mainContainer.setCenterWidget(tabContent);

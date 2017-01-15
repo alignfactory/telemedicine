@@ -24,6 +24,7 @@ public class RequestModel extends AbstractDataModel {
 	private Long 	regUserId;
 	private Date 	regDate;
 	private String	note; 
+	private String 	resultNote; 
 	
 	private PatientModel patientModel = new PatientModel(); 
 	private UserModel requestUserModel = new UserModel(); 
@@ -183,6 +184,14 @@ public class RequestModel extends AbstractDataModel {
 
 	public void setTreatStateName(String treatStateName) {
 		this.treatStateName = treatStateName;
+	}
+
+	public String getResultNote() {
+		return resultNote;
+	}
+
+	public void setResultNote(String resultNote) {
+		this.resultNote = resultNote;
 	}
 	
 }
