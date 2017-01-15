@@ -73,6 +73,7 @@
 	<mapper resource="com/tmc/server/app/tmc/mapper/tmc01_patient.xml"/>
 	<mapper resource="com/tmc/server/app/tmc/mapper/tmc02_request.xml"/>
 	<mapper resource="com/tmc/server/app/tmc/mapper/tmc03_checkup.xml"/>
+	<mapper resource="com/tmc/server/app/tmc/mapper/tmc99_retrieve.xml"/>
 
 </mappers>
 

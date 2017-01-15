@@ -45,7 +45,6 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 	private RequestModelProperties properties = GWT.create(RequestModelProperties.class);
 	private Grid<RequestModel> grid = this.buildGrid();
 	private Grid<RequestModel> gridHistory = this.buildGridHistory();
-	//private Page_Treat pageTreat = new Page_Treat(grid);
 	private TextField patientNameField = new TextField();
 	private DateField dateField = new DateField(); 
 	private CompanyModel companyModel = LoginUser.getLoginUser().getCompanyModel(); 
@@ -110,7 +109,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		}); 
 		
 		BorderLayoutData northLayoutData = new BorderLayoutData(300);
-		northLayoutData.setMargins(new Margins(2,0,0,0));
+		northLayoutData.setMargins(new Margins(0,0,0,0));
 		northLayoutData.setSplit(true);
 		northLayoutData.setMaxSize(1000);
 		this.setNorthWidget(vlc, northLayoutData); 
