@@ -47,7 +47,6 @@ public class Page_Checkup extends ContentPanel  {
 			}
 		}); 
 		gridBuilder.addText(properties.checkupName(), 100, "검사종류", checkupTypeComboBox) ;
-		
 		gridBuilder.addText(properties.checkupOrder(), 200, "검사요청사항", new TextField()) ;
 
 		
@@ -105,7 +104,6 @@ public class Page_Checkup extends ContentPanel  {
 		CheckupModel checkupModel = new CheckupModel();
 		
 		// 초기 데이터 설정 
-		// checkupModel.setCheckupDate(new Date());
 		checkupModel.setProcessCode("010");
 		checkupModel.setProcessName("검사요청");
 		
