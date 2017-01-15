@@ -56,11 +56,7 @@ public class Tab_TreatResult extends BorderLayoutContainer implements InterfaceG
 	
 	public Tab_TreatResult() {
 
-		treatStateComboBox.addCollapseHandler(new CollapseHandler(){
-			@Override
-			public void onCollapse(CollapseEvent event) {
-			}
-		}); 
+		treatStateComboBox.setValue("처방등록");
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48);
@@ -111,6 +107,7 @@ public class Tab_TreatResult extends BorderLayoutContainer implements InterfaceG
 		gridBuilder.addDate(properties.treatDate(), 100, "진료일"); 
 		gridBuilder.addText(properties.treatKorName(), 80, "진료의"); 
 		gridBuilder.addText(properties.treatNote(), 200, "처방내역"); 
+		gridBuilder.addText(properties.resultNote(), 200, "조치내역");
 		gridBuilder.addText(properties.note(), 400, "특기사항"); 		
 		gridBuilder.addText(properties.regKorName(), 80, "등록자"); 
 		gridBuilder.addDate(properties.regDate(), 100, "등록일"); 

@@ -38,6 +38,7 @@ public class Request {
 		param.put("companyId", companyId);
 		param.put("patientName", patientName); 
 		param.put("requestDate", requestDate); 
+		param.put("treatStateCode", request.getString("treatStateCode"));
 		
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByCompanyId", param);
 		result.setRetrieveResult(1, "select ok", list);
