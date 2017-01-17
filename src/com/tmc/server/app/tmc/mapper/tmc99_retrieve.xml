@@ -4,15 +4,15 @@
 <mapper namespace="tmc99_retrieve">
 
 <resultMap 	id="mapper" type="com.tmc.client.app.tmc.model.StatsRetrieveModel" >
-	<id  	column="sys01_company_id"  	property="companyId"/>
+	<id  	column="sys01_company_id"  	property="companyId" />
  	<result column="sys01_company_nm" 	property="companyName"/>
  	<result column="patient_cnt"		property="patientCount"/>
- 	<result column="p10_cnt"  			property="p10Count"/>
- 	<result column="p20_cnt"			property="p20Count"/>
- 	<result column="p30_cnt"			property="p30Count"/>
- 	<result column="p40_cnt"			property="p40Count"/>
- 	<result column="p50_cnt"  			property="p50Count"/>
- 	<result column="p60_cnt"  			property="p60Count"/>
+ 	<result column="p10_cnt"  			property="p10Count" />
+ 	<result column="p20_cnt"			property="p20Count" />
+ 	<result column="p30_cnt"			property="p30Count" />
+ 	<result column="p40_cnt"			property="p40Count" />
+ 	<result column="p50_cnt"  			property="p50Count" />
+ 	<result column="p60_cnt"  			property="p60Count" />
 </resultMap>
 
 <select id="selectByRetrieve" resultMap="mapper" parameterType="HashMap" > 
@@ -65,6 +65,62 @@
 		and		tmc02_treat_state_cd = '60' ) p60_cnt 
 	from sys01_company
 	where sys01_company_type_cd = '10'
+</select>
+
+<!--  result type이 변경된다.  -->
+<select id="selectByStatic" resultType="java.util.Map" parameterType="HashMap" > 
+
+	select 	sys01_company_id companyId, 
+			sys01_company_nm companyName, 
+	(	select	count(*) 
+		from	tmc01_patient 
+		where	tmc01_company_id = sys01_company_id ) p10Count, 
+	(	select	count(*) 
+		from	tmc02_request 
+		join	tmc01_patient 
+			on tmc01_patient_id = tmc02_patient_id
+		where	tmc01_company_id = sys01_company_id
+		and		tmc02_request_date between #{fromDate} and #{toDate}
+		) p10_cnt , 
+	(	select	count(*) 
+		from	tmc02_request 
+		join	tmc01_patient 
+			on tmc01_patient_id = tmc02_patient_id
+		where	tmc01_company_id = sys01_company_id
+		and		tmc02_request_date between #{fromDate} and #{toDate}
+		and		tmc02_treat_state_cd = '20' ) p20_cnt , 
+	(	select	count(*) 
+		from	tmc02_request 
+		join	tmc01_patient 
+			on tmc01_patient_id = tmc02_patient_id
+		where	tmc01_company_id = sys01_company_id
+		and		tmc02_request_date between #{fromDate} and #{toDate}
+		and		tmc02_treat_state_cd = '30' ) p30_cnt , 
+	(	select	count(*) 
+		from	tmc02_request 
+		join	tmc01_patient 
+			on tmc01_patient_id = tmc02_patient_id
+		where	tmc01_company_id = sys01_company_id
+		and		tmc02_request_date between #{fromDate} and #{toDate}
+		and		tmc02_treat_state_cd = '40' ) p40_cnt , 
+	(	select	count(*) 
+		from	tmc02_request 
+		join	tmc01_patient 
+			on tmc01_patient_id = tmc02_patient_id
+		where	tmc01_company_id = sys01_company_id
+		and		tmc02_request_date between #{fromDate} and #{toDate}
+		and		tmc02_treat_state_cd = '50' ) p50_cnt , 
+	(	select	count(*) 
+		from	tmc02_request 
+		join	tmc01_patient 
+			on tmc01_patient_id = tmc02_patient_id
+		where	tmc01_company_id = sys01_company_id
+		and		tmc02_request_date between #{fromDate} and #{toDate}
+		and		tmc02_treat_state_cd = '60' ) p60_cnt 
+	from sys01_company
+	where sys01_company_type_cd = '10'
+	and		sys01_company_nm = '의정부보건소'
+
 </select>
 
 </mapper>
