@@ -131,13 +131,13 @@ public class Tab_CheckupList extends BorderLayoutContainer implements InterfaceG
 		GridRetrieveData<CheckupModel> service = new GridRetrieveData<CheckupModel>(gridCheckup.getStore());
 		service.addParam("companyId", this.lookupCompanyField.getCompanyModel().getCompanyId());
 		service.addParam("startDate", startDateField.getValue());
-		
-		Info.display("start date is", ""+startDateField.getValue());
-		new SimpleMessage("start date is", ""+startDateField.getValue());
-		
 		service.addParam("endDate", endDateField.getValue());
 		service.addParam("patientName", patientNameField.getText());
-		service.retrieve("tmc.Checkup.selectByCheckupList");
+		
+//		Info.display("start date is", ""+startDateField.getValue());
+//		new SimpleMessage("start date is", ""+startDateField.getValue());
+		
+		service.retrieve("tmc.Request.selectByCheckupList");
 	}
 	
 	@Override
