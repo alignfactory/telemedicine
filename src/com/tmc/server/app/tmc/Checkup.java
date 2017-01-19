@@ -33,24 +33,6 @@ public class Checkup {
 		result.setRetrieveResult(1, "select ok", list);
 	}
 	
-	public void selectByCheckupId(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
-		Long companyId = request.getLong("companyId"); 
-		Date startDate = request.getDate("startDate"); 
-		Date endDate = request.getDate("endDate"); 
-		String patientName = request.getString("patientName");
-		patientName = "%" + patientName + "%";
-		
-//		System.out.println("companyId is " + companyId); 
-		Map<String, Object> param = new HashMap<String, Object>(); 
-		param.put("companyId", companyId);
-		param.put("startDate", startDate);
-		param.put("endDate", endDate);
-		param.put("patientName", patientName); 
-		
-		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByCheckupId", param);
-		result.setRetrieveResult(1, "select ok", list);
-	}
-	
 	public void update(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		
 		Long userId = request.getLong("userId");
@@ -72,6 +54,30 @@ public class Checkup {
 		updateModel.updateModel(sqlSession, list, mapperName, result);
 	}
 
+	public void selectByCheckupList(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
+		Long companyId = request.getLong("companyId"); 
+		Date startDate = request.getDate("startDate"); 
+		Date endDate = request.getDate("endDate"); 
+		String patientName = request.getString("patientName");
+		patientName = "%" + patientName + "%";
+		
+		System.out.println("company id is "+companyId); 
+		System.out.println("start date is " + startDate);
+		System.out.println("end date is " + endDate);
+		System.out.println("epatientName " + patientName);
+		
+		Map<String, Object> param = new HashMap<String, Object>(); 
+		param.put("companyId", companyId);
+		param.put("startDate", startDate);
+		param.put("endDate", endDate);
+		param.put("patientName", patientName); 
+		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectByCheckupList", param);
+		
+		System.out.println("list count is "+ list.size()); 
+		
+		result.setRetrieveResult(1, "select ok", list);
+	}
+	
 	public void delete(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		UpdateDataModel<AbstractDataModel> updateModel = new UpdateDataModel<AbstractDataModel>(); 
 		updateModel.deleteModel(sqlSession, request.getList(), mapperName, result);

@@ -39,12 +39,11 @@ public class Login implements InterfaceServiceCall {
 		loginDialog.setBodyBorder(false);
 		loginDialog.getHeader().setIcon(ResourceIcon.INSTANCE.dBButton() ); //(+) 이미지를 가져온다. ;
 		loginDialog.setResizable(false);
-		loginDialog.setHeading("Telemedicine Login");
+		loginDialog.setHeading("Telemedicine login");
 		loginDialog.setHeaderVisible(true);
-
-		loginDialog.setWidth(420);
-		loginDialog.setHeight(450);
-
+		loginDialog.setWidth(400);
+		loginDialog.setHeight(440);
+		
 		loginDialog.getButton(PredefinedButton.OK).setWidth(60);
 		loginDialog.getButton(PredefinedButton.OK).addSelectHandler(new SelectHandler() {
 			@Override
@@ -61,8 +60,7 @@ public class Login implements InterfaceServiceCall {
 		
 		VerticalLayoutData vld = new VerticalLayoutData(); 
 		
-//		vlc.add(new HTML("<div><br><img src='img/Telemedicine.jpg' width='500' height='140'></div>"));
-		vlc.add(new HTML("<div align='center'><img src='img/Telemedicine.jpg' width='200' height='200'><br></div>"));
+		vlc.add(new HTML("<center><div><img src='img/Telemedicine.jpg' width='200' height='200'></center></div>"));
 		panel.setLayoutData(new Margins(0, 0, 30, 30));
 		loginDialog.add(panel); 
 		loginDialog.show();
@@ -77,7 +75,7 @@ public class Login implements InterfaceServiceCall {
 		passwordLabel.setWidth(280); 
 		vlc.add(passwordLabel, vld);
   
-		Label loginDesc = new HTML("<font size='2'><br>※ Login ID는 등록된 E-Mail ID를 사용 바랍니다. <br>※ Error 발생시 담당자에게 문의 바랍니다.<br></font>");
+		Label loginDesc = new HTML("<font size='2'><br>※ Login ID는 등록된 E-Mail ID를 사용 바랍니다. <br>※ 오류 발생시 담당자에게 문의 바랍니다.<br></font>");
 		vlc.add(loginDesc);
 	}
 

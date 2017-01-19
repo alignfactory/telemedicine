@@ -11,8 +11,6 @@ public class Tab_Main extends BorderLayoutContainer {
 	
 	public Tab_Main() {
 		
-		
-		
 		BorderLayoutData westLayoutData = new BorderLayoutData(0.4);
 		//westLayoutData.setMargins(new Margins(0,1,0,0));
 		//westLayoutData.setSplit(true);

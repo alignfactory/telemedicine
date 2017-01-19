@@ -89,9 +89,9 @@ public class OpenTab {
 			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_CheckupList.class) ;
 		}
 
-//		if("Tab_PrescribeList".equals(className)) {
-//			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_PrescribeList.class) ;
-//		}
+		if("Tab_TreatList".equals(className)) {
+			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_TreatList.class) ;
+		}
 
 		if("Tab_TreatRequest".equals(className)) {
 			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_TreatRequest.class) ;
@@ -100,7 +100,14 @@ public class OpenTab {
 		if("Tab_Prescribe".equals(className)) {
 			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_Prescribe.class) ;
 		}
-
+		
+		if("Tab_TreatResult".equals(className)) {
+			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_TreatResult.class) ;
+		}
+		
+		if("Tab_Stats".equals(className)) {
+			return (Widget) GWT.create(com.tmc.client.app.tmc.Tab_Stats.class) ;
+		}
 		
 		
 		return null; 

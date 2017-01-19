@@ -49,14 +49,14 @@
 	where	tmc03_request_id = #{requestId}
 </select>
 
-<select id="selectByCheckupId" resultMap="mapper" parameterType="HashMap"> 
+<select id="selectByCheckupList" resultMap="mapper" parameterType="HashMap" > 
 	select 	tmc03_checkup.*,
 			sys02_user.*,    
 			dbo.f_cdnm('CheckupTypeCode', tmc03_checkup_cd) tmc03_checkup_nm,   
 			dbo.f_cdnm('CheckupProcessCode', tmc03_process_cd) tmc03_process_nm
 	from 	tmc03_checkup
 			left outer join sys02_user
-				on tmc03_checkup_user_id = sys02_user_id
+			on tmc03_checkup_user_id = sys02_user_id
 	where	sys02_company_id = #{companyId}
 	and		tmc03_checkup_date between #{startDate} and #{endDate}
 	and		sys02_kor_nm like #{patientName}

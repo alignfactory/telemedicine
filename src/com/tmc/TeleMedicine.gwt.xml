@@ -5,6 +5,12 @@
 
 	<inherits name='com.google.gwt.user.User' />
 	<inherits name='com.sencha.gxt.ui.GXT' />
+	
+	<!--  google 의 json을 기반으로 오브젝트를 자동생성하는 기능  -->
+	<inherits name="com.google.web.bindery.autobean.AutoBean"/>
+	
+	
+	
 	<stylesheet src="reset.css" />
 	<inherits name='com.sencha.gxt.theme.neptune.Theme' />
 
@@ -14,6 +20,4 @@
 	<source path='client' />
 	<source path='shared' />
 
- 	<collapse-all-properties />
- 
 </module>

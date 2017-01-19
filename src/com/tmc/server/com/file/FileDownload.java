@@ -22,13 +22,12 @@ import com.tmc.server.com.DatabaseFactory;
 
 public class FileDownload implements javax.servlet.Servlet {
 
-	private FilePath filePath = new FilePath(); 
-	
 	private void fileDownload(HttpServletRequest request, HttpServletResponse response) 
 			 throws ServletException, IOException {
 		
 		response.setCharacterEncoding("UTF-8"); // encoding 해주어야 한글메세지가 보인다.
 		
+		String filePath = "D:\\WebFiles\\" ;
 		String fileId = request.getParameter("fileId");
 		
 		if(fileId == null){
@@ -38,7 +37,7 @@ public class FileDownload implements javax.servlet.Servlet {
 		SqlSession sqlSession = DatabaseFactory.openSession();
 		FileModel fileModel = sqlSession.selectOne("sys10_file.selectById", Long.parseLong(fileId)); 
 		
-        File file = new File(filePath.getFilePath(fileId) + "\\"  + fileId);
+        File file = new File(filePath + (Long.parseLong(fileId)/100) + "\\"  + fileId);
         System.out.println("file download:" + file.getAbsolutePath());
 
         if(fileModel == null) {

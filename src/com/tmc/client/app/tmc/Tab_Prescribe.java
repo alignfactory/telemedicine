@@ -82,7 +82,7 @@ public class Tab_Prescribe extends BorderLayoutContainer implements InterfaceGri
 		this.setWestWidget(this.gridHistory, westLayoutData);
 
 		BorderLayoutData centerLayoutData = new BorderLayoutData();
-		centerLayoutData.setMargins(new Margins(0,0,0,2));
+		centerLayoutData.setMargins(new Margins(0,2,0,2));
 		centerLayoutData.setMaxSize(1000);
 		this.setCenterWidget(pageTreat, centerLayoutData);
 	}

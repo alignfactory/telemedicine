@@ -24,6 +24,8 @@
 	<result column="tmc02_reg_date"  		property="regDate"/>
 	<result column="tmc02_note"  			property="note"/>
 	
+	<result column="tmc02_result_note"  	property="resultNote"/>
+	
 	<!--  request user  
 	<result column="req_sys02_user_id" 		property="request_user_userId"/>
 	<result column="req_sys02_company_id"	property="request_user_companyId"/>
@@ -163,6 +165,10 @@
 	</if>
 	and		tmc01_kor_nm like #{patientName}
 	
+	<if test="treatStateCode != null">
+	and		tmc02_treat_state_cd = #{treatStateCode} 
+	</if>
+	
 	order 	by tmc02_request_date
 </select>
  
@@ -238,6 +244,48 @@
 	and		tmc02_request_date between #{startDate} and #{endDate}
 	and		tmc01_kor_nm like #{patientName}
     order 	by tmc02_request_date
+</select>
+
+<select id="selectByTreatList" resultMap="mapper" parameterType="HashMap" > 
+	select 	tmc01_patient.*, 
+			tmc02_request.*,
+			dbo.f_cdnm('TreatStateCode', tmc02_treat_state_cd) tmc02_treat_state_nm,
+			dbo.f_cdnm('GenderCode', tmc01_gender_cd) tmc01_gender_nm,   
+<!-- 
+			request_user.sys02_company_id req_sys02_company_id, 
+			request_user.sys02_user_id req_sys02_user_id,
+			request_user.sys02_kor_nm req_sys02_kor_nm,
+			user table include and 각 오브젝트로 나누어 조회한다. 
+ -->		
+			<include refid="tmc02_request.selectUserColumns"> <!-- 보건의 -->
+				<property name="alias" value="request_user"/>
+				<property name="prefix" value="req"/>
+			</include>, 
+			<include refid="tmc02_request.selectUserColumns"> <!-- 전문의 -->
+				<property name="alias" value="treat_user"/>
+				<property name="prefix" value="treat"/>
+			</include>, 
+			<include refid="tmc02_request.selectUserColumns"> <!-- 등록자 -->
+				<property name="alias" value="reg_user"/>
+				<property name="prefix" value="reg"/>
+			</include>
+	from 	tmc02_request 
+			join tmc01_patient 
+				on tmc02_patient_id = tmc01_patient_id  
+			join sys02_user request_user 
+				on tmc02_request_user_id = request_user.sys02_user_id 
+			join sys02_user reg_user  
+				on tmc02_reg_user_id = reg_user.sys02_user_id
+			left join sys02_user treat_user 
+				on tmc02_treat_user_id = treat_user.sys02_user_id
+	where 	tmc01_company_id = #{companyId}
+	and		tmc02_request_date between convert(date, #{startDate}) and  convert(date, #{endDate})
+	and		tmc01_kor_nm like #{patientName}
+	<if test="treatStateCode != null">
+	and		tmc02_treat_state_cd = #{treatStateCode} 
+	</if>
+	
+	order 	by tmc02_request_date
 </select>
 
 </mapper>

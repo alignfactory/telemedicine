@@ -84,12 +84,6 @@ public class GridUpdateData<T> implements InterfaceServiceCall{
 		for (AbstractDataModel model: result.getResult()) {
 			listStore.update((T) model); 
 		}
-		
-		// callback execute 
-		if(this.callBack != null){
-			Info.display("calblack", "call");
-			this.callBack.callback();
-		}
 	}
 
 	public InterfaceCallback getCallBack() {

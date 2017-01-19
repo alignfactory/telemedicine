@@ -134,7 +134,7 @@ public class Tab_RequestList extends BorderLayoutContainer implements InterfaceG
 	
 		
 		GridBuilder<RequestModel> gridBuilder = new GridBuilder<RequestModel>(properties.keyId());  
-		gridBuilder.setChecked(SelectionMode.SINGLE);
+//		gridBuilder.setChecked(SelectionMode.SINGLE);
 
 		gridBuilder.addDate(properties.requestDate(), 90, "진료예정일"); //, new DateField());
 		gridBuilder.addText(properties.insNo(), 90, "보험번호"); //, new TextField()) ;

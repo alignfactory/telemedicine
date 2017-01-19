@@ -9,10 +9,11 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 public class ServiceResult implements IsSerializable {
 	
 	private String serviceName; 
-	private int status=0; 
+	private int  status=0; 
 	private String message=""; 
 	private List<AbstractDataModel> list = new ArrayList<AbstractDataModel>();
 	private Long seq ;  
+	private String jsonString; 
 	
 	public Long getSeq(){
 		return seq ; 
@@ -90,4 +91,14 @@ public class ServiceResult implements IsSerializable {
 		this.serviceName = serviceName;
 	}
 
+	public void setJosnResult(String jsonString){
+		this.jsonString = jsonString;
+	}
+	
+	public String getJsonResult(){
+		//조회된 결과를 JSON으로 리턴한다.
+		
+		return this.jsonString ;  
+	}
+	
 }
