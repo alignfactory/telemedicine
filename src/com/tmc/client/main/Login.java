@@ -60,7 +60,7 @@ public class Login implements InterfaceServiceCall {
 		
 		VerticalLayoutData vld = new VerticalLayoutData(); 
 		
-		vlc.add(new HTML("<center><div><img src='img/Telemedicine.jpg' width='200' height='200'></center></div>"));
+		vlc.add(new HTML("<div align='center'><img src='img/Telemedicine.jpg' width='200' height='200'><br></div>"));
 		panel.setLayoutData(new Margins(0, 0, 30, 30));
 		loginDialog.add(panel); 
 		loginDialog.show();
@@ -75,7 +75,7 @@ public class Login implements InterfaceServiceCall {
 		passwordLabel.setWidth(280); 
 		vlc.add(passwordLabel, vld);
   
-		Label loginDesc = new HTML("<font size='2'><br>※ Login ID는 등록된 E-Mail ID를 사용 바랍니다. <br>※ 오류 발생시 담당자에게 문의 바랍니다.<br></font>");
+		Label loginDesc = new HTML("<font size='2'><br>※ Login ID는 등록된 E-Mail ID를 사용 바랍니다. <br>※ Error 발생시 담당자에게 문의 바랍니다.<br></font>");
 		vlc.add(loginDesc);
 	}
 
