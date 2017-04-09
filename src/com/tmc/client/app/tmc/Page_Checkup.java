@@ -58,7 +58,7 @@ public class Page_Checkup extends ContentPanel  {
 				grid.getStore().getRecord(data).addChange(properties.processCode(), checkupProcessComboBox.getCode());
 			}
 		}); 
-		gridBuilder.addText(properties.processName(), 80, "상태구분"); // , checkupProcessComboBox) ;
+		gridBuilder.addText(properties.processName(), 80, "검사상태"); // , checkupProcessComboBox) ;
 
 		gridBuilder.addText(properties.checkupResult(), 250, "검사결과"); //, new DateField()) ;
 

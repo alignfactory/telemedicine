@@ -59,7 +59,7 @@ public class Request {
 		List<AbstractDataModel> list = sqlSession.selectList(mapperName + ".selectBySearchList", param);
 		result.setRetrieveResult(1, "select ok", list);
 	}
-	
+
 	public void selectByTreatList(SqlSession sqlSession, ServiceRequest request, ServiceResult result) {
 		Long companyId = request.getLong("companyId"); 
 		Date startDate = request.getDate("startDate"); 

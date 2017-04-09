@@ -24,9 +24,10 @@
 				<property name="password" value="psmis" />
 			-->
 			
-			<!--  sql server -->			
+			<!--  sql server -->
+			<!--  fw.n3ems.co.kr -->
 			<property name="driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-			<property name="url" value="jdbc:sqlserver://localhost:1433;DatabaseName=TelemedicineDB" />
+			<property name="url" value="jdbc:sqlserver://fw.n3ems.co.kr:1433;DatabaseName=TelemedicineDB" />
 			<property name="username" value="medical" />
 			<property name="password" value="qwer!@34" />
 

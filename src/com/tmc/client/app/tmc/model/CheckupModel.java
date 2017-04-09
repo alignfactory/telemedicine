@@ -23,6 +23,9 @@ public class CheckupModel extends AbstractDataModel {
 	private Long checkupUserId;
 	
 	private UserModel userModel = new UserModel(); 
+	private RequestModel requestModel = new RequestModel(); 
+	private PatientModel patientModel = new PatientModel();
+	
 	
 	@Override
 	public void setKeyId(Long id) {
@@ -120,6 +123,22 @@ public class CheckupModel extends AbstractDataModel {
 
 	public void setCheckupOrder(String checkupOrder) {
 		this.checkupOrder = checkupOrder;
+	}
+
+	public RequestModel getRequestModel() {
+		return requestModel;
+	}
+
+	public void setRequestModel(RequestModel requestModel) {
+		this.requestModel = requestModel;
+	}
+
+	public PatientModel getPatientModel() {
+		return patientModel;
+	}
+
+	public void setPatientModel(PatientModel patientModel) {
+		this.patientModel = patientModel;
 	}
 
 	

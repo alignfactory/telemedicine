@@ -109,7 +109,7 @@ public class Tab_Checkup extends BorderLayoutContainer implements InterfaceGridO
 		GridBuilder<RequestModel> gridBuilder = new GridBuilder<RequestModel>(requestModelProperties.keyId());  
 		// gridBuilder.setChecked(SelectionMode.SINGLE);
 		gridBuilder.addDate(requestModelProperties.requestDate(), 90, "진료예정일"); //, new DateField());
-		gridBuilder.addText(requestModelProperties.treatStateName(), 80, "상태구분"); 
+		gridBuilder.addText(requestModelProperties.treatStateName(), 80, "진료상태"); 
 		gridBuilder.addText(requestModelProperties.insNo(), 80, "보험번호"); //, new TextField()) ;
 		gridBuilder.addText(requestModelProperties.patientKorName(), 80, "환자명"); //, lookupPatientField) ;
 		gridBuilder.addText(requestModelProperties.korName(), 80, "보건의"); //, lookupRequestUserField);
@@ -147,7 +147,7 @@ public class Tab_Checkup extends BorderLayoutContainer implements InterfaceGridO
 				gridCheckup.getStore().getRecord(data).addChange(checkupModelProperties.processCode(), checkupProcessComboBox.getCode());
 			}
 		}); 
-		gridBuilder.addText(checkupModelProperties.processName(), 80, "상태구분", checkupProcessComboBox) ;
+		gridBuilder.addText(checkupModelProperties.processName(), 80, "검사상태", checkupProcessComboBox) ;
 		gridBuilder.addText(checkupModelProperties.checkupResult(), 400, "검사결과", new TextField()) ;
 		
 		ActionCell<String> fileUploadCell = new ActionCell<String>("첨부파일", new ActionCell.Delegate<String>(){

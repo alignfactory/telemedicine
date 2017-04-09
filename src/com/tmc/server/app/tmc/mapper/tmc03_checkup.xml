@@ -25,41 +25,73 @@
 		resultMap="sys02_user.mapper"
 	/>
 
+	<association property="requestModel" 
+		javaType="com.tmc.client.app.tmc.model.RequestModel" 
+		resultMap="tmc02_request.mapper"
+	/>
+
+	<association property="patientModel" 
+		javaType="com.tmc.client.app.tmc.model.PatientModel" 
+		resultMap="tmc01_patient.mapper"
+	/>
+
+
 </resultMap>
 
 <select id="selectById" resultMap="mapper" parameterType="Long" > 
 	select 	tmc03_checkup.*,
-			sys02_user.*,    
+			sys02_user.*,
+			tmc02_request.*,     
+			tmc01_patient.*, 
+			dbo.f_cdnm('TreatStateCode', tmc02_treat_state_cd) tmc02_treat_state_nm,
 			dbo.f_cdnm('CheckupTypeCode', tmc03_checkup_cd) tmc03_checkup_nm,   
-			dbo.f_cdnm('CheckupProcessCode', tmc03_process_cd) tmc03_process_nm
+			dbo.f_cdnm('CheckupProcessCode', tmc03_process_cd) tmc03_process_nm 
 	from 	tmc03_checkup
+			left outer join tmc02_request
+			on tmc03_request_id = tmc02_request_id
 			left outer join sys02_user
-			on tmc03_checkup_user_id = sys02_user_id
-	where	tmc03_checkup_id = #{checkupId}
+			on tmc03_checkup_user_id = sys02_user_id, 
+			tmc01_patient
+	where	tmc02_patient_id = tmc01_patient_id
+	and		tmc03_checkup_id = #{checkupId}
 </select>
 
 <select id="selectByRequestId" resultMap="mapper" parameterType="Long" > 
 	select 	tmc03_checkup.*,
-			sys02_user.*,    
+			sys02_user.*,   
+			tmc02_request.*, 
+			tmc01_patient.*, 
+			dbo.f_cdnm('TreatStateCode', tmc02_treat_state_cd) tmc02_treat_state_nm,
 			dbo.f_cdnm('CheckupTypeCode', tmc03_checkup_cd) tmc03_checkup_nm,   
 			dbo.f_cdnm('CheckupProcessCode', tmc03_process_cd) tmc03_process_nm
 	from 	tmc03_checkup
+			left outer join tmc02_request
+			on tmc03_request_id = tmc02_request_id 
 			left outer join sys02_user
-			on tmc03_checkup_user_id = sys02_user_id
+			on tmc03_checkup_user_id = sys02_user_id, 
+			tmc01_patient
 	where	tmc03_request_id = #{requestId}
+	and		tmc02_patient_id = tmc01_patient_id
 </select>
 
 <select id="selectByCheckupList" resultMap="mapper" parameterType="HashMap" > 
 	select 	tmc03_checkup.*,
-			sys02_user.*,    
+			sys02_user.*,   
+			tmc02_request.*,  
+			tmc01_patient.*, 
+			dbo.f_cdnm('TreatStateCode', tmc02_treat_state_cd) tmc02_treat_state_nm,
 			dbo.f_cdnm('CheckupTypeCode', tmc03_checkup_cd) tmc03_checkup_nm,   
 			dbo.f_cdnm('CheckupProcessCode', tmc03_process_cd) tmc03_process_nm
 	from 	tmc03_checkup
+			left outer join tmc02_request
+			on tmc03_request_id = tmc02_request_id 
 			left outer join sys02_user
-			on tmc03_checkup_user_id = sys02_user_id
+			on tmc03_checkup_user_id = sys02_user_id, 
+			tmc01_patient 
 	where	sys02_company_id = #{companyId}
 	and		tmc03_checkup_date between #{startDate} and #{endDate}
 	and		sys02_kor_nm like #{patientName}
+	and		tmc02_patient_id = tmc01_patient_id
 </select>
 
 </mapper>

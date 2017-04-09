@@ -178,7 +178,7 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 
 		gridBuilder.addDate(properties.requestDate(), 90, "진료예정일", new DateField());
-		gridBuilder.addText(properties.treatStateName(), 80, "상태구분");
+		gridBuilder.addText(properties.treatStateName(), 80, "진료상태");
 		gridBuilder.addText(properties.insNo(), 80, "보험번호"); //, new TextField()) ;
 		gridBuilder.addText(properties.patientKorName(), 100, "환자명", lookupPatientField) ;
 		gridBuilder.addText(properties.korName(), 80, "보건의", lookupRequestUserField);
@@ -196,10 +196,14 @@ public class Tab_Request extends BorderLayoutContainer implements InterfaceGridO
 
 		GridBuilder<RequestModel> gridBuilder = new GridBuilder<RequestModel>(properties.keyId());  
 		// gridBuilder.setChecked(null);
-		gridBuilder.addDate(properties.treatDate(), 	85, "진료일"); //, new DateField());
-		gridBuilder.addText(properties.treatKorName(), 	80, "진료의"); //, lookUpTreatUserField) ;
 		gridBuilder.addDate(properties.requestDate(), 	90, "진료예정일");
+		//gridBuilder.addDate(properties.treatDate(), 	85, "진료일"); //, new DateField());
+		gridBuilder.addText(properties.treatKorName(), 	80, "진료의"); //, lookUpTreatUserField) ;
+		
 		gridBuilder.addText(properties.korName(), 		80, "보건의");
+		gridBuilder.addText(properties.treatStateName(), 80, "진료상태");
+		gridBuilder.addText(properties.requestNote(), 200, "진료요청내용") ;
+		gridBuilder.addText(properties.treatNote(), 200, "처방내역"); //, new TextField()) ;
 		
 		return gridBuilder.getGrid(); 
 	}

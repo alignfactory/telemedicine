@@ -60,7 +60,7 @@ public class Tab_TreatResult extends BorderLayoutContainer implements InterfaceG
 		
 		SearchBarBuilder searchBarBuilder = new SearchBarBuilder(this);
 		searchBarBuilder.addLookupTriggerField(lookupCompanyField, "기관명", 250, 48);
-		searchBarBuilder.addComboBox(treatStateComboBox, "상태구분", 180, 60); 
+		searchBarBuilder.addComboBox(treatStateComboBox, "진료상태", 180, 60); 
 		searchBarBuilder.addTextField(patientNameField, "환자명", 150, 46, true); 
 
 		
@@ -103,7 +103,7 @@ public class Tab_TreatResult extends BorderLayoutContainer implements InterfaceG
 		gridBuilder.addText(properties.patientKorName(), 80, "환자명"); 
 		gridBuilder.addText(properties.korName(), 100, "보건의") ; 
 		gridBuilder.addText(properties.requestNote(), 200, "진료요청내용"); 
-		gridBuilder.addText(properties.treatStateName(), 80, "상태구분");
+		gridBuilder.addText(properties.treatStateName(), 80, "진료상태");
 		gridBuilder.addDate(properties.treatDate(), 100, "진료일"); 
 		gridBuilder.addText(properties.treatKorName(), 80, "진료의"); 
 		gridBuilder.addText(properties.treatNote(), 200, "처방내역"); 

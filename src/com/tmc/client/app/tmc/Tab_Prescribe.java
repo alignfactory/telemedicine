@@ -93,7 +93,7 @@ public class Tab_Prescribe extends BorderLayoutContainer implements InterfaceGri
 		gridBuilder.setChecked(SelectionMode.SINGLE);
 
 		gridBuilder.addDate(properties.requestDate(), 100, "진료예정일"); //, new DateField());
-		gridBuilder.addText(properties.treatStateName(), 80, "상태구분"); 
+		gridBuilder.addText(properties.treatStateName(), 80, "진료상태"); 
 		gridBuilder.addText(properties.insNo(), 100, "보험번호"); //, new TextField()) ;
 		gridBuilder.addText(properties.patientKorName(), 80, "환자명"); //, lookupPatientField) ;
 		
@@ -113,7 +113,7 @@ public class Tab_Prescribe extends BorderLayoutContainer implements InterfaceGri
 
 		GridBuilder<RequestModel> gridBuilder = new GridBuilder<RequestModel>(properties.keyId());  
 		// gridBuilder.setChecked(null);
-		gridBuilder.addText(properties.treatStateName(), 80, "상태구분"); 
+		gridBuilder.addText(properties.treatStateName(), 80, "진료상태"); 
 		gridBuilder.addDate(properties.requestDate(), 	100, "진료예정일");
 		gridBuilder.addText(properties.patientKorName(), 80, "환자명");
 		//gridBuilder.addDate(properties.treatDate(), 	100, "진료일"); //, new DateField());

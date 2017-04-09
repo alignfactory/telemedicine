@@ -142,7 +142,7 @@ public class Page_Treat extends ContentPanel implements Editor<RequestModel> {
     	
     	HorizontalLayoutContainer row02 = new HorizontalLayoutContainer();
     	row02.add(new FieldLabel(requestDate, "진료예정일"), rowLayout);
-    	row02.add(new FieldLabel(treatStateName, "상태구분"), rowLayout);
+    	row02.add(new FieldLabel(treatStateName, "진료구분"), rowLayout);
     	// row02.add(new FieldLabel(treatStateCode, "상태구분"), rowLayout);
     	row02.add(new FieldLabel(korName, "담당보건의"), rowLayout);
     	row02.add(new FieldLabel(treatDate, "진료일"), rowLayout);

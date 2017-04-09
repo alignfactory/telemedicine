@@ -144,6 +144,11 @@ public class Tab_RequestList extends BorderLayoutContainer implements InterfaceG
 		gridBuilder.addText(properties.requestNote(), 200, "진료요청내용"); //, new TextField()) ;
 		gridBuilder.addDate(properties.treatDate(), 85, "진료일"); //, new DateField());
 		gridBuilder.addText(properties.treatKorName(), 80, "진료의"); //, lookUpTreatUserField) ;
+		
+		//gridBuilder.addText(properties.treatKorName(), 80, "진료의"); //, lookUpTreatUserField) ;
+		
+		gridBuilder.addText(properties.treatStateName(), 80, "진료상태");
+		
 		gridBuilder.addText(properties.treatNote(), 200, "처방내역"); //, new TextField()) ;
 		gridBuilder.addText(properties.note(), 400, "특기사항"); //, new TextField()) ;		
 		gridBuilder.addText(properties.regKorName(), 80, "등록자"); //, new TextField()) ;

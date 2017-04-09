@@ -78,12 +78,19 @@ public class Tab_CheckupList extends BorderLayoutContainer implements InterfaceG
 	public Grid<CheckupModel> buildGridCheckup(){
 
 		GridBuilder<CheckupModel> gridBuilder = new GridBuilder<CheckupModel>(checkupModelProperties.keyId());  
-//		gridBuilder.setChecked(SelectionMode.SINGLE);
 		
+		gridBuilder.addDate(checkupModelProperties.treatDate(), 85, "진료일"); //, new DateField());
+
+		gridBuilder.addText(checkupModelProperties.treatStateName(), 80, "진료상태"); 
+		
+		gridBuilder.addText(checkupModelProperties.patientKorName(), 80, "환자명"); 
+
+		gridBuilder.addText(checkupModelProperties.requestNote(), 200, "진료요청내용"); //, new TextField()) ;
+
 		gridBuilder.addText(checkupModelProperties.checkupName(), 100, "검사종류"); // , checkupTypeComboBox) ;
 		gridBuilder.addText(checkupModelProperties.checkupOrder(), 300, "검사요청사항"); //, new TextField()) ;
 
-		gridBuilder.addText(checkupModelProperties.processName(), 80, "상태구분");	//, checkupProcessComboBox) ;
+		gridBuilder.addText(checkupModelProperties.processName(), 80, "검사상태");	//, checkupProcessComboBox) ;
 		gridBuilder.addText(checkupModelProperties.checkupResult(), 400, "검사결과");	//, new TextField()) ;
 		
 		ActionCell<String> fileUploadCell = new ActionCell<String>("첨부파일", new ActionCell.Delegate<String>(){
@@ -96,7 +103,7 @@ public class Tab_CheckupList extends BorderLayoutContainer implements InterfaceG
 		gridBuilder.addDate(checkupModelProperties.checkupDate(), 100, "검사일"); // , new DateField()) ;
 		gridBuilder.addText(checkupModelProperties.userKorName(), 80, "검사담당");
 
-//		gridBuilder.addDate(requestModelProperties.requestDate(), 90, "진료예정일"); //, new DateField());
+		
 //		gridBuilder.addText(requestModelProperties.treatStateName(), 80, "상태구분"); 
 //		gridBuilder.addText(requestModelProperties.insNo(), 80, "보험번호"); //, new TextField()) ;
 //		gridBuilder.addText(requestModelProperties.patientKorName(), 80, "환자명"); //, lookupPatientField) ;
@@ -114,6 +121,7 @@ public class Tab_CheckupList extends BorderLayoutContainer implements InterfaceG
 
 	private void fileUploadOpen(){
 		CheckupModel checkupModel = gridCheckup.getSelectionModel().getSelectedItem(); 
+
 		if(checkupModel != null){
 			Lookup_File lookupFile = new Lookup_File();
 			lookupFile.open(checkupModel.getCheckupId());
@@ -137,7 +145,7 @@ public class Tab_CheckupList extends BorderLayoutContainer implements InterfaceG
 //		Info.display("start date is", ""+startDateField.getValue());
 //		new SimpleMessage("start date is", ""+startDateField.getValue());
 		
-		service.retrieve("tmc.Request.selectByCheckupList");
+		service.retrieve("tmc.Checkup.selectByCheckupList");
 	}
 	
 	@Override
